@@ -49,7 +49,7 @@ MathJax.Hub.Config({
 	}
 });
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 
 <script type="text/javascript" charset="utf-8">
 $(function() {
@@ -121,8 +121,6 @@ $(function() {
 });
 
 function hlAceLine(n) {
-//    var Range = ace.require("ace/range").Range;
-//    editor.session.addMarker(new Range(n-1,1,n-1,2000),'ace_active-line','fullLine');
     editor.gotoLine(n, 0);
     editor.focus();
 }
@@ -201,6 +199,10 @@ function checkLatexCode(latexString){
         },
         'SPACE_BEFORE_PUNCTUATION_MARK': {
             msg: 'Пробелы перед двоеточием, запятой, точкой, восклицательным и вопросительными знаками, точкой с запятой не ставятся.',
+            severity: 0
+        },
+        'SPACE_BEFORE_PARENTHESES': {
+            msg: 'В тексте перед открывающей скобкой ставится пробел.',
             severity: 0
         },
         'SPACE_AFTER_PUNCTUATION_MARK': {
@@ -629,6 +631,14 @@ function checkLatexCode(latexString){
         var badPos = textFragments[i].search(/\s+[?!.,;:]/);
         if ( badPos >= 0){
             addTypicalWarning('SPACE_BEFORE_PUNCTUATION_MARK', 'text', i, badPos);
+        }
+    }
+
+    /* STAGE: check for spaces before parentheses */
+    for (var i = 0; i < textFragments.length; ++i) {
+        var badPos = textFragments[i].search(/\S\(/);
+        if ( badPos >= 0){
+            addTypicalWarning('SPACE_BEFORE_PARENTHESES', 'text', i, badPos);
         }
     }
 
