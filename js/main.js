@@ -27,7 +27,7 @@ $(function() {
                 severity: 0
             },
             'CONSECUTIVE_DISPLAY_FORMULAE': {
-                msg: 'Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>array</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки.',
+                msg: 'Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href="https://www.sharelatex.com/learn/Aligning_equations_with_amsmath">ссылке</a>.',
                 severity: 0
             },
             'DASH_HYPHEN': {
@@ -209,6 +209,10 @@ $(function() {
             'BACKSLASH_NEEDED':  {
                 msg: 'Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В LaTeX есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code>. То же касается имён функций синуса, косинуса и пр. Список доступных стандартных команд см. по <a href="https://www.sharelatex.com/learn/Operators#Reference_guide">ссылке</a>.',
                 severity: 0
+            },
+            'CDOT_FOR_READABILITY':  {
+                msg: 'В произведениях чисел, обозначаемых отдельной буквой, и дробей или биномиальных коэффициентов, полезно для улучшения читабельности текста явно указывать произведение командой <code>\\cdot</code>.',
+                severity: 5
             }
         };
         var used_errcodes = {};
@@ -246,6 +250,11 @@ $(function() {
         }
 
         function findLine(fragmentType, fragmentIndex, positionInFragment) {
+            if(fragmentIndex === undefined){
+                var globalPosition = fragmentType;
+                return latexString.substring(0, globalPosition).split('\n').length;
+            }
+
             var numLinesSkipped = 0;
             for (var i = 0; i < fragmentIndex; ++i){
                 numLinesSkipped += mathFragments[i].split('\n').length - 1;
@@ -390,22 +399,23 @@ $(function() {
         /* STAGE: check if math formulae are not split without necessity */
         var badPos = latexString.search(/(\$|\\\))\s*(,|=|\+|-)?\s*(\$|\\\()/);
         if ( badPos >= 0) {
-            addWarning('UNNECESSARY_FORMULA_BREAK', null, extractSnippet(latexString, badPos, 10));
+            addWarning('UNNECESSARY_FORMULA_BREAK', null, extractSnippet(latexString, badPos, 10), findLine(badPos));
         }
 
         /* STAGE: check for low-level font commands */
         badPos = latexString.search(/\\it[^a-z0-9]|\\bf[^a-z0-9]/);
         if (badPos >= 0) {
-            addWarning('LOW_LEVEL_FONT_COMMANDS', null, extractSnippet(latexString, badPos));
+            addWarning('LOW_LEVEL_FONT_COMMANDS', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
-        if (latexString.indexOf('\\textit') >= 0) {
-            addWarning('ITALIC_INSTEAD_OF_EMPH');
-        }
-
-        badPos = latexString.search(/\\]\s*\\\[/);
+        badPos = latexString.search(/\\textit/);
         if (badPos >= 0) {
-            addWarning('CONSECUTIVE_DISPLAY_FORMULAE', null, extractSnippet(latexString, badPos));
+            addWarning('ITALIC_INSTEAD_OF_EMPH', null, extractSnippet(latexString, badPos), findLine(badPos));
+        }
+
+        badPos = latexString.search(/\\](\s|[^абвгдеёжзиклмнопрстуфхцчшщьыъэюя])*\\\[/i);
+        if (badPos >= 0) {
+            addWarning('CONSECUTIVE_DISPLAY_FORMULAE', null, extractSnippet(latexString, badPos), findLine(badPos+3));
         }
 
         /* STAGE: Check for \mbox and \hbox */
@@ -741,6 +751,14 @@ $(function() {
             var badPos = mathFragments[i].search(/<=|>=/);
             if (badPos >= 0) {
                 addTypicalWarning('LE_AS_SINGLE_COMMAND', 'math', i, badPos);
+            }
+        }
+
+        /* STAGE: recommend explicit \cdot for readability */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/\d\s*\\(frac|binom)/);
+            if (badPos >= 0) {
+                addTypicalWarning('CDOT_FOR_READABILITY', 'math', i, badPos);
             }
         }
 
