@@ -38,6 +38,10 @@ $(function() {
                 msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывным, чтобы тире не «повисало на краю пропасти» при переносе строки.',
                 severity: 0
             },
+            'NUMERAL_ABBREVIATION': {
+                msg: 'Нарушены <a href="http://new.gramota.ru/spravka/letters/22-spravka/letters/87-rubric-99">правила сокращения порядковых числительных</a>.',
+                severity: 0
+            },
             'UNNECESSARY_FORMULA_BREAK': {
                 msg: 'Возможно, некоторые формулы следовало объединить. Например, вместо <code>$x$, $y$ $\\in$ $A$</code> пишите <code>$x,\\,y\\in A$</code>; вместо <code>$a$ = $b+c$</code> пишите <code>$a=b+c$</code> и т.д.',
                 severity: 0
@@ -427,7 +431,13 @@ $(function() {
         /* STAGE: check if paragraph starts with a formula */
         badPos = latexString.search(/(\n\s*\n|\\par)\s*(\$|\\\()/);
         if (badPos >= 0) {
-            addWarning('PARAGRAPH_STARTS_WITH_FORMULA', null, extractSnippet(latexString, badPos));
+            addWarning('PARAGRAPH_STARTS_WITH_FORMULA', null, extractSnippet(latexString, badPos), findLine(badPos));;
+        }
+
+        /* STAGE: check if numerals are properly abbreviated */
+        badPos = latexString.search(/\d(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|ому|ом|ая|ой|ую|ые|ых|ыми|и)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
+        if (badPos >= 0) {
+            addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));;
         }
 
         /* STAGE: split into text and math blocks */
