@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 .severity0 {
     opacity: 1;
     order: 1;
@@ -30,7 +32,18 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+
 #author a {
     color: white;
     text-decoration: none;
+}
+
+q {
+    color: dimgrey;
+}
+q:before {
+    content: '\201C';
+}
+q:after {
+    content: '\201D';
 }

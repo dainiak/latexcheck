@@ -19,7 +19,7 @@ $(function() {
                 severity: 0
             },
             'DOUBLE_DOLLARS': {
-                msg: 'Двойных долларов в тексте быть не должно. Выносные формулы нужно оформлять с помощью <code>\\[</code>…<code>\\]</code>.',
+                msg: 'Двойных долларов в тексте быть не должно. Выносные формулы нужно оформлять с помощью <code>\\[</code>…<code>\\]</code>. Объяснение см. по <a href="http://tex.stackexchange.com/questions/503/why-is-preferable-to">ссылке</a>.',
                 severity: 0
             },
             'MISMATCHED_MATH_DELIMITERS': {
@@ -31,15 +31,19 @@ $(function() {
                 severity: 0
             },
             'DASH_HYPHEN': {
-                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>.',
+                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
             'DASH_SURROUND_WITH_SPACES': {
-                msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывным, чтобы тире не «повисало на краю пропасти» при переносе строки.',
+                msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывным, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
             'NUMERAL_ABBREVIATION': {
                 msg: 'Нарушены <a href="http://new.gramota.ru/spravka/letters/22-spravka/letters/87-rubric-99">правила сокращения порядковых числительных</a>.',
+                severity: 0
+            },
+            'LATE_DEFINITION': {
+                msg: 'Место того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href="https://doc.co/pgnsVw">статью П. Халмоша</a>, раздел «Правильно используйте слова».',
                 severity: 0
             },
             'UNNECESSARY_FORMULA_BREAK': {
@@ -51,7 +55,7 @@ $(function() {
                 severity: 0
             },
             'LOW_LEVEL_FONT_COMMANDS': {
-                msg: 'Вместо низкоуровневых команд <code>{\\it …}</code>, <code>{\\bf …}</code> используйте команды <code>\\textit{…}</code> <code>\\textbf{…}</code>. '
+                msg: 'Вместо низкоуровневых команд <code>{\\it …}</code>, <code>{\\bf …}</code> используйте команды <code>\\textit{…}</code> <code>\\textbf{…}</code> (подробности см. по <a href="http://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text">ссылке</a>.)'
                     + 'Кроме того, выделять текст лучше не курсивом, а более гибкой командой <code>\\emph{…}</code>, поскольку она корректно сработает даже внутри курсивного блока.',
                 severity: 0
             },
@@ -107,7 +111,7 @@ $(function() {
                 msg: 'Когда при наборе формул возникает необходимость поставить скобки (круглые/фигурные/квадратные) или знак модуля вокруг высокой подформулы (дроби, биномиального коэффициента, суммы с пределами), рекомендуется добавлять команды <code>\\left</code> и <code>\\right</code>. '
                     + 'Особенно это актуально для выключных формул. Например, сравните, как нелепо выглядит в PDF '
                     + 'скомпилированная формула <code>\\[(\\frac{a}{b})^2\\]</code> и как естественен её «правильный» вариант <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. '
-                    + 'Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left…  … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href="http://tex.stackexchange.com/a/58641">ссылке</a>.',
+                    + 'Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left…  … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href="http://tex.stackexchange.com/a/58641">ссылке</a>. Можно также воспользоваться командой <a href="http://tex.stackexchange.com/a/1765"><code>\\DeclarePairedDelimiter</code></a> из библиотеки mathtools.',
                 severity: 10
             },
             'NUMERALS_AS_WORDS': {
@@ -143,7 +147,7 @@ $(function() {
                 severity: 5
             },
             'REPLACE_MBOX_WITH_TEXT': {
-                msg: 'Для вставки текста внутрь формулы вместо команд <code>\\mbox</code> и <code>\\hbox</code> пользуйтесь командой <code>\\text</code>.',
+                msg: 'Для вставки текста внутрь формулы вместо команд <code>\\mbox</code> и <code>\\hbox</code> пользуйтесь командой <code>\\text</code>. Объяснение см. по <a href="http://tex.stackexchange.com/questions/70632/difference-between-various-methods-for-producing-text-in-math-mode">ссылке</a>.',
                 severity: 0
             },
             'TEXT_IN_MATH_MODE': {
@@ -318,7 +322,6 @@ $(function() {
         }
 
         /* STAGE: Check math delimiters */
-
         badPos = latexString.search(/\${2}/);
         if (badPos >= 0){
             addWarning('DOUBLE_DOLLARS', null, '$$', latexString.substring(0,badPos).split('\n').length-1);
@@ -435,9 +438,15 @@ $(function() {
         }
 
         /* STAGE: check if numerals are properly abbreviated */
-        badPos = latexString.search(/\d(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|ому|ом|ая|ой|ую|ые|ых|ыми|и)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
+        badPos = latexString.search(/\d(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|ому|ом|ая|ой|ую|ые|ых|ыми|и|ым|тым|той|им|его|того)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
         if (badPos >= 0) {
             addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));;
+        }
+
+        /* STAGE: check if letters are defined before they are used */
+        badPos = latexString.search(/,(\\]|\$)?\s+где([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
+        if (badPos >= 0) {
+            addWarning('LATE_DEFINITION', null, extractSnippet(latexString, badPos), findLine(badPos));;
         }
 
         /* STAGE: split into text and math blocks */
