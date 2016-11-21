@@ -67,6 +67,10 @@ $(function() {
                 msg: 'Для закавычивания слов «клавиатурные» кавычки <code>"…"</code> в LaTeX не используются. Если нужно закавычить слово, делайте это одним из способов <code>``…\'\'</code> (два апострофа на букве ё вначале и два на букве э в конце) или <code><<…>></code> (два знака меньше и два знака больше).',
                 severity: 0
             },
+            'QUOTES_IN_MATH': {
+                msg: 'Обнаружен символ кавычки в математическом режиме. Если Вы хотели поставить двойной штрих над математическим символом, наберите два штриха подряд: <code>y\'\'</code>.',
+                severity: 0
+            },
             'LATIN_LETTER_OUTSIDE_MATH': {
                 msg: 'Даже одна буква, если у неё математический смысл — должна быть заключена в доллары.',
                 severity: 0
@@ -479,6 +483,14 @@ $(function() {
             var badPos = textFragments[i].search('"');
             if (badPos >= 0){
                 addTypicalWarning('WRONG_QUOTES', 'text', i, badPos);
+            }
+        }
+
+        /* STAGE: check quotation marks in math mode */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search('"');
+            if (badPos >= 0){
+                addTypicalWarning('QUOTES_IN_MATH', 'math', i, badPos);
             }
         }
 
