@@ -107,6 +107,10 @@ $(function() {
                 msg: 'После двоеточия, точки с запятой, запятой, не должно начинаться новое предложение.',
                 severity: 0
             },
+            'CAPITALIZATION_AFTER_PERIOD': {
+                msg: 'Предложение следует начинать с заглавной буквы.',
+                severity: 0
+            },
             'PERIOD_BEFORE_NEXT_SENTENCE': {
                 msg: 'В конце предложения должна ставиться точка, даже если предложение заканчивается формулой.',
                 severity: 0
@@ -584,6 +588,13 @@ $(function() {
             }
         }
 
+        /* STAGE: check for capital letter after period */
+        for (var i = 0; i < textFragments.length; ++i) {
+            var badPos = textFragments[i].search(/\.\s*[абвгдеёжзиклмнопрстуфхцчшщьыъэюя]/);
+            if ( badPos >= 0){
+                addTypicalWarning('CAPITALIZATION_AFTER_PERIOD', 'text', i, badPos);
+            }
+        }
 
         /* STAGE: check for period before new sentence */
         for (var i = 0; i < textFragments.length; ++i) {
