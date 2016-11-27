@@ -223,7 +223,7 @@ $(function() {
                 severity: 0
             },
             'BACKSLASH_NEEDED':  {
-                msg: 'Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В LaTeX есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code>. То же касается имён функций синуса, косинуса и пр. Список доступных стандартных команд см. по <a href="https://www.sharelatex.com/learn/Operators#Reference_guide">ссылке</a>.',
+                msg: 'Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В LaTeX есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Список доступных стандартных команд см. по <a href="https://www.sharelatex.com/learn/Operators#Reference_guide">ссылке</a>. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code> или, ещё лучше, <a href="http://tex.stackexchange.com/a/67529">создайте свой оператор</a> командой <code>\\DeclareMathOperator</code> в преамбуле документа.',
                 severity: 0
             },
             'CDOT_FOR_READABILITY':  {
@@ -806,7 +806,7 @@ $(function() {
 
         /* STAGE: check sin, cos, lim, min etc. are prepended by backslash */
         for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/[^\\](cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/);
+            var badPos = mathFragments[i].search(/([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/);
             if (badPos >= 0) {
                 addTypicalWarning('BACKSLASH_NEEDED', 'math', i, badPos);
             }

@@ -47,3 +47,16 @@ q:before {
 q:after {
     content: '\201D';
 }
+
+.container-fluid a {
+    color: inherit;
+    border-bottom: 2px cadetblue dotted;
+    text-decoration: inherit;
+}
+
+.container-fluid a:hover {
+    color: inherit;
+    border-bottom: 2px cadetblue dotted;
+    text-decoration: inherit;
+    background-color: darkgrey;
+}
