@@ -48,13 +48,13 @@ q:after {
     content: '\201D';
 }
 
-.container-fluid a {
+.container-fluid a:not(.btn) {
     color: inherit;
     border-bottom: 2px cadetblue dotted;
     text-decoration: inherit;
 }
 
-.container-fluid a:hover {
+.container-fluid a:hover:not(.btn) {
     color: inherit;
     border-bottom: 2px cadetblue dotted;
     text-decoration: inherit;
