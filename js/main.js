@@ -34,6 +34,10 @@ $(function() {
                 msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
+            'DASH_IN_MATH_MODE': {
+                msg: 'Похоже, Вы хотели поставить дефис. Но когда знак дефиса попадает в математический режим, он становится минусом. Вывод: делать дефис не частью формулы, а частью следующего за ней текста.',
+                severity: 0
+            },
             'DASH_SURROUND_WITH_SPACES': {
                 msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывным, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
@@ -517,6 +521,13 @@ $(function() {
             var badPos = mathFragments[i].search(/(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[с]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i);
             if (badPos>= 0){
                 addTypicalWarning('CYRILLIC_LETTER_C_MISUSED', 'math', i, badPos);
+            }
+        }
+
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/-$/i);
+            if (badPos>= 0){
+                addTypicalWarning('DASH_IN_MATH_MODE', 'math', i, badPos);
             }
         }
 
