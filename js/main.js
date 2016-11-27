@@ -6,6 +6,8 @@ $(function() {
         editor.focus();
     }
 
+    window.hlAceLine = hlAceLine;
+
 
     function checkLatexCode(latexString){
         var capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
