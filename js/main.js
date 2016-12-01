@@ -33,7 +33,7 @@ $(function() {
                 severity: 0
             },
             'DASH_HYPHEN': {
-                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
+                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
             'DASH_IN_MATH_MODE': {
@@ -543,7 +543,7 @@ $(function() {
 
         /* STAGE: check if dash is surrounded with spaces */
         for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/--[^- ]|[^- ]--/);
+            var badPos = textFragments[i].search(/--[^- ~]|[^- ~]--/);
             if ( badPos >= 0 ){
                 addTypicalWarning('DASH_SURROUND_WITH_SPACES', 'text', i, badPos);
             }
