@@ -6,6 +6,7 @@
 <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet"></link>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="css/main.css" rel="stylesheet">
 
@@ -60,28 +61,43 @@ MathJax.Hub.Config({
 </head>
 
 <body>
-<div id="author"><a href="http://www.dainiak.com" rel="author">www.dainiak.com</a></div>
+<div class="social-share">
+    <div class="social-share-buttons">
+    <div class="btn-group">
+    <a class="btn btn-default social-share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+    <a class="btn btn-default social-share" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F&title=Interactive%20LaTeX%20Primer"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+    <a class="btn btn-default social-share" href="https://twitter.com/home?status=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+    <a class="btn btn-default social-share" href="http://vk.com/share.php?url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-vk" aria-hidden="true"></i></a>
+    <a class="btn btn-default social-share" href="https://plus.google.com/share?url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+    </div>
+    </div>
+    <a href="https://github.com/dainiak/latexcheck" class="fork-me"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+</div>
+
 <div class="container-fluid">
     <div class="row">
+        Инструмент создан <a rel="author" href="http://www.dainiak.com">Александром Дайняком</a>, доцентом <a href="https://mipt.ru/">МФТИ</a>. Почтовый адрес для связи: <code>dainiak@gmail.com</code>
+        <div class="well">
         Полезные ресурсы:
-        <ul class="well">
+        <ul>
+        <li>Стиль в математике: <a href="https://doc.co/pgnsVw">П. Халмош. <em>Как писать математические тексты</em></a></li>
+        <li>Краткое руководство по LaTeX на русском: <a href="http://www.ccas.ru/voron/download/voron05latex.pdf">К. В. Воронцов. LaTeX 2e в примерах</a></li>
+        <li>Стандартное руководство по LaTeX на русском: <a href="http://www.mccme.ru/free-books/llang/newllang.pdf">С. М. Львовский. Набор и вёрстка в системе LaTeX</a></li>
+        <li>Интерактивный урок по LaTeX: <a href="https://dainiak.github.io/ilatexprimer/">https://dainiak.github.io/ilatexprimer/</a></li>
         <li>Рукописный ввод символов LaTeX: сервисы <a href="http://detexify.kirelabs.org/classify.html">Detexify</a> и <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
         <li>Очень кратко о полезных, но неочевидных элементах оформления: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics">Wikibooks: LaTeX/Advanced Mathematics</a></li>
-        <li>Краткое руководство: <a href="http://www.ccas.ru/voron/download/voron05latex.pdf">К. В. Воронцов. LaTeX 2e в примерах</a></li>
-        <li>Стандартное руководство: <a href="http://www.mccme.ru/free-books/llang/newllang.pdf">С. М. Львовский. Набор и вёрстка в системе LaTeX</a></li>
-        <li>Стиль в математике: <a href="https://doc.co/pgnsVw">П. Халмош. Как писать математические тексты</a></li>
         <li>Специфичные требования ДС: <a href="https://goo.gl/FhyJJm">Как правильно оформлять дорешки по курсу «Дискретные структуры 2016/2017» в МФТИ</a></li>
-    </ul></div>
+        </ul></div></div>
     <div class="row">Вставьте исходный текст на LaTeX сюда: <div class="well" id="user_input_area"></div></div>
     <div class="row">
         <div class="btn-group">
-        <button class="btn btn-default" id="btn_check">Проверка соответствия правилам</button>
-        <button class="btn btn-default" id="btn_try_typeset">Предпросмотр с помощью MathJax</button>
-        <a class="btn btn-default" href="https://goo.gl/forms/rLtfjrGZouOPuTl22">Сообщить об ошибке</a>
+        <button class="btn btn-default" id="btn_check">Проверить!</button>
+        <button class="btn btn-default" id="btn_try_typeset">Предпросмотр</button>
+        <a class="btn btn-default" href="https://goo.gl/forms/bsCb6TxkEA49vof52">Сообщить об ошибке</a>
         </div>
     </div>
     <div class="row">
-        <div class="well flex" id="result_display_area"></div>
+        <div class="well flex" id="result_display_area">Здесь отображается результат проверки</div>
     </div>
 </div>
 </body>

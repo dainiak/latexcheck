@@ -60,3 +60,23 @@ q:after {
     text-decoration: inherit;
     background-color: darkgrey;
 }
+
+div.social-share {
+    position: absolute;
+    vertical-align: top;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+div.social-share-buttons {
+    position: fixed;
+    top: 0;
+    right: 150;
+}
+
+a.fork-me {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
