@@ -235,6 +235,14 @@ $(function() {
             'CDOT_FOR_READABILITY':  {
                 msg: 'В произведениях чисел, обозначаемых отдельной буквой, и дробей или биномиальных коэффициентов, полезно для улучшения читабельности текста явно указывать произведение командой <code>\\cdot</code>.',
                 severity: 5
+            },
+            'GRAPHICS_IN_MATH_MODE':  {
+                msg: 'Команда <code>\\includegraphics</code> не должна использоваться в математическом режиме. Чтобы отцентрировать рисунок, используйте окружения <code>center</code> и <code>figure</code>.',
+                severity: 0
+            },
+            'UNNECESSARY_MATH_MODE': {
+                msg: 'Если внутри формулы (в окружении долларов) стоит единственный символ и он не является буквой или цифрой — это тревожный знак. Скорее всего, либо в математический режим переходить было не нужно, либо без нужды на части была разорвана формула.',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -485,6 +493,14 @@ $(function() {
                     'UNNECESSARY_FORMULA_BREAK',
                     'Формулы <code>' + mathFragments[i-1] + '</code> и <code>' + mathFragments[i] + '</code> не разделены текстом. '
                     + 'Возможно, следует объединить эти две формулы в одну, либо вставить вводное слово перед второй формулой. ', textFragments[i], findLine('text',i,0));
+            }
+        }
+
+        /* STAGE: check for includegraphics in math mode */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/\\includegraphics/);
+            if (badPos >= 0) {
+                addTypicalWarning('GRAPHICS_IN_MATH_MODE', 'math', i, badPos);
             }
         }
 
@@ -822,6 +838,14 @@ $(function() {
             var badPos = mathFragments[i].search(/([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/);
             if (badPos >= 0) {
                 addTypicalWarning('BACKSLASH_NEEDED', 'math', i, badPos);
+            }
+        }
+
+        /* STAGE: check if math mode is necessary */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/[^0-9a-zA-Z]/);
+            if (badPos >= 0) {
+                addTypicalWarning('UNNECESSARY_MATH_MODE', 'math', i, badPos);
             }
         }
 
