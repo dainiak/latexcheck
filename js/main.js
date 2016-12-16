@@ -122,10 +122,7 @@ $(function() {
                 severity: 0
             },
             'LEFT_RIGHT_RECOMMENDED': {
-                msg: 'Когда при наборе формул возникает необходимость поставить скобки (круглые/фигурные/квадратные) или знак модуля вокруг высокой подформулы (дроби, биномиального коэффициента, суммы с пределами), рекомендуется добавлять команды <code>\\left</code> и <code>\\right</code>. '
-                    + 'Особенно это актуально для выключных формул. Например, сравните, как нелепо выглядит в PDF '
-                    + 'скомпилированная формула <code>\\[(\\frac{a}{b})^2\\]</code> и как естественен её «правильный» вариант <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. '
-                    + 'Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left…  … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href="http://tex.stackexchange.com/a/58641">ссылке</a>. Можно также воспользоваться командой <a href="http://tex.stackexchange.com/a/1765"><code>\\DeclarePairedDelimiter</code></a> из библиотеки mathtools.',
+                msg: 'Когда при наборе формул возникает необходимость поставить скобки (круглые/фигурные/квадратные) или знак модуля вокруг высокой подформулы (дроби, биномиального коэффициента, суммы с пределами), рекомендуется добавлять команды <code>\\left</code> и <code>\\right</code>. Особенно это актуально для выключных формул. Например, сравните, как нелепо выглядит в PDF скомпилированная формула <code>\\[(\\frac{a}{b})^2\\]</code> и как естественен её «правильный» вариант <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left…  … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href="http://tex.stackexchange.com/a/58641">ссылке</a>. Можно также воспользоваться командой <a href="http://tex.stackexchange.com/a/1765"><code>\\DeclarePairedDelimiter</code></a> из библиотеки mathtools.',
                 severity: 10
             },
             'NUMERALS_AS_WORDS': {
@@ -485,6 +482,8 @@ $(function() {
                 mathFragmentTypes.push(fragments[i-1] == '\\(' || fragments[i-1] == '$' ? 'inline' : 'display' );
             }
         }
+        //console.log(textFragments);
+        //console.log(mathFragments);
 
         /* STAGE: check for neighbouring formulas */
         for (var i = 1; i < textFragments.length-1; ++i) {
@@ -843,7 +842,7 @@ $(function() {
 
         /* STAGE: check if math mode is necessary */
         for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/[^0-9a-zA-Z]/);
+            var badPos = mathFragments[i].search(/^\s*[^0-9a-zA-Z]+\s*$/);
             if (badPos >= 0) {
                 addTypicalWarning('UNNECESSARY_MATH_MODE', 'math', i, badPos);
             }
