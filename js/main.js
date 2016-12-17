@@ -49,7 +49,7 @@ $(function() {
                 severity: 0
             },
             'LATE_DEFINITION': {
-                msg: 'Место того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href="https://doc.co/pgnsVw">статью П. Халмоша</a>, раздел «Правильно используйте слова».',
+                msg: 'Вместо того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href="https://doc.co/pgnsVw">статью П. Халмоша</a>, раздел «Правильно используйте слова».',
                 severity: 0
             },
             'UNNECESSARY_FORMULA_BREAK': {
@@ -239,6 +239,10 @@ $(function() {
             },
             'UNNECESSARY_MATH_MODE': {
                 msg: 'Если внутри формулы (в окружении долларов) стоит единственный символ и он не является буквой или цифрой — это тревожный знак. Скорее всего, либо в математический режим переходить было не нужно, либо без нужды на части была разорвана формула.',
+                severity: 0
+            },
+            'BETTER_TO_USE_WORDS_THEN_MATH': {
+                msg: 'Конструкции наподобие <code>число элементов $=m^2$</code> недопустимы в письменном тексте, за исключением конспектов. Знаки $=$, $\\gt$, $\\geqslant$ и др. нужно в этих случаях писать словами: <code>…не превосходит $m^2$</code>, <code>…равняется $m^2$</code> и т.д.',
                 severity: 0
             }
         };
@@ -845,6 +849,14 @@ $(function() {
             var badPos = mathFragments[i].search(/^\s*[^0-9a-zA-Z]+\s*$/);
             if (badPos >= 0) {
                 addTypicalWarning('UNNECESSARY_MATH_MODE', 'math', i, badPos);
+            }
+        }
+
+        /* STAGE: check if math symbol be better replaced with plain text */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/^\s*([><=]|\\le|\\ge)/);
+            if (badPos >= 0) {
+                addTypicalWarning('BETTER_TO_USE_WORDS_THEN_MATH', 'math', i, badPos);
             }
         }
 
