@@ -248,6 +248,10 @@ $(function() {
             'TEXT_COMMANDS_IN_MATH_MODE': {
                 msg: 'Текстовые команды <code>\\textbf</code>, <code>\\textit</code> и др. не следует использовать в математическом режиме. Для набора жирным шрифтом математических символов есть команда <code>\\mathbf</code>.',
                 severity: 0
+            },
+            'LIMITS_UNNECESSARY_IN_DISPLAY_MODE': {
+                msg: 'Команда <code>\\limits</code> в выключных формулах обычно лишняя: пределы и без неё выставляются верно.',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -341,6 +345,7 @@ $(function() {
                     )
             );
         }
+
 
         /* STAGE: Check if there are no teacher fixmes left */
         var badPos = latexString.search(/\\fix\{/);
@@ -885,6 +890,17 @@ $(function() {
             var badPos = textFragments[i].search(/\s+\d\s+/);
             if (badPos >= 0) {
                 addTypicalWarning('NUMERALS_AS_WORDS', 'text', i, badPos);
+            }
+        }
+
+        /* Check if \limits command is used in display math */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            if( mathFragmentTypes[i] != 'display' ) {
+                continue;
+            }
+            var badPos = mathFragments[i].search(/\\limits/);
+            if (badPos >= 0) {
+                addTypicalWarning('LIMITS_UNNECESSARY_IN_DISPLAY_MODE', 'math', i, badPos);
             }
         }
 
