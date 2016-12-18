@@ -529,7 +529,7 @@ $(function() {
 
         /* STAGE: check latin letters outside math mode */
         for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/(^|[,. ])[a-zA-Z]($|[,.:!? ])/);
+            var badPos = textFragments[i].search(/(^|[,. ])[a-zA-Z]($|[,.:!? -])/);
             if (badPos >= 0){
                 addTypicalWarning('LATIN_LETTER_OUTSIDE_MATH', 'text', i, badPos);
             }
@@ -858,7 +858,7 @@ $(function() {
 
         /* STAGE: check if math symbol be better replaced with plain text */
         for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/^\s*([><=]|\\(le|ge|sim|lesssim))/);
+            var badPos = mathFragments[i].search(/^\s*([><=]|\\(le|ge|sim|lesssim)(\W|\d|$))/);
             if (badPos >= 0) {
                 addTypicalWarning('BETTER_TO_USE_WORDS_THEN_MATH', 'math', i, badPos);
             }
