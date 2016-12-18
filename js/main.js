@@ -234,7 +234,7 @@ $(function() {
                 severity: 5
             },
             'GRAPHICS_IN_MATH_MODE':  {
-                msg: 'Команда <code>\\includegraphics</code> не должна использоваться в математическом режиме. Чтобы отцентрировать рисунок, используйте окружения <code>center</code> и <code>figure</code>.',
+                msg: 'Команда <code>\\includegraphics</code> не должна использоваться в математическом режиме без <em>крайней</em> необходимости. Чтобы отцентрировать рисунок, вместо помещения рисунка в выключную формулу используйте окружения <code>center</code> и <code>figure</code>.',
                 severity: 0
             },
             'UNNECESSARY_MATH_MODE': {
@@ -243,6 +243,10 @@ $(function() {
             },
             'BETTER_TO_USE_WORDS_THEN_MATH': {
                 msg: 'Конструкции наподобие <code>число элементов $=m^2$</code> недопустимы в письменном тексте, за исключением конспектов. Знаки $=$, $\\gt$, $\\geqslant$ и др. нужно в этих случаях писать словами: <code>…не превосходит $m^2$</code>, <code>…равняется $m^2$</code> и т.д.',
+                severity: 0
+            },
+            'TEXT_COMMANDS_IN_MATH_MODE': {
+                msg: 'Текстовые команды <code>\\textbf</code>, <code>\\textit</code> и др. не следует использовать в математическом режиме. Для набора жирным шрифтом математических символов есть команда <code>\\mathbf</code>.',
                 severity: 0
             }
         };
@@ -857,6 +861,14 @@ $(function() {
             var badPos = mathFragments[i].search(/^\s*([><=]|\\(le|ge|sim|lesssim))/);
             if (badPos >= 0) {
                 addTypicalWarning('BETTER_TO_USE_WORDS_THEN_MATH', 'math', i, badPos);
+            }
+        }
+
+        /* STAGE: check if text-mode modifiers are used in math mode */
+        for (var i = 0; i < mathFragments.length; ++i) {
+            var badPos = mathFragments[i].search(/\\textbf|\\textbf|\\emph/);
+            if (badPos >= 0) {
+                addTypicalWarning('TEXT_COMMANDS_IN_MATH_MODE', 'math', i, badPos);
             }
         }
 
