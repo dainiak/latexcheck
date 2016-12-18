@@ -252,6 +252,10 @@ $(function() {
             'LIMITS_UNNECESSARY_IN_DISPLAY_MODE': {
                 msg: 'Команда <code>\\limits</code> в выключных формулах обычно лишняя: пределы и без неё выставляются верно.',
                 severity: 0
+            },
+            'MATH_ENVIRONMENT_VERVOSITY_WARNING': {
+                msg: 'Окружение <code>math</code> используется довольно редко. Лучше всего вместо него использовать более короткую (и абсолютно такую же по получаемому результату) конструкцию <code>\\(…\\)</code> или <code>$…$</code>. Часто также ошибочно полагают, что с помощью math оформляют <em>выключные</em> формулы — но это не так: внутри окружения math действует обычный inline-режим. Для оформления выключных формул подойдёт либо конструкция <code>\\[…\\]</code>, либо одно из окружений equation, array и др.',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -503,8 +507,14 @@ $(function() {
             addWarning('LATE_DEFINITION', null, extractSnippet(latexString, badPos), findLine(badPos));;
         }
 
+        /* STAGE: check if letters are defined before they are used */
+        badPos = latexString.search(/\\begin\{math}/);
+        if (badPos >= 0) {
+            addWarning('MATH_ENVIRONMENT_VERVOSITY_WARNING', null, extractSnippet(latexString, badPos+7), findLine(badPos));;
+        }
+
         /* STAGE: split into text and math blocks */
-        var fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end)\{(?:equation|align|gather|eqnarray|multline|flalign|alignat)\*?})/);
+        var fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end)\{(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
         var textFragments = [];
         var mathFragments = [];
         var mathFragmentTypes = [];
@@ -514,7 +524,7 @@ $(function() {
             }
             else if (i % 4 == 2) {
                 mathFragments.push(fragments[i]);
-                mathFragmentTypes.push(fragments[i-1] == '\\(' || fragments[i-1] == '$' ? 'inline' : 'display' );
+                mathFragmentTypes.push(fragments[i-1] == '\\(' || fragments[i-1] == '$' || fragments[i-1] == '\\begin{math}' ? 'inline' : 'display' );
             }
         }
 
@@ -748,7 +758,7 @@ $(function() {
 
 
         /* STAGE: recommend explicit \cdot for readability */
-        addWarningQuick('math', /\d\s*\\(frac|binom)/, 'CDOT_FOR_READABILITY');
+        addWarningQuick('math', /\d\s*\\(frac|binom|sum|prod)/, 'CDOT_FOR_READABILITY');
 
 
         /* STAGE: check sin, cos, lim, min etc. are prepended by backslash */
