@@ -346,6 +346,28 @@ $(function() {
             );
         }
 
+        function addWarningQuick(fragmentType, badness, errorCode, mathFragmentType) {
+            if(fragmentType == 'math') {
+                for (var i = 0; i < mathFragments.length; ++i) {
+                    if( mathFragmentType && mathFragmentType != mathFragmentTypes[i] ) {
+                        continue;
+                    }
+                    var badPos = mathFragments[i].search(badness);
+                    if (badPos >= 0){
+                        addTypicalWarning(errorCode, 'math', i, badPos);
+                    }
+                }
+            }
+            else {
+                for (var i = 0; i < textFragments.length; ++i) {
+                    var badPos = textFragments[i].search(badness);
+                    if (badPos >= 0){
+                        addTypicalWarning(errorCode, 'text', i, badPos);
+                    }
+                }
+            }
+        }
+
 
         /* STAGE: Check if there are no teacher fixmes left */
         var badPos = latexString.search(/\\fix\{/);
@@ -495,8 +517,7 @@ $(function() {
                 mathFragmentTypes.push(fragments[i-1] == '\\(' || fragments[i-1] == '$' ? 'inline' : 'display' );
             }
         }
-        //console.log(textFragments);
-        //console.log(mathFragments);
+
 
         /* STAGE: check for neighbouring formulas */
         for (var i = 1; i < textFragments.length-1; ++i) {
@@ -508,134 +529,23 @@ $(function() {
             }
         }
 
-        /* STAGE: check for includegraphics in math mode */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\includegraphics/);
-            if (badPos >= 0) {
-                addTypicalWarning('GRAPHICS_IN_MATH_MODE', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check quotation marks */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search('"');
-            if (badPos >= 0){
-                addTypicalWarning('WRONG_QUOTES', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check quotation marks in math mode */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search('"');
-            if (badPos >= 0){
-                addTypicalWarning('QUOTES_IN_MATH', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check latin letters outside math mode */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/(^|[,. ])[a-zA-Z]($|[,.:!? -])/);
-            if (badPos >= 0){
-                addTypicalWarning('LATIN_LETTER_OUTSIDE_MATH', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i);
-            if ( badPos >= 0){
-                addTypicalWarning('LATIN_LETTER_C_MISUSED', 'text', i, badPos);
-            }
-        }
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[с]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i);
-            if (badPos>= 0){
-                addTypicalWarning('CYRILLIC_LETTER_C_MISUSED', 'math', i, badPos);
-            }
-        }
-
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/-$/i);
-            if (badPos>= 0){
-                addTypicalWarning('DASH_IN_MATH_MODE', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if hyphen is used where dash should be */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(' - ');
-            if ( badPos >= 0 ){
-                addTypicalWarning('DASH_HYPHEN', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check if dash is surrounded with spaces */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/--[^- ~]|[^- ~]--/);
-            if ( badPos >= 0 ){
-                addTypicalWarning('DASH_SURROUND_WITH_SPACES', 'text', i, badPos);
-            }
-        }
-
-
-        /* STAGE: check for correct floor function notation */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\[[^\[\],;]+]/);
-            if (badPos >= 0){
-                addTypicalWarning('FLOOR_FUNCTION_NOTATION', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check for incorrect multiplication sign */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/[^{^_]\*/);
-            if ( badPos >= 0){
-                addTypicalWarning('MULTIPLICATION_SIGN', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check for spaces around commas and periods */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/\s+[?!.,;:]/);
-            if ( badPos >= 0){
-                addTypicalWarning('SPACE_BEFORE_PUNCTUATION_MARK', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check for spaces before parentheses */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/\S\(/);
-            if ( badPos >= 0){
-                addTypicalWarning('SPACE_BEFORE_PARENTHESES', 'text', i, badPos);
-            }
-        }
 
         for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/[?!.,;:][АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьыъэюя]/);
-            if (badPos >= 0){
-                addTypicalWarning('SPACE_AFTER_PUNCTUATION_MARK', 'text', i, badPos);
-            }
-            badPos = textFragments[i].search(/[?!.,;:]$/);
+            var badPos = textFragments[i].search(/[?!.,;:]$/);
             if (badPos >= 0 && i < mathFragmentTypes.length && mathFragmentTypes[i] == 'inline'){
                 addTypicalWarning('SPACE_AFTER_PUNCTUATION_MARK', 'text', i, badPos);
             }
         }
 
+        addWarningQuick('text', /[?!.,;:][АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьыъэюя]/, 'SPACE_AFTER_PUNCTUATION_MARK');
+
         /* STAGE: check for capitals after punctuation */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/[,;:]\s*[АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]/);
-            if ( badPos >= 0){
-                addTypicalWarning('CAPITALIZATION_AFTER_PUNCTUATION_MARK', 'text', i, badPos);
-            }
-        }
+        addWarningQuick('text', /[,;:]\s*[АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]/, 'CAPITALIZATION_AFTER_PUNCTUATION_MARK');
+
 
         /* STAGE: check for capital letter after period */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/\.\s*[абвгдеёжзиклмнопрстуфхцчшщьыъэюя]/);
-            if ( badPos >= 0){
-                addTypicalWarning('CAPITALIZATION_AFTER_PERIOD', 'text', i, badPos);
-            }
-        }
+        addWarningQuick('text', /\.\s*[абвгдеёжзиклмнопрстуфхцчшщьыъэюя]/, 'CAPITALIZATION_AFTER_PERIOD');
+
 
         /* STAGE: check for period before new sentence */
         for (var i = 0; i < textFragments.length; ++i) {
@@ -688,6 +598,7 @@ $(function() {
             }
         }
 
+        /* STAGE: \mid used instead of bar */
         for (var i = 0; i < mathFragments.length; ++i) {
             var badMatch = mathFragments[i].match(/\\mid.*?\\mid/);
             if (badMatch && !badMatch[0].includes('\\}')){
@@ -706,35 +617,19 @@ $(function() {
             }
         }
 
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badMatch = textFragments[i].match(/\(\\ref\{[^}]*}\)/);
-            if (badMatch){
-                addWarning('EQREF_INSTEAD_OF_REF', null, badMatch[0]);
-            }
-        }
+        addWarningQuick('text', /\(\\ref\{[^}]*}\)/, 'EQREF_INSTEAD_OF_REF');
 
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badMatch = textFragments[i].match(/\S\s+\\(eqref|ref)\{[^}]*}/);
-            if (badMatch) {
-                addWarning('NONBREAKABLE_SPACE_BEFORE_REF', null, badMatch[0]);
-            }
-        }
+        addWarningQuick('text', /\S\s+\\(eqref|ref)\{[^}]*}/, 'NONBREAKABLE_SPACE_BEFORE_REF');
+
 
         /* STAGE: Trivially named symbolic link */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i);
-            if (badPos >= 0) {
-                addTypicalWarning('TRIVIAL_LABEL', 'math', i, badPos+5);
-            }
-        }
+        addWarningQuick('math', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
+        addWarningQuick('text', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
+
 
         /* STAGE: Ellipsis */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\.{3}/);
-            if (badPos >= 0) {
-                addTypicalWarning('ELLIPSIS_LDOTS', 'math', i, badPos);
-            }
-        }
+        addWarningQuick('math', /\.{3}/, 'ELLIPSIS_LDOTS');
+
 
         /* STAGE: Text in math mode */
         for (var i = 0; i < mathFragments.length; ++i) {
@@ -753,129 +648,14 @@ $(function() {
             addWarning('NO_CONCLUSION');
         }
 
-        /* STAGE: check if there are shortcuts for \not command */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\not\s*(=|\\in)/);
-            if (badPos >= 0) {
-                addTypicalWarning('INCORPORATE_NOT', 'math', i, badPos);
-            }
-        }
 
         /* STAGE: check if there are sentences starting with formula */
         for (var i = 0; i < mathFragments.length; ++i) {
             if (textFragments[i].trim().endsWith('.')) {
                 addTypicalWarning('SENTENCE_STARTS_WITH_FORMULA', 'math', i, badPos);
-                //addWarning('SENTENCE_STARTS_WITH_FORMULA', null, extractSnippet(textFragments[i], textFragments[i].length) + '…' + extractSnippet(mathFragments[i], 0));
             }
         }
 
-        /* STAGE: check if there are symbols that do not meet the Russian typographic tradition */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\(epsilon|phi|emptyset)/);
-            if (badPos >= 0) {
-                addTypicalWarning('RUSSIAN_TYPOGRAPHY_PECULIARITIES', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if there are invisible braces */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/(^|=|\\cup|\\cap|\||\\lvert)\s*\{/);
-            if (badPos >= 0) {
-                addTypicalWarning('INVISIBLE_BRACES', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if low-level \over and \choose commands are used */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\over[^a-zA-Z]/);
-            if (badPos >= 0) {
-                addTypicalWarning('OVER_VS_FRAC', 'math', i, badPos);
-            }
-            badPos = mathFragments[i].search(/\\choose[^a-zA-Z]/);
-            if (badPos >= 0) {
-                addTypicalWarning('CHOOSE_VS_BINOM', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if standard sets are typed correctly */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\in\s*\{?\s*(N|R|Z|Q|C)([^A-Za-z]|$)/);
-            if (badPos >= 0) {
-                addTypicalWarning('SETS_IN_BBFONT', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if all lists are made using appropriate commands */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/^\d+(\)|.)/m);
-            if (badPos >= 0) {
-                addTypicalWarning('MANUAL_LISTS', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check that \bmod command is used instead of plain mod */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/[^\\pb]mod\W/);
-            if (badPos >= 0) {
-                addTypicalWarning('MOD_NOT_A_COMMAND', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if tilde is not surrounded with spaces */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/\s+~|~\s+/);
-            if (badPos >= 0) {
-                addTypicalWarning('TILDE_INEFFECTIVE_AS_NBSP', 'text', i, badPos);
-            }
-        }
-
-        /* STAGE: check that \le is used instead of <= */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/<=|>=/);
-            if (badPos >= 0) {
-                addTypicalWarning('LE_AS_SINGLE_COMMAND', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: recommend explicit \cdot for readability */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\d\s*\\(frac|binom)/);
-            if (badPos >= 0) {
-                addTypicalWarning('CDOT_FOR_READABILITY', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check sin, cos, lim, min etc. are prepended by backslash */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/);
-            if (badPos >= 0) {
-                addTypicalWarning('BACKSLASH_NEEDED', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if math mode is necessary */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/^\s*[^0-9a-zA-Z]+\s*$/);
-            if (badPos >= 0) {
-                addTypicalWarning('UNNECESSARY_MATH_MODE', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if math symbol be better replaced with plain text */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/^\s*([><=]|\\(le|ge|sim|lesssim)(\W|\d|$))/);
-            if (badPos >= 0) {
-                addTypicalWarning('BETTER_TO_USE_WORDS_THEN_MATH', 'math', i, badPos);
-            }
-        }
-
-        /* STAGE: check if text-mode modifiers are used in math mode */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/\\textbf|\\textbf|\\emph/);
-            if (badPos >= 0) {
-                addTypicalWarning('TEXT_COMMANDS_IN_MATH_MODE', 'math', i, badPos);
-            }
-        }
 
         /* STAGE: check if there's no punctuation marks right after display math */
         for (var i = 0; i < textFragments.length; ++i) {
@@ -885,24 +665,115 @@ $(function() {
             }
         }
 
+
+        /* STAGE: check if there are shortcuts for \not command */
+        addWarningQuick('math', /\\not\s*(=|\\in)/, 'INCORPORATE_NOT');
+
+
+        /* STAGE: check for includegraphics in math mode */
+        addWarningQuick('math', /\\includegraphics/, 'GRAPHICS_IN_MATH_MODE');
+
+
+        /* STAGE: check quotation marks */
+        addWarningQuick('text', /"/, 'WRONG_QUOTES');
+        addWarningQuick('math', /"/, 'QUOTES_IN_MATH');
+
+
+        /* STAGE: check latin letters outside math mode */
+        addWarningQuick('text', /(^|[,. ])[a-zA-Z]($|[,.:!? -])/, 'LATIN_LETTER_OUTSIDE_MATH');
+
+
+        /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
+        addWarningQuick('text', /[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i, 'LATIN_LETTER_C_MISUSED');
+        addWarningQuick('math', /(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[с]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i, 'CYRILLIC_LETTER_C_MISUSED');
+
+
+        addWarningQuick('math', /-$/, 'DASH_IN_MATH_MODE');
+
+        /* STAGE: check if hyphen is used where dash should be */
+        addWarningQuick('text', ' - ', 'DASH_HYPHEN');
+
+
+        /* STAGE: check if dash is surrounded with spaces */
+        addWarningQuick('text', /--[^- ~]|[^- ~]--/, 'DASH_SURROUND_WITH_SPACES');
+
+
+        /* STAGE: check for correct floor function notation */
+        addWarningQuick('math', /\[[^\[\],;]+]/, 'FLOOR_FUNCTION_NOTATION');
+
+
+        /* STAGE: check for incorrect multiplication sign */
+        addWarningQuick('math', /[^{^_]\*/, 'MULTIPLICATION_SIGN');
+
+
+        /* STAGE: check for spaces around commas and periods */
+        addWarningQuick('text', /\s+[?!.,;:]/, 'SPACE_BEFORE_PUNCTUATION_MARK');
+
+
+        /* STAGE: check for spaces before parentheses */
+        addWarningQuick('text', /\S\(/, 'SPACE_BEFORE_PARENTHESES');
+
+
+        /* STAGE: check if there are symbols that do not meet the Russian typographic tradition */
+        addWarningQuick('math', /\\(epsilon|phi|emptyset)/, 'RUSSIAN_TYPOGRAPHY_PECULIARITIES');
+
+
+        /* STAGE: check if there are invisible braces */
+        addWarningQuick('math', /(^|=|\\cup|\\cap|\||\\lvert)\s*\{/, 'INVISIBLE_BRACES');
+
+
+        /* STAGE: check if low-level \over and \choose commands are used */
+        addWarningQuick('math', /\\over[^a-zA-Z]/, 'OVER_VS_FRAC');
+        addWarningQuick('math', /\\choose[^a-zA-Z]/, 'CHOOSE_VS_BINOM');
+
+
+        /* STAGE: check if standard sets are typed correctly */
+        addWarningQuick('math', /\\in\s*\{?\s*(N|R|Z|Q|C)([^A-Za-z]|$)/, 'SETS_IN_BBFONT');
+
+
+        /* STAGE: check if all lists are made using appropriate commands */
+        addWarningQuick('text', /^\d+(\)|.)/m, 'MANUAL_LISTS');
+
+
+        /* STAGE: check that \bmod command is used instead of plain mod */
+        addWarningQuick('math', /[^\\pb]mod\W/, 'MOD_NOT_A_COMMAND');
+
+
+        /* STAGE: check if tilde is not surrounded with spaces */
+        addWarningQuick('text', /\s+~|~\s+/, 'TILDE_INEFFECTIVE_AS_NBSP');
+
+
+        /* STAGE: check that \le is used instead of <= */
+        addWarningQuick('math', /<=|>=/, 'LE_AS_SINGLE_COMMAND');
+
+
+        /* STAGE: recommend explicit \cdot for readability */
+        addWarningQuick('math', /\d\s*\\(frac|binom)/, 'CDOT_FOR_READABILITY');
+
+
+        /* STAGE: check sin, cos, lim, min etc. are prepended by backslash */
+        addWarningQuick('math', /([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/, 'BACKSLASH_NEEDED');
+
+
+        /* STAGE: check if math mode is necessary */
+        addWarningQuick('math', /^\s*[^0-9a-zA-Z]+\s*$/, 'UNNECESSARY_MATH_MODE');
+
+
+        /* STAGE: check if math symbol be better replaced with plain text */
+        addWarningQuick('math', /^\s*([><=]|\\(le|ge|sim|lesssim)(\W|\d|$))/, 'BETTER_TO_USE_WORDS_THEN_MATH');
+
+
+        /* STAGE: check if text-mode modifiers are used in math mode */
+        addWarningQuick('math', /\\textbf|\\textbf|\\emph/, 'TEXT_COMMANDS_IN_MATH_MODE');
+
+
         /* STAGE: advise to consider replacing small numbers with text */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/\s+\d\s+/);
-            if (badPos >= 0) {
-                addTypicalWarning('NUMERALS_AS_WORDS', 'text', i, badPos);
-            }
-        }
+        addWarningQuick('text', /\s+\d\s+/, 'NUMERALS_AS_WORDS');
+        addWarningQuick('math', /^\d$/, 'NUMERALS_AS_WORDS');
+
 
         /* Check if \limits command is used in display math */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            if( mathFragmentTypes[i] != 'display' ) {
-                continue;
-            }
-            var badPos = mathFragments[i].search(/\\limits/);
-            if (badPos >= 0) {
-                addTypicalWarning('LIMITS_UNNECESSARY_IN_DISPLAY_MODE', 'math', i, badPos);
-            }
-        }
+        addWarningQuick('math', /\\limits/, 'LIMITS_UNNECESSARY_IN_DISPLAY_MODE', 'display');
 
 
         if (rda.html() == '') {
