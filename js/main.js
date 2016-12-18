@@ -210,7 +210,7 @@ $(function() {
                 severity: 0
             },
             'MOD_NOT_A_COMMAND': {
-                msg: 'Используйте команду <code>\\bmod</code>, чтобы mod был набран в формуле прямым шрифтом (как и подобает операции, а не произведению трёх переменных m, o и d).',
+                msg: 'Используйте команду <code>\\bmod</code> или <code>\\pmod</code>, чтобы mod был набран в формуле прямым шрифтом (как и подобает операции, а не произведению трёх переменных m, o и d).',
                 severity: 0
             },
             'TILDE_INEFFECTIVE_AS_NBSP': {
@@ -810,7 +810,7 @@ $(function() {
 
         /* STAGE: check that \bmod command is used instead of plain mod */
         for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(/[^\\]mod\W/);
+            var badPos = mathFragments[i].search(/[^\\pb]mod\W/);
             if (badPos >= 0) {
                 addTypicalWarning('MOD_NOT_A_COMMAND', 'math', i, badPos);
             }
