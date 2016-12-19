@@ -260,6 +260,10 @@ $(function() {
             'USE_DIVIDES_INSTEAD_OF_VDOTS': {
                 msg: 'Команду <code>\\vdots</code> следует использовать только в матрицах или похожих окружениях для обозначения именно многоточия по вертикали. Когда речь идёт о делимости, вместо трёх точек (в качестве слов «делится на») используйте вертикальную черту (в качестве слов «является делителем»). Когда же рядом ещё вертикальные черта, например, в set builder notation, разумно вообще писать словами: <code>\\( A=\\{x\\in\\mathbb{N} \\mid x\\text{ кратен } 5\\} \\)</code>',
                 severity: 0
+            },
+            'FORMULA_NEIGHBOURING_REFERENCE': {
+                msg: 'Плохо читается, когда формула непосредственно соседствует со ссылкой, без знаков препинания. Всегда можно вставить слово либо поменять порядок слов в предложении, чтобы этого избежать.',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -792,6 +796,10 @@ $(function() {
 
         /* Check if \vdots command is used for divisibility */
         addWarningQuick('math', /\\vdots\s*[^&\\]/, 'USE_DIVIDES_INSTEAD_OF_VDOTS');
+
+
+        /* Check if reference is immediately after or before math */
+        addWarningQuick('text', /(\\(eq)?ref\{[^}]+}\s*$)|(^\s*\\(eq)?ref\{[^}]+})/, 'FORMULA_NEIGHBOURING_REFERENCE');
 
 
         if (rda.html() == '') {
