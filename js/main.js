@@ -256,6 +256,10 @@ $(function() {
             'MATH_ENVIRONMENT_VERVOSITY_WARNING': {
                 msg: 'Окружение <code>math</code> используется довольно редко. Лучше всего вместо него использовать более короткую (и абсолютно такую же по получаемому результату) конструкцию <code>\\(…\\)</code> или <code>$…$</code>. Часто также ошибочно полагают, что с помощью math оформляют <em>выключные</em> формулы — но это не так: внутри окружения math действует обычный inline-режим. Для оформления выключных формул подойдёт либо конструкция <code>\\[…\\]</code>, либо одно из окружений equation, array и др.',
                 severity: 0
+            },
+            'USE_DIVIDES_INSTEAD_OF_VDOTS': {
+                msg: 'Команду <code>\\vdots</code> следует использовать только в матрицах или похожих окружениях для обозначения именно многоточия по вертикали. Когда речь идёт о делимости, вместо трёх точек (в качестве слов «делится на») используйте вертикальную черту (в качестве слов «является делителем»). Когда же рядом ещё вертикальные черта, например, в set builder notation, разумно вообще писать словами: <code>\\( A=\\{x\\in\\mathbb{N} \\mid x\\text{ кратен } 5\\} \\)</code>',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -783,7 +787,11 @@ $(function() {
 
 
         /* Check if \limits command is used in display math */
-        addWarningQuick('math', /\\limits/, 'LIMITS_UNNECESSARY_IN_DISPLAY_MODE', 'display');
+        addWarningQuick('math', /\\limits/, 'LIMITS_UNNECESSARY_IN_DISPLAY_MODE', 'display')
+
+
+        /* Check if \vdots command is used for divisibility */
+        addWarningQuick('math', /\\vdots\s*[^&\\]/, 'USE_DIVIDES_INSTEAD_OF_VDOTS');
 
 
         if (rda.html() == '') {
