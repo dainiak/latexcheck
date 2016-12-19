@@ -508,7 +508,7 @@ $(function() {
         }
 
         /* STAGE: check if numerals are properly abbreviated */
-        badPos = latexString.search(/(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|тому|ому|ему|ом|ая|ой|ую|ые|ых|ыми|и|ым|тым|той|им|его|того|тых|ых|том)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
+        badPos = latexString.search(/(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|тому|ому|ему|ом|ая|ой|ую|ые|ых|ыми|и|ым|тым|той|им|его|того|тых|ых|том|ем|ём|ех|ёх|ух)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
         if (badPos >= 0) {
             addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));;
         }
