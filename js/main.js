@@ -639,6 +639,8 @@ $(function() {
             }
         }
 
+        addWarningQuick('math', /^\s*(\d+|\*)\s*$/, 'SYMBOLIC_LINKS');
+
         addWarningQuick('text', /\(\\ref\{[^}]*}\)/, 'EQREF_INSTEAD_OF_REF');
 
         addWarningQuick('text', /\S\s+\\(eqref|ref)\{[^}]*}/, 'NONBREAKABLE_SPACE_BEFORE_REF');
