@@ -264,6 +264,10 @@ $(function() {
             'FORMULA_NEIGHBOURING_REFERENCE': {
                 msg: 'Плохо читается, когда формула непосредственно соседствует со ссылкой, без знаков препинания. Всегда можно вставить слово либо поменять порядок слов в предложении, чтобы этого избежать.',
                 severity: 0
+            },
+            'MAKE_LONG_FORMULA_DISPLAY': {
+                msg: 'Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений на стр. 2 в <a href="http://goo.gl/WywBQT">документе по ссылке</a>.',
+                severity: 0
             }
         };
         var used_errcodes = {};
@@ -800,6 +804,10 @@ $(function() {
 
         /* Check if reference is immediately after or before math */
         addWarningQuick('text', /(\\(eq)?ref\{[^}]+}\s*$)|(^\s*\\(eq)?ref\{[^}]+})/, 'FORMULA_NEIGHBOURING_REFERENCE');
+
+
+        /* Suggest making a long formula display */
+        addWarningQuick('math', /.{110,}/, 'MAKE_LONG_FORMULA_DISPLAY', 'inline');
 
 
         if (rda.html() == '') {
