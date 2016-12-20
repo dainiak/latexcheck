@@ -723,7 +723,7 @@ $(function() {
 
 
         /* STAGE: check if dash is surrounded with spaces */
-        addWarningQuick('text', /--[^- ~]|[^- ~]--/, 'DASH_SURROUND_WITH_SPACES');
+        addWarningQuick('text', /--[^- ~\n]|[^- ~\n]--/, 'DASH_SURROUND_WITH_SPACES');
 
 
         /* STAGE: check for correct floor function notation */
