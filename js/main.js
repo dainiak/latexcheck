@@ -109,6 +109,10 @@ $(function() {
                 msg: 'После двоеточия, запятой, точки, точки с запятой, восклицательного и вопросительного знаков нужно ставить пробел.',
                 severity: 0
             },
+            'SPACE_AFTER_PARENTHESIS': {
+                msg: 'После открывающей скобки не следует ставить пробел.',
+                severity: 0
+            },
             'CAPITALIZATION_AFTER_PUNCTUATION_MARK': {
                 msg: 'После двоеточия, точки с запятой, запятой, не должно начинаться новое предложение.',
                 severity: 0
@@ -810,6 +814,10 @@ $(function() {
 
         /* Suggest making a long formula display */
         addWarningQuick('math', /.{110,}/, 'MAKE_LONG_FORMULA_DISPLAY', 'inline');
+
+
+        /* Space after parenthesis */
+        addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
 
         if (rda.html() == '') {
