@@ -708,7 +708,7 @@ $(function() {
 
 
         /* STAGE: check latin letters outside math mode */
-        addWarningQuick('text', /(^|[,. ])[a-zA-Z]($|[,.:!? -])/, 'LATIN_LETTER_OUTSIDE_MATH');
+        addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
 
 
         /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
