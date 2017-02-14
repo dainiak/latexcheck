@@ -11,6 +11,9 @@ function initiate() {
     if (inBrowser) { window.hlAceLine = hlAceLine; }
 
     function checkLatexCode(latexString, addWarningCustom) {
+        if (typeof addWarningCustom !== 'undefined' && typeof addWarningCustom !== 'function') {
+            throw new Error('addWarningCustom must be a function');
+        }
         var capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
         var smallCyrLetters = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя';
         function isCyrLetter(letter){ return capCyrLetters.includes(letter) || smallCyrLetters.includes(letter) }
@@ -276,7 +279,7 @@ function initiate() {
             }
         };
         var used_errcodes = {};
-        if (typeof addWarningCustom !== 'function') {
+        if (!addWarning) {
             var rda = $('#result_display_area');
             rda.html('');
         }
@@ -353,7 +356,7 @@ function initiate() {
             }
         }
 
-        if (typeof addWarningCustom === 'function') {
+        if (typeof addWarningCustom === 'undefined') {
             addWarning = addWarningCustom;
         }
 
@@ -827,7 +830,7 @@ function initiate() {
         addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
 
-        if (typeof addWarningCustom !== 'function' && rda.html() == '') {
+        if (typeof addWarningCustom !== 'undefined' && rda.html() == '') {
             rda.text('Замечательный результат: автоматическая проверка пройдена без замечаний.');
         }
     }
