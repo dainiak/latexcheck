@@ -356,7 +356,7 @@ function initiate() {
             }
         }
 
-        if (typeof addWarningCustom === 'undefined') {
+        if (typeof addWarningCustom !== 'undefined') {
             addWarning = addWarningCustom;
         }
 
@@ -830,7 +830,7 @@ function initiate() {
         addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
 
-        if (typeof addWarningCustom !== 'undefined' && rda.html() == '') {
+        if (typeof addWarningCustom === 'undefined' && rda.html() == '') {
             rda.text('Замечательный результат: автоматическая проверка пройдена без замечаний.');
         }
     }
