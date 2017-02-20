@@ -1,4 +1,6 @@
-$(function() {
+var inBrowser = typeof window !== "undefined";
+function initiate() {
+
     var editor;
 
     function hlAceLine(n) {
@@ -6,16 +8,18 @@ $(function() {
         editor.focus();
     }
 
-    window.hlAceLine = hlAceLine;
+    if (inBrowser) { window.hlAceLine = hlAceLine; }
 
-
-    function checkLatexCode(latexString){
+    function checkLatexCode(latexString, addWarningCustom) {
+        if (addWarningCustom != undefined && typeof addWarningCustom !== 'function') {
+            throw new Error('addWarningCustom must be a function');
+        }
         var capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
         var smallCyrLetters = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя';
         function isCyrLetter(letter){ return capCyrLetters.includes(letter) || smallCyrLetters.includes(letter) }
         function isWordSymbol(letter){ return /\w/.test(letter) || isCyrLetter(letter) }
 
-        var errors = {
+        var errors = this.errors = {
             'FIXME_NOT_YET_FIXED': {
                 msg: 'В проверяющую систему не допускается загружать решения, которые всё ещё содержат исправления преподавателей (команду <code>\\fix</code>).',
                 severity: 0
@@ -275,8 +279,11 @@ $(function() {
             }
         };
         var used_errcodes = {};
-        var rda = $('#result_display_area');
-        rda.html('');
+        if (!addWarningCustom) {
+            // This var will be visible to the code below.
+            var rda = $('#result_display_area');
+            rda.html('');
+        }
 
         function extractSnippet(fragment, position, radius) {
             if(position === null || position === undefined){
@@ -348,6 +355,10 @@ $(function() {
             if (codeFragment) {
                 errorMessage.html(errorMessage.html() + codeFragment);
             }
+        }
+
+        if (addWarningCustom != undefined) {
+            addWarning = addWarningCustom;
         }
 
         function addTypicalWarning(errorCode, fragmentType, fragmentIndex, positionInFragment){
@@ -820,12 +831,28 @@ $(function() {
         addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
 
-        if (rda.html() == '') {
+        if (addWarningCustom == undefined && rda.html() == '') {
             rda.text('Замечательный результат: автоматическая проверка пройдена без замечаний.');
         }
     }
 
+    function checkLatexCodeExport(latexString) {
+        var used_errcodes = {};
+        function addWarning(errorCode, extraInfo, codeFragment, lineNumber) {
+            if (!used_errcodes[errorCode]) {
+                used_errcodes[errorCode] = {
+                    severity: this.errors[errorCode].severity,
+                    extraInfo: (extraInfo ? extraInfo : this.errors[errorCode].msg),
+                    codeFragments: []
+                };
+            }
+            used_errcodes[errorCode].codeFragments.push({code: codeFragment, line: lineNumber});
+        }
+        checkLatexCode(latexString, addWarning);
+        return used_errcodes;
+    }
 
+    if (inBrowser) {
     editor = ace.edit(document.querySelector('#user_input_area'));
     editor.$blockScrolling = Infinity; // To disable annoying ACE warning
     editor.setOptions({
@@ -881,4 +908,13 @@ $(function() {
         $('#result_display_area').removeClass('flex');
         typesetWithProcessing();
     });
-});
+    } else {
+        exports.checkLatexCode = checkLatexCodeExport;
+    }
+}
+
+if (inBrowser) {
+    $(initiate);
+} else {
+    initiate();
+}
