@@ -279,7 +279,8 @@ function initiate() {
             }
         };
         var used_errcodes = {};
-        if (!addWarning) {
+        if (!addWarningCustom) {
+            // This var will be visible to the code below.
             var rda = $('#result_display_area');
             rda.html('');
         }
