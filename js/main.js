@@ -11,7 +11,7 @@ function initiate() {
     if (inBrowser) { window.hlAceLine = hlAceLine; }
 
     function checkLatexCode(latexString, addWarningCustom) {
-        if (typeof addWarningCustom !== 'undefined' && typeof addWarningCustom !== 'function') {
+        if (addWarningCustom != undefined && typeof addWarningCustom !== 'function') {
             throw new Error('addWarningCustom must be a function');
         }
         var capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
@@ -356,7 +356,7 @@ function initiate() {
             }
         }
 
-        if (typeof addWarningCustom !== 'undefined') {
+        if (addWarningCustom != undefined) {
             addWarning = addWarningCustom;
         }
 
@@ -830,7 +830,7 @@ function initiate() {
         addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
 
-        if (typeof addWarningCustom === 'undefined' && rda.html() == '') {
+        if (addWarningCustom == undefined && rda.html() == '') {
             rda.text('Замечательный результат: автоматическая проверка пройдена без замечаний.');
         }
     }
