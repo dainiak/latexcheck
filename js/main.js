@@ -771,7 +771,7 @@ function initiate() {
 
 
         /* STAGE: check if all lists are made using appropriate commands */
-        addWarningQuick('text', /^\d+(\)|.)/m, 'MANUAL_LISTS');
+        addWarningQuick('text', /^\s*(\\par\s+)?\d+(\)|.)/m, 'MANUAL_LISTS');
 
 
         /* STAGE: check that \bmod command is used instead of plain mod */
