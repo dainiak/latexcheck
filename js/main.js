@@ -36,8 +36,12 @@ function initiate() {
                 msg: 'Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href="https://www.sharelatex.com/learn/Aligning_equations_with_amsmath">ссылке</a>.',
                 severity: 0
             },
+            'EQNARRAY_USED': {
+                msg: 'Не используйте окружение <code>eqnarray</code> (подробности по <a href="https://tex.stackexchange.com/a/197">ссылке</a>). Вместо этого пользуйтесь, например, <code>aligned</code>.',
+                severity: 0
+            },
             'DASH_HYPHEN': {
-                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченно с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
+                msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченное с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
             'DASH_IN_MATH_MODE': {
@@ -45,7 +49,7 @@ function initiate() {
                 severity: 0
             },
             'DASH_SURROUND_WITH_SPACES': {
-                msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывным, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
+                msg: 'Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывными, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
             },
             'NUMERAL_ABBREVIATION': {
@@ -251,6 +255,10 @@ function initiate() {
             },
             'BETTER_TO_USE_WORDS_THEN_MATH': {
                 msg: 'Конструкции наподобие <code>число элементов $=m^2$</code> недопустимы в письменном тексте, за исключением конспектов. Знаки $=$, $\\gt$, $\\geqslant$ и др. нужно в этих случаях писать словами: <code>…не превосходит $m^2$</code>, <code>…равняется $m^2$</code> и т.д.',
+                severity: 0
+            },
+            'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC':{
+                msg: 'Хотя $\\LaTeX$ это и не считает ошибкой, не следует писать слитно команды ТеХа и кириллические слова.',
                 severity: 0
             },
             'TEXT_COMMANDS_IN_MATH_MODE': {
@@ -510,6 +518,12 @@ function initiate() {
             addWarning('CONSECUTIVE_DISPLAY_FORMULAE', null, extractSnippet(latexString, badPos), findLine(badPos+3));
         }
 
+        /* STAGE: eqnarray environment used */
+        badPos = latexString.search(/eqnarray/);
+        if (badPos >= 0) {
+            addWarning('EQNARRAY_USED', null, extractSnippet(latexString, badPos), findLine(badPos+3));
+        }
+
         /* STAGE: Check for \mbox and \hbox */
         badPos = latexString.search(/\\(m|h)box/);
         if (badPos >= 0) {
@@ -573,6 +587,8 @@ function initiate() {
                 addTypicalWarning('SPACE_AFTER_PUNCTUATION_MARK', 'text', i, badPos);
             }
         }
+
+        addWarningQuick('text', /\\[a-zA-Z]+[АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьыъэюя]/, 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
 
         addWarningQuick('text', /[?!.,;:][АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьыъэюя]/, 'SPACE_AFTER_PUNCTUATION_MARK');
 
@@ -665,10 +681,8 @@ function initiate() {
         addWarningQuick('math', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
         addWarningQuick('text', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
 
-
         /* STAGE: Ellipsis */
         addWarningQuick('math', /\.{3}/, 'ELLIPSIS_LDOTS');
-
 
         /* STAGE: Text in math mode */
         for (var i = 0; i < mathFragments.length; ++i) {
