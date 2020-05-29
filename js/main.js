@@ -37,7 +37,7 @@ function initiate() {
                 severity: 0
             },
             'EQNARRAY_USED': {
-                msg: 'Не используйте окружение <code>eqnarray</code> (подробности по <a href="https://tex.stackexchange.com/a/197">ссылке</a>). Вместо этого пользуйтесь, например, <code>aligned</code>.',
+                msg: 'Не используйте окружение <code>eqnarray</code> (подробности по <a href="https://tex.stackexchange.com/a/197">ссылке</a>). Вместо этого пользуйтесь, например, <code>align</code>.',
                 severity: 0
             },
             'DASH_HYPHEN': {
