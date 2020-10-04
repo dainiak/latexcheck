@@ -89,6 +89,10 @@ function initiate() {
                 msg: 'Даже одна буква, если у неё математический смысл — должна быть заключена в доллары.',
                 severity: 0
             },
+            'MATH_SEMANTICS_OUTSIDE_MATH': {
+                msg: 'Команды, печатающие символы, имеющие математическую природу, настоятельно рекомендуется использовать в математическом режиме, даже если они работают и без оного.',
+                severity: 0
+            },
             'LATIN_LETTER_C_MISUSED': {
                 msg: 'Возможно, использована случайно латинская буква с (це) вместо русского предлога <strong>с</strong> посреди текста на русском языке.',
                 severity: 0
@@ -254,7 +258,7 @@ function initiate() {
                 severity: 0
             },
             'BETTER_TO_USE_WORDS_THEN_MATH': {
-                msg: 'Конструкции наподобие <code>число элементов $=m^2$</code> недопустимы в письменном тексте, за исключением конспектов. Знаки $=$, $\\gt$, $\\geqslant$ и др. нужно в этих случаях писать словами: <code>…не превосходит $m^2$</code>, <code>…равняется $m^2$</code> и т.д.',
+                msg: 'Конструкции наподобие <code>число элементов $=m^2$</code> недопустимы в письменном тексте, за исключением конспектов. Знаки \\(=, \\gt, \\geqslant\\) и др. нужно в этих случаях писать словами: <code>…не превосходит $m^2$</code>, <code>…равняется $m^2$</code> и т.д.',
                 severity: 0
             },
             'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC':{
@@ -269,7 +273,7 @@ function initiate() {
                 msg: 'Команда <code>\\limits</code> в выключных формулах обычно лишняя: пределы и без неё выставляются верно.',
                 severity: 0
             },
-            'MATH_ENVIRONMENT_VERVOSITY_WARNING': {
+            'MATH_ENVIRONMENT_VERBOSITY_WARNING': {
                 msg: 'Окружение <code>math</code> используется довольно редко. Лучше всего вместо него использовать более короткую (и абсолютно такую же по получаемому результату) конструкцию <code>\\(…\\)</code> или <code>$…$</code>. Часто также ошибочно полагают, что с помощью math оформляют <em>выключные</em> формулы — но это не так: внутри окружения math действует обычный inline-режим. Для оформления выключных формул подойдёт либо конструкция <code>\\[…\\]</code>, либо одно из окружений equation, array и др.',
                 severity: 0
             },
@@ -551,7 +555,7 @@ function initiate() {
         /* STAGE: check if letters are defined before they are used */
         badPos = latexString.search(/\\begin\{math}/);
         if (badPos >= 0) {
-            addWarning('MATH_ENVIRONMENT_VERVOSITY_WARNING', null, extractSnippet(latexString, badPos+7), findLine(badPos));;
+            addWarning('MATH_ENVIRONMENT_VERBOSITY_WARNING', null, extractSnippet(latexString, badPos+7), findLine(badPos));;
         }
 
         /* STAGE: split into text and math blocks */
@@ -735,6 +739,8 @@ function initiate() {
         /* STAGE: check latin letters outside math mode */
         addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
 
+        /* STAGE: check typical math commands outside math mode */
+        addWarningQuick('text', /(\\infty)/, 'MATH_SEMANTICS_OUTSIDE_MATH');
 
         /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
         addWarningQuick('text', /[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i, 'LATIN_LETTER_C_MISUSED');
@@ -887,7 +893,7 @@ function initiate() {
     $('#btn_check').click(function(){
         $('#result_display_area').addClass('flex');
         checkLatexCode(editor.getValue());
-        MathJax.Hub.queue.Push(MathJax.Hub.Typeset(document.querySelector('#result_display_area')));
+        MathJax.typeset([document.querySelector('#result_display_area')]);
     });
 
     function typesetWithProcessing(){
@@ -907,15 +913,14 @@ function initiate() {
             .replace(/\n\n/g, '\\par');
 
         $('#result_display_area').text(v);
-        MathJax.Hub.queue.Push(MathJax.Hub.Typeset(document.querySelector('#result_display_area'), function () {
+        MathJax.typesetPromise([document.querySelector('#result_display_area')]).then(() => {
             var v = $('#result_display_area').html();
-            console.log(v);
             v = v
                 .replace(/\\par/g, '<br>')
                 .replace('((beginTask))', '<span class="badge">Условие задачи</span>')
                 .replace('((beginSolution))', '<span class="badge">Решение</span>');
             $('#result_display_area').html(v);
-        }));
+        });
     }
 
     $('#btn_try_typeset').click(function(){
