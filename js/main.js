@@ -167,6 +167,10 @@ function initiate() {
                 msg: 'В математическом режиме многоточие ставится не <code>...</code>, а командой <code>\\ldots</code>. При наличии пакета amsmath, когда многоточие нужно вставить между запятыми в перечислении объектов, используйте команду <code>\\dotsc</code>.',
                 severity: 0
             },
+            'SUGGESTED_NEW_PARAGRAPH': {
+                msg: 'Чтобы начать с новой строки формулу, она делается выключной. Чтобы начать новый параграф текста, используется команда <code>\\par</code> в текстовом режиме. Использовать же несемантичный перенос <code>\\\\</code>, помимо окружений типа <code>tabular</code>, следует только в крайних случаях.',
+                severity: 0
+            },
             'TRIVIAL_LABEL': {
                 msg: 'Символические ссылки нужно делать, но нет большого смысла делать тривиальные описания типа <code>\\label{eq1}</code>. '
                     + 'Так же, как в программировании называть переменную <code>var1</code> чаще всего пагубно. '
@@ -735,6 +739,8 @@ function initiate() {
         addWarningQuick('text', /"/, 'WRONG_QUOTES');
         addWarningQuick('math', /"/, 'QUOTES_IN_MATH');
 
+        /* STAGE: check latin letters outside math mode */
+        addWarningQuick('text', /([^\\]\\\\[^\\])/, 'SUGGESTED_NEW_PARAGRAPH');
 
         /* STAGE: check latin letters outside math mode */
         addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
