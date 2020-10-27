@@ -81,6 +81,10 @@ function initiate() {
                 msg: 'Для закавычивания слов «клавиатурные» кавычки <code>"…"</code> в LaTeX не используются. Если нужно закавычить слово, делайте это одним из способов <code>``…\'\'</code> (два апострофа на букве ё вначале и два на букве э в конце) или <code><<…>></code> (два знака меньше и два знака больше).',
                 severity: 0
             },
+            'WRONG_SAME_QUOTES': {
+                msg: 'Открывающие и закрывающие кавычки ставится по-разному: непривильно делать <code>\'\'…\'\'</code> или <code>``…``</code>, следует делать <code>``…\'\'</code> для закавычивания в англоязычном тексте. В русской типографике применяются французские <code><<кавычки-ёлочки>></code>, для вложенных кавычек — немецкие <code>,,кавычки-лапки``</code>.',
+                severity: 0
+            },
             'QUOTES_IN_MATH': {
                 msg: 'Обнаружен символ кавычки в математическом режиме. Если Вы хотели поставить двойной штрих над математическим символом, наберите два штриха подряд: <code>y\'\'</code>.',
                 severity: 0
@@ -738,9 +742,10 @@ function initiate() {
         /* STAGE: check quotation marks */
         addWarningQuick('text', /"/, 'WRONG_QUOTES');
         addWarningQuick('math', /"/, 'QUOTES_IN_MATH');
+        addWarningQuick('text', /(''[^']+'')|('[^']+')|(``[^']+``)|(`[^']+`)|(''[^']+``)/, 'WRONG_SAME_QUOTES');
 
         /* STAGE: check latin letters outside math mode */
-        addWarningQuick('text', /([^\\]\\\\[^\\])/, 'SUGGESTED_NEW_PARAGRAPH');
+        addWarningQuick('text', /([^\\]\\(\\|newline)[^\\])/, 'SUGGESTED_NEW_PARAGRAPH');
 
         /* STAGE: check latin letters outside math mode */
         addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
