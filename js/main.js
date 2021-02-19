@@ -351,10 +351,10 @@ function initiate() {
             }
             if(fragmentType === 'math'){
                 numLinesSkipped += textFragments[fragmentIndex].split('\n').length - 1;
-                numLinesSkipped += mathFragments[i].substring(0,positionInFragment).split('\n').length - 1;
+                numLinesSkipped += mathFragments[fragmentIndex].substring(0,positionInFragment).split('\n').length - 1;
             }
             else{
-                numLinesSkipped += textFragments[i].substring(0,positionInFragment).split('\n').length - 1;
+                numLinesSkipped += textFragments[fragmentIndex].substring(0,positionInFragment).split('\n').length - 1;
             }
             return numLinesSkipped + 1;
         }
@@ -683,7 +683,7 @@ function initiate() {
 
         /* STAGE: problems with symbolic links */
         for (let i = 0; i < textFragments.length; ++i) {
-            let badPos = textFragments[i].search(/((рисунок|рисунка|рисунке|рис\.)|формул(а|е|ой|у|ы)|(равенств|тождеств)(о|а|е|у|ами|ах)|(соотношени|выражени)(е|ю|и|я|ями|ях|ям))\s+\(?\d\)?/i);
+            let badPos = textFragments[i].search(/(рис(унок|унка|унке|\.)|формул(а|е|ой|у|ы)|(равенств|тождеств)(о|а|е|у|ами|ах)|(соотношени|выражени)(е|ю|и|я|ями|ях|ям))\s+\(?\d\)?/i);
             if (badPos < 0) {
                 badPos = textFragments[i].search(/(\s|~)\(\d\)(\.|,?\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя]*\W)/);
             }
@@ -692,7 +692,7 @@ function initiate() {
             }
         }
 
-        addWarningQuick('math', /^\s*(\d+|\*)\s*$/, 'SYMBOLIC_LINKS');
+        addWarningQuick('math', /^\s*(\(\d+|\*)\)\s*$/, 'SYMBOLIC_LINKS');
 
         addWarningQuick('text', /\(\\ref{[^}]*}\)/, 'EQREF_INSTEAD_OF_REF');
 
