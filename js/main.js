@@ -1,7 +1,7 @@
-var inBrowser = typeof window !== "undefined";
+let inBrowser = typeof window !== "undefined";
 function initiate() {
 
-    var editor;
+    let editor;
 
     function hlAceLine(n) {
         editor.gotoLine(n, 0);
@@ -11,15 +11,15 @@ function initiate() {
     if (inBrowser) { window.hlAceLine = hlAceLine; }
 
     function checkLatexCode(latexString, addWarningCustom) {
-        if (addWarningCustom != undefined && typeof addWarningCustom !== 'function') {
+        if (addWarningCustom !== undefined && typeof addWarningCustom !== 'function') {
             throw new Error('addWarningCustom must be a function');
         }
-        var capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
-        var smallCyrLetters = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя';
+        let capCyrLetters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ';
+        let smallCyrLetters = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя';
         function isCyrLetter(letter){ return capCyrLetters.includes(letter) || smallCyrLetters.includes(letter) }
         function isWordSymbol(letter){ return /\w/.test(letter) || isCyrLetter(letter) }
 
-        var errors = this.errors = {
+        let errors = this.errors = {
             'FIXME_NOT_YET_FIXED': {
                 msg: 'В проверяющую систему не допускается загружать решения, которые всё ещё содержат исправления преподавателей (команду <code>\\fix</code>).',
                 severity: 0
@@ -58,6 +58,10 @@ function initiate() {
             },
             'LATE_DEFINITION': {
                 msg: 'Вместо того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href="https://doc.co/pgnsVw">статью П. Халмоша</a>, раздел «Правильно используйте слова».',
+                severity: 0
+            },
+            'PARAGRAPH_BREAK_BEFORE_DISPLAY_FORMULA': {
+                msg: 'Пустая строка заставляет \\(\\LaTeX\\) начинать новый параграф, даже если эта пустая строка стоит прямо перед выключной формулой. Чаще всего это не нужно, так как параграфы по смыслу не следует начинать с формул, а выключную формулу \\(\\LaTeX\\) в любом случае окаймляет достаточным количеством пустого пространства.',
                 severity: 0
             },
             'UNNECESSARY_FORMULA_BREAK': {
@@ -298,10 +302,10 @@ function initiate() {
                 severity: 0
             }
         };
-        var used_errcodes = {};
+        let used_errcodes = {};
         if (!addWarningCustom) {
             // This var will be visible to the code below.
-            var rda = $('#result_display_area');
+            let rda = $('#result_display_area');
             rda.html('');
         }
 
@@ -310,8 +314,8 @@ function initiate() {
                 return fragment;
             }
             radius = radius ? radius : 5;
-            var left = Math.max(0, position-5);
-            var right = Math.min(fragment.length-1, position+5);
+            let left = Math.max(0, position-radius);
+            let right = Math.min(fragment.length-1, position+radius);
             if (isWordSymbol(fragment.substr(left, 1))) {
                 while (left > 0 && isWordSymbol(fragment.substr(left-1, 1))) {
                     --left;
@@ -337,16 +341,15 @@ function initiate() {
 
         function findLine(fragmentType, fragmentIndex, positionInFragment) {
             if(fragmentIndex === undefined){
-                var globalPosition = fragmentType;
-                return latexString.substring(0, globalPosition).split('\n').length;
+                return latexString.substring(0, fragmentType).split('\n').length;
             }
 
-            var numLinesSkipped = 0;
-            for (var i = 0; i < fragmentIndex; ++i){
+            let numLinesSkipped = 0;
+            for (let i = 0; i < fragmentIndex; ++i){
                 numLinesSkipped += mathFragments[i].split('\n').length - 1;
                 numLinesSkipped += textFragments[i].split('\n').length - 1;
             }
-            if(fragmentType == 'math'){
+            if(fragmentType === 'math'){
                 numLinesSkipped += textFragments[fragmentIndex].split('\n').length - 1;
                 numLinesSkipped += mathFragments[i].substring(0,positionInFragment).split('\n').length - 1;
             }
@@ -366,18 +369,19 @@ function initiate() {
             }
 
             if(!used_errcodes[errorCode]) {
-                var severity = errors[errorCode].severity.toString();
+                let severity = errors[errorCode].severity.toString();
+                let rda = $('#result_display_area');
                 rda.html(rda.html() + '<div class="well well-sm severity' + severity + '" id="' + errorCode + '" data-severity="' + severity +'">' + (extraInfo ? extraInfo : errors[errorCode].msg) + '</div>');
                 used_errcodes[errorCode] = $('#' + errorCode);
             }
-            var errorMessage = used_errcodes[errorCode];
+            let errorMessage = used_errcodes[errorCode];
 
             if (codeFragment) {
                 errorMessage.html(errorMessage.html() + codeFragment);
             }
         }
 
-        if (addWarningCustom != undefined) {
+        if (addWarningCustom !== undefined) {
             addWarning = addWarningCustom;
         }
 
@@ -386,7 +390,7 @@ function initiate() {
                     errorCode,
                     null,
                     extractSnippet(
-                            (fragmentType == 'math' ? mathFragments : textFragments)[fragmentIndex],
+                            (fragmentType === 'math' ? mathFragments : textFragments)[fragmentIndex],
                             positionInFragment
                     ),
                     findLine(
@@ -398,20 +402,20 @@ function initiate() {
         }
 
         function addWarningQuick(fragmentType, badness, errorCode, mathFragmentType) {
-            if(fragmentType == 'math') {
-                for (var i = 0; i < mathFragments.length; ++i) {
-                    if( mathFragmentType && mathFragmentType != mathFragmentTypes[i] ) {
+            if(fragmentType === 'math') {
+                for (let i = 0; i < mathFragments.length; ++i) {
+                    if( mathFragmentType && mathFragmentType !== mathFragmentTypes[i] ) {
                         continue;
                     }
-                    var badPos = mathFragments[i].search(badness);
+                    let badPos = mathFragments[i].search(badness);
                     if (badPos >= 0){
                         addTypicalWarning(errorCode, 'math', i, badPos);
                     }
                 }
             }
             else {
-                for (var i = 0; i < textFragments.length; ++i) {
-                    var badPos = textFragments[i].search(badness);
+                for (let i = 0; i < textFragments.length; ++i) {
+                    let badPos = textFragments[i].search(badness);
                     if (badPos >= 0){
                         addTypicalWarning(errorCode, 'text', i, badPos);
                     }
@@ -421,7 +425,7 @@ function initiate() {
 
 
         /* STAGE: Check if there are no teacher fixmes left */
-        var badPos = latexString.search(/\\fix\{/);
+        let badPos = latexString.search(/\\fix{/);
         if (badPos >= 0){
             addWarning('FIXME_NOT_YET_FIXED', null, '\\fix{', latexString.substring(0,badPos).split('\n').length-1);
         }
@@ -432,15 +436,15 @@ function initiate() {
             addWarning('DOUBLE_DOLLARS', null, '$$', latexString.substring(0,badPos).split('\n').length-1);
         }
 
-        var i = 0;
-        var currentlyInMathMode = false;
-        var lastSeenBrace = '';
+        let i = 0;
+        let currentlyInMathMode = false;
+        let lastSeenBrace = '';
         while (i < latexString.length){
-            var nextTwoSymbols = latexString.substr(i,2);
-            var nextSymbol = latexString.substr(i,1);
-            if (nextTwoSymbols == '$$'){
+            let nextTwoSymbols = latexString.substr(i,2);
+            let nextSymbol = latexString.substr(i,1);
+            if (nextTwoSymbols === '$$'){
                 if (currentlyInMathMode){
-                    if (lastSeenBrace != '$$'){
+                    if (lastSeenBrace !== '$$'){
                         addWarning(
                             'MISMATCHED_MATH_DELIMITERS',
                             'Команда <code>' + nextTwoSymbols + '</code> встречена в математическом режиме, открытом ранее командой <code>' + lastSeenBrace + '</code>');
@@ -473,7 +477,7 @@ function initiate() {
                             'Команда <code>' + nextTwoSymbols + '</code> встречена в текстовом режиме, а должна была закрывать математический.');
                     break;
                 }
-                if (nextTwoSymbols == '\\]' && lastSeenBrace != '\\[' || nextTwoSymbols == '\\)' && lastSeenBrace != '\\(' ) {
+                if (nextTwoSymbols === '\\]' && lastSeenBrace !== '\\[' || nextTwoSymbols === '\\)' && lastSeenBrace !== '\\(' ) {
                     addWarning(
                             'MISMATCHED_MATH_DELIMITERS',
                             'Математический режим был открыт командой <code>' + lastSeenBrace + '</code>, а закрыт командой <code>' + nextTwoSymbols + '</code>');
@@ -483,11 +487,11 @@ function initiate() {
                 currentlyInMathMode = false;
                 i += 2;
             }
-            else if (nextTwoSymbols == '\\') {
+            else if (nextTwoSymbols === '\\') {
                 i += 2;
             }
-            else if (nextSymbol == '$'){
-                if(currentlyInMathMode && lastSeenBrace != '$') {
+            else if (nextSymbol === '$'){
+                if(currentlyInMathMode && lastSeenBrace !== '$') {
                     addWarning(
                             'MISMATCHED_MATH_DELIMITERS',
                             'Математический режим был открыт командой <code>' + lastSeenBrace + '</code>, а закрыт командой <code>$</code>');
@@ -508,8 +512,14 @@ function initiate() {
             }
         }
 
+        /* STAGE: check for unnecessary paragraph break before display math formula */
+        badPos = latexString.search(/\s*\n+\s*\n+\s*(\\\[|\\begin{(equation|multline|align|gather|flalign)})/);
+        if ( badPos >= 0) {
+            addWarning('PARAGRAPH_BREAK_BEFORE_DISPLAY_FORMULA', null, extractSnippet(latexString, badPos, 10), findLine(badPos));
+        }
+
         /* STAGE: check if math formulae are not split without necessity */
-        var badPos = latexString.search(/(\$|\\\))\s*(,|=|\+|-)?\s*(\$|\\\()/);
+        badPos = latexString.search(/(\$|\\\))\s*[-+/,=]?\s*(\$|\\\()/);
         if ( badPos >= 0) {
             addWarning('UNNECESSARY_FORMULA_BREAK', null, extractSnippet(latexString, badPos, 10), findLine(badPos));
         }
@@ -537,7 +547,7 @@ function initiate() {
         }
 
         /* STAGE: Check for \mbox and \hbox */
-        badPos = latexString.search(/\\(m|h)box/);
+        badPos = latexString.search(/\\[mh]box/);
         if (badPos >= 0) {
             addWarning('REPLACE_MBOX_WITH_TEXT', null, extractSnippet(latexString, badPos));
         }
@@ -545,45 +555,45 @@ function initiate() {
         /* STAGE: check if paragraph starts with a formula */
         badPos = latexString.search(/(\n\s*\n|\\par)\s*(\$|\\\()/);
         if (badPos >= 0) {
-            addWarning('PARAGRAPH_STARTS_WITH_FORMULA', null, extractSnippet(latexString, badPos), findLine(badPos));;
+            addWarning('PARAGRAPH_STARTS_WITH_FORMULA', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
         /* STAGE: check if numerals are properly abbreviated */
-        badPos = latexString.search(/(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|тому|ому|ему|ом|ая|ой|ую|ые|ых|ыми|и|ым|тым|той|им|его|того|тых|ых|том|ем|ём|ех|ёх|ух)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
+        badPos = latexString.search(/(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|тому|ому|ему|ом|ая|ой|ую|ые|ыми|и|ым|тым|той|им|его|того|тых|ых|том|ем|ём|ех|ёх|ух)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
         if (badPos >= 0) {
-            addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));;
+            addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
         /* STAGE: check if letters are defined before they are used */
         badPos = latexString.search(/,(\\]|\$)?\s+где([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
         if (badPos >= 0) {
-            addWarning('LATE_DEFINITION', null, extractSnippet(latexString, badPos), findLine(badPos));;
+            addWarning('LATE_DEFINITION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
         /* STAGE: check if letters are defined before they are used */
-        badPos = latexString.search(/\\begin\{math}/);
+        badPos = latexString.search(/\\begin{math}/);
         if (badPos >= 0) {
-            addWarning('MATH_ENVIRONMENT_VERBOSITY_WARNING', null, extractSnippet(latexString, badPos+7), findLine(badPos));;
+            addWarning('MATH_ENVIRONMENT_VERBOSITY_WARNING', null, extractSnippet(latexString, badPos+7), findLine(badPos));
         }
 
         /* STAGE: split into text and math blocks */
-        var fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end)\{(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
-        var textFragments = [];
-        var mathFragments = [];
-        var mathFragmentTypes = [];
-        for (var i = 0; i < fragments.length; ++i){
-            if (i % 4 == 0){
+        let fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end){(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
+        let textFragments = [];
+        let mathFragments = [];
+        let mathFragmentTypes = [];
+        for (let i = 0; i < fragments.length; ++i){
+            if (i % 4 === 0){
                 textFragments.push(fragments[i]);
             }
-            else if (i % 4 == 2) {
+            else if (i % 4 === 2) {
                 mathFragments.push(fragments[i]);
-                mathFragmentTypes.push(fragments[i-1] == '\\(' || fragments[i-1] == '$' || fragments[i-1] == '\\begin{math}' ? 'inline' : 'display' );
+                mathFragmentTypes.push(fragments[i-1] === '\\(' || fragments[i-1] === '$' || fragments[i-1] === '\\begin{math}' ? 'inline' : 'display' );
             }
         }
 
 
         /* STAGE: check for neighbouring formulas */
-        for (var i = 1; i < textFragments.length-1; ++i) {
+        for (let i = 1; i < textFragments.length-1; ++i) {
             if (textFragments[i].match(/^\s*$/)) {
                 addWarning(
                     'UNNECESSARY_FORMULA_BREAK',
@@ -593,9 +603,9 @@ function initiate() {
         }
 
 
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/[?!.,;:]$/);
-            if (badPos >= 0 && i < mathFragmentTypes.length && mathFragmentTypes[i] == 'inline'){
+        for (let i = 0; i < textFragments.length; ++i) {
+            let badPos = textFragments[i].search(/[?!.,;:]$/);
+            if (badPos >= 0 && i < mathFragmentTypes.length && mathFragmentTypes[i] === 'inline'){
                 addTypicalWarning('SPACE_AFTER_PUNCTUATION_MARK', 'text', i, badPos);
             }
         }
@@ -613,27 +623,27 @@ function initiate() {
 
 
         /* STAGE: check for period before new sentence */
-        for (var i = 0; i < textFragments.length; ++i) {
-            if (i > 0 && capCyrLetters.includes(textFragments[i].trim().substr(0,1)) && !mathFragments[i-1].trim().match(/\.(\s*\}*)*$/)){
+        for (let i = 0; i < textFragments.length; ++i) {
+            if (i > 0 && capCyrLetters.includes(textFragments[i].trim().substr(0,1)) && !mathFragments[i-1].trim().match(/\.(\s*}*)*$/)){
                 addWarning('PERIOD_BEFORE_NEXT_SENTENCE', null, extractSnippet(mathFragments[i-1] + textFragments[i], mathFragments[i-1].length));
             }
         }
 
         /* STAGE: check for \left-\right commands */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            if(mathFragmentTypes[i] != 'display' && !mathFragments[i].match(/\\displaystyle/)){
+        for (let i = 0; i < mathFragments.length; ++i) {
+            if(mathFragmentTypes[i] !== 'display' && !mathFragments[i].match(/\\displaystyle/)){
                 continue;
             }
 
-            var modifiedMathFragment = mathFragments[i];
-            for (var j = 0, k = 0; j < modifiedMathFragment.length; ++j){
-                if (modifiedMathFragment.substr(j,1) == '|'){
+            let modifiedMathFragment = mathFragments[i];
+            for (let j = 0, k = 0; j < modifiedMathFragment.length; ++j){
+                if (modifiedMathFragment.substr(j,1) === '|'){
                     ++k;
                     modifiedMathFragment = modifiedMathFragment.substr(0,j) + (k % 2 ? '¹' : '²') + modifiedMathFragment.substr(j+1,modifiedMathFragment.length)
                 }
             }
-            var largeFormula = '(\\\\(frac|binom|over|underline|sum|prod|choose)|((\\)|\\\\}|])[_^]))';
-            var delimiters = [
+            let largeFormula = '(\\\\(frac|binom|over|underline|sum|prod|choose)|((\\)|\\\\}|])[_^]))';
+            let delimiters = [
                 '¹[^|]*?  [^|]*?²',
                 '[(][^)]*  [^)]*[)]',
                 '\\\\[{].*?  .*?\\\\[}]',
@@ -641,13 +651,13 @@ function initiate() {
                 '\\\\lceil.*?  .*?\\\\rceil',
                 '\\\\lvert.*?  .*?\\\\rvert'];
 
-            for (var j = 0; j < delimiters.length; ++j) {
-                var ldelim, rdelim;
+            for (let j = 0; j < delimiters.length; ++j) {
+                let ldelim, rdelim;
                 ldelim = delimiters[j].split('  ')[0];
                 rdelim = delimiters[j].split('  ')[1];
 
-                var re = new RegExp(ldelim + largeFormula + rdelim);
-                var badMatch = modifiedMathFragment.match(re);
+                let re = new RegExp(ldelim + largeFormula + rdelim);
+                let badMatch = modifiedMathFragment.match(re);
                 if (badMatch && badMatch[0].search(/\\(right|bigr|biggr)/) < 0 ){
                     addWarning('LEFT_RIGHT_RECOMMENDED', null, badMatch[0].replace(/[¹²]/g,'|'), findLine('math', i, 0));
                     break;
@@ -656,24 +666,24 @@ function initiate() {
         }
 
         /* STAGE: bar used instead of \mid in set comprehension */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badMatch = mathFragments[i].match(/\\\{.*?\|.*?\\}/);
+        for (let i = 0; i < mathFragments.length; ++i) {
+            let badMatch = mathFragments[i].match(/\\{.*?\|.*?\\}/);
             if (badMatch && !badMatch[0].includes('\\mid')){
                 addWarning('MID_IN_SET_COMPREHENSION', null, badMatch[0]);
             }
         }
 
         /* STAGE: \mid used instead of bar */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badMatch = mathFragments[i].match(/\\mid.*?\\mid/);
+        for (let i = 0; i < mathFragments.length; ++i) {
+            let badMatch = mathFragments[i].match(/\\mid.*?\\mid/);
             if (badMatch && !badMatch[0].includes('\\}')){
                 addWarning('MID_IN_SET_COMPREHENSION', null, badMatch[0]);
             }
         }
 
         /* STAGE: problems with symbolic links */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/((рисунок|рисунка|рисунке|рис\.)|формул(а|е|ой|у|ы)|(равенств|тождеств)(о|а|е|у|ами|ах)|(соотношени|выражени)(е|ю|и|я|ями|ях|ям))\s+\(?\d\)?/i);
+        for (let i = 0; i < textFragments.length; ++i) {
+            let badPos = textFragments[i].search(/((рисунок|рисунка|рисунке|рис\.)|формул(а|е|ой|у|ы)|(равенств|тождеств)(о|а|е|у|ами|ах)|(соотношени|выражени)(е|ю|и|я|ями|ях|ям))\s+\(?\d\)?/i);
             if (badPos < 0) {
                 badPos = textFragments[i].search(/(\s|~)\(\d\)(\.|,?\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя]*\W)/);
             }
@@ -684,21 +694,21 @@ function initiate() {
 
         addWarningQuick('math', /^\s*(\d+|\*)\s*$/, 'SYMBOLIC_LINKS');
 
-        addWarningQuick('text', /\(\\ref\{[^}]*}\)/, 'EQREF_INSTEAD_OF_REF');
+        addWarningQuick('text', /\(\\ref{[^}]*}\)/, 'EQREF_INSTEAD_OF_REF');
 
-        addWarningQuick('text', /\S\s+\\(eqref|ref)\{[^}]*}/, 'NONBREAKABLE_SPACE_BEFORE_REF');
+        addWarningQuick('text', /\S\s+\\(eqref|ref){[^}]*}/, 'NONBREAKABLE_SPACE_BEFORE_REF');
 
 
         /* STAGE: Trivially named symbolic link */
-        addWarningQuick('math', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
-        addWarningQuick('text', /\\label\{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
+        addWarningQuick('math', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
+        addWarningQuick('text', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
 
         /* STAGE: Ellipsis */
         addWarningQuick('math', /\.{3}/, 'ELLIPSIS_LDOTS');
 
         /* STAGE: Text in math mode */
-        for (var i = 0; i < mathFragments.length; ++i) {
-            var badPos = mathFragments[i].search(new RegExp('[' + smallCyrLetters + capCyrLetters + ']'));
+        for (let i = 0; i < mathFragments.length; ++i) {
+            let badPos = mathFragments[i].search(new RegExp('[' + smallCyrLetters + capCyrLetters + ']'));
             if (badPos < 0){
                 badPos = mathFragments[i].search(/([^a-z\\]|^)[a-z]{4,}/i);
             }
@@ -708,14 +718,14 @@ function initiate() {
         }
 
         /* STAGE: checking if there is a decent conclusion*/
-        var lastTextFragment = textFragments[textFragments.length-1].trim();
-        if ((lastTextFragment.length == 0 || lastTextFragment.match(/\\end\{(figure|enumerate|itemize|tabular)}\s*\\end\{solution}$/)) && textFragments[textFragments.length-2].search(/Ответ/i) < 0){
+        let lastTextFragment = textFragments[textFragments.length-1].trim();
+        if ((lastTextFragment.length === 0 || lastTextFragment.match(/\\end{(figure|enumerate|itemize|tabular)}\s*\\end{solution}$/)) && textFragments[textFragments.length-2].search(/Ответ/i) < 0){
             addWarning('NO_CONCLUSION');
         }
 
 
         /* STAGE: check if there are sentences starting with formula */
-        for (var i = 0; i < mathFragments.length; ++i) {
+        for (let i = 0; i < mathFragments.length; ++i) {
             if (textFragments[i].trim().endsWith('.')) {
                 addTypicalWarning('SENTENCE_STARTS_WITH_FORMULA', 'math', i, badPos);
             }
@@ -723,9 +733,9 @@ function initiate() {
 
 
         /* STAGE: check if there's no punctuation marks right after display math */
-        for (var i = 0; i < textFragments.length; ++i) {
-            var badPos = textFragments[i].search(/^\s*[,.!?:;]/);
-            if (badPos >= 0 && i > 0 && mathFragmentTypes[i-1] == 'display') {
+        for (let i = 0; i < textFragments.length; ++i) {
+            let badPos = textFragments[i].search(/^\s*[,.!?:;]/);
+            if (badPos >= 0 && i > 0 && mathFragmentTypes[i-1] === 'display') {
                 addTypicalWarning('PUNCTUATION_AFTER_DISPLAY_MATH', 'text', i, badPos);
             }
         }
@@ -789,7 +799,7 @@ function initiate() {
 
 
         /* STAGE: check if there are invisible braces */
-        addWarningQuick('math', /(^|=|\\cup|\\cap|\||\\lvert)\s*\{/, 'INVISIBLE_BRACES');
+        addWarningQuick('math', /(^|=|\\cup|\\cap|\||\\lvert)\s*{/, 'INVISIBLE_BRACES');
 
 
         /* STAGE: check if low-level \over and \choose commands are used */
@@ -798,11 +808,11 @@ function initiate() {
 
 
         /* STAGE: check if standard sets are typed correctly */
-        addWarningQuick('math', /\\in\s*\{?\s*(N|R|Z|Q|C)([^A-Za-z]|$)/, 'SETS_IN_BBFONT');
+        addWarningQuick('math', /\\in\s*{?\s*[NRZQC]([^A-Za-z]|$)/, 'SETS_IN_BBFONT');
 
 
         /* STAGE: check if all lists are made using appropriate commands */
-        addWarningQuick('text', /^\s*(\\par\s+)?\d+(\)|.)/m, 'MANUAL_LISTS');
+        addWarningQuick('text', /^\s*(\\par\s+)?\d+[).]/m, 'MANUAL_LISTS');
 
 
         /* STAGE: check that \bmod command is used instead of plain mod */
@@ -822,7 +832,7 @@ function initiate() {
 
 
         /* STAGE: check sin, cos, lim, min etc. are prepended by backslash */
-        addWarningQuick('math', /([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|max|sin|tanh)[^a-z]/, 'BACKSLASH_NEEDED');
+        addWarningQuick('math', /([^\\]|^)(cos|csc|exp|ker|limsup|max|min|sinh|arcsin|cosh|deg|gcd|lg|ln|Pr|sup|arctan|cot|det|hom|lim|log|sec|tan|arg|coth|dim|liminf|sin|tanh)[^a-z]/, 'BACKSLASH_NEEDED');
 
 
         /* STAGE: check if math mode is necessary */
@@ -834,7 +844,7 @@ function initiate() {
 
 
         /* STAGE: check if text-mode modifiers are used in math mode */
-        addWarningQuick('math', /\\textbf|\\textbf|\\emph/, 'TEXT_COMMANDS_IN_MATH_MODE');
+        addWarningQuick('math', /\\textit|\\textbf|\\emph/, 'TEXT_COMMANDS_IN_MATH_MODE');
 
 
         /* STAGE: advise to consider replacing small numbers with text */
@@ -851,7 +861,7 @@ function initiate() {
 
 
         /* Check if reference is immediately after or before math */
-        addWarningQuick('text', /(\\(eq)?ref\{[^}]+}\s*$)|(^\s*\\(eq)?ref\{[^}]+})/, 'FORMULA_NEIGHBOURING_REFERENCE');
+        addWarningQuick('text', /(\\(eq)?ref{[^}]+}\s*$)|(^\s*\\(eq)?ref{[^}]+})/, 'FORMULA_NEIGHBOURING_REFERENCE');
 
 
         /* Suggest making a long formula display */
@@ -861,14 +871,14 @@ function initiate() {
         /* Space after parenthesis */
         addWarningQuick('text', /\( /, 'SPACE_AFTER_PARENTHESIS');
 
-
-        if (addWarningCustom == undefined && rda.html() == '') {
+        let rda = $('#result_display_area');
+        if (addWarningCustom === undefined && rda.html() === '') {
             rda.text('Замечательный результат: автоматическая проверка пройдена без замечаний.');
         }
     }
 
     function checkLatexCodeExport(latexString) {
-        var used_errcodes = {};
+        let used_errcodes = {};
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber) {
             if (!used_errcodes[errorCode]) {
                 used_errcodes[errorCode] = {
@@ -908,11 +918,11 @@ function initiate() {
     });
 
     function typesetWithProcessing(){
-        var v = editor.getValue();
+        let v = editor.getValue();
         v = v
-            .replace(/\\begin\{task}/g,'((beginTask))')
-            .replace(/\\begin\{solution}/g,'((beginSolution))')
-            .replace(/\\end\{(task|solution)}/g,'');
+            .replace(/\\begin{task}/g,'((beginTask))')
+            .replace(/\\begin{solution}/g,'((beginSolution))')
+            .replace(/\\end{(task|solution)}/g,'');
 
         v = v
             .replace(/---/g, '—')
@@ -923,9 +933,10 @@ function initiate() {
             .replace(/''/g, '”')
             .replace(/\n\n/g, '\\par');
 
-        $('#result_display_area').text(v);
+        let rda = $('#result_display_area');
+        rda.text(v);
         MathJax.typesetPromise([document.querySelector('#result_display_area')]).then(() => {
-            var v = $('#result_display_area').html();
+            let v = rda.html();
             v = v
                 .replace(/\\par/g, '<br>')
                 .replace('((beginTask))', '<span class="badge">Условие задачи</span>')
