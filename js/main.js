@@ -513,7 +513,7 @@ function initiate() {
         }
 
         /* STAGE: check for unnecessary paragraph break before display math formula */
-        badPos = latexString.search(/\s*\n+\s*\n+\s*(\\\[|\\begin{(equation|multline|align|gather|flalign)})/);
+        badPos = latexString.search(/\s*\n+\s*\n+\s*(\\\[|\\begin{(equation|multline|align|gather|flalign)\*?})/);
         if ( badPos >= 0) {
             addWarning('PARAGRAPH_BREAK_BEFORE_DISPLAY_FORMULA', null, extractSnippet(latexString, badPos, 10), findLine(badPos));
         }
