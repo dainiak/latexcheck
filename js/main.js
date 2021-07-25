@@ -791,7 +791,7 @@ function initiate() {
 
 
         /* STAGE: check for spaces before parentheses */
-        addWarningQuick('text', /\S\(/, 'SPACE_BEFORE_PARENTHESES');
+        addWarningQuick('text', /[^()\[\]{}\n\t-\\/+]\(/, 'SPACE_BEFORE_PARENTHESES');
 
 
         /* STAGE: check if there are symbols that do not meet the Russian typographic tradition */
