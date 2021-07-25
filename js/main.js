@@ -361,17 +361,17 @@ function initiate() {
 
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber){
             if (codeFragment){
-                codeFragment = '<br><div class="badge"'
+                codeFragment = '<br><span class="badge bg-secondary"'
                         + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '')
                         +'>Подозрительный фрагмент: <code>…' + codeFragment + '…</code>'
                         + (lineNumber ? ' (строка ' + lineNumber + ' в редакторе)' : '')
-                        + '</div>';
+                        + '</span>';
             }
 
             if(!used_errcodes[errorCode]) {
                 let severity = errors[errorCode].severity.toString();
                 let rda = $('#result_display_area');
-                rda.html(rda.html() + '<div class="well well-sm severity' + severity + '" id="' + errorCode + '" data-severity="' + severity +'">' + (extraInfo ? extraInfo : errors[errorCode].msg) + '</div>');
+                rda.html(rda.html() + '<div class="p-2 border severity' + severity + '" id="' + errorCode + '" data-severity="' + severity +'">' + (extraInfo ? extraInfo : errors[errorCode].msg) + '</div>');
                 used_errcodes[errorCode] = $('#' + errorCode);
             }
             let errorMessage = used_errcodes[errorCode];

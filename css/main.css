@@ -48,13 +48,13 @@ q:after {
     content: '\201D';
 }
 
-.container-fluid a:not(.btn) {
+.container a:not(.btn) {
     color: inherit;
     border-bottom: 2px cadetblue dotted;
     text-decoration: inherit;
 }
 
-.container-fluid a:hover:not(.btn) {
+.container a:hover:not(.btn) {
     color: inherit;
     border-bottom: 2px cadetblue dotted;
     text-decoration: inherit;
@@ -67,12 +67,6 @@ div.social-share {
     top: 0;
     right: 0;
     border: 0;
-}
-
-div.social-share-buttons {
-    position: fixed;
-    top: 0;
-    right: 150;
 }
 
 a.fork-me {

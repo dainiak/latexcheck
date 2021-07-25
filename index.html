@@ -5,16 +5,17 @@
     <meta name="author" content="Alex Dainiak @ Moscow Institute of Physics and Technology">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="css/main.css" rel="stylesheet">
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-latex.min.js"></script>
@@ -30,27 +31,20 @@
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
-    <title>Инструмент проверки стиля дорешек по курсу ДС</title>
+    <title>Инструмент проверки стиля LaTeX-кода</title>
 </head>
 
 <body>
 <div class="social-share">
-    <div class="social-share-buttons">
-    <div class="btn-group">
-    <a class="btn btn-default social-share" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-    <a class="btn btn-default social-share" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F&title=Interactive%20LaTeX%20Primer"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-    <a class="btn btn-default social-share" href="https://twitter.com/home?status=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-    <a class="btn btn-default social-share" href="http://vk.com/share.php?url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-vk" aria-hidden="true"></i></a>
-    <a class="btn btn-default social-share" href="https://plus.google.com/share?url=https%3A%2F%2Fdainiak.github.io%2Flatexcheck%2F"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-    </div>
-    </div>
     <a href="https://github.com/dainiak/latexcheck" class="fork-me"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container d-grid gap-3">
+    <div class="row p-2">
+        <div class="well  bg-light border p-1">
         Инструмент создан <a rel="author" href="https://www.dainiak.com">Александром Дайняком</a>, доцентом <a href="https://mipt.ru/">МФТИ</a>. Почтовый адрес для связи: <code>dainiak@gmail.com</code>
-        <div class="well">
+        </div>
+        <div class="well bg-light border p-1">
         Полезные ресурсы:
         <ul>
         <li>Стиль в математике: <a href="https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W">П. Халмош. <em>Как писать математические тексты</em></a></li>
@@ -60,16 +54,16 @@
         <li>Рукописный ввод символов LaTeX: сервисы <a href="http://detexify.kirelabs.org/classify.html">Detexify</a> и <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
         <li>Очень кратко о полезных, но неочевидных элементах оформления: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics">Wikibooks: LaTeX/Advanced Mathematics</a></li>
         </ul></div></div>
-    <div class="row">Вставьте исходный текст на LaTeX сюда: <div class="well" id="user_input_area"></div></div>
-    <div class="row">
-        <div class="btn-group">
-        <button class="btn btn-default" id="btn_check">Проверить!</button>
-        <button class="btn btn-default" id="btn_try_typeset">Предпросмотр</button>
-        <a class="btn btn-default" href="https://goo.gl/forms/bsCb6TxkEA49vof52">Сообщить об ошибке</a>
+    <div class="row p-2  bg-light border">Вставьте исходный текст на LaTeX сюда: <div class="well" id="user_input_area"></div></div>
+    <div class="row p-2">
+        <div class="btn-group"  role="group">
+        <button class="btn btn-outline-primary" id="btn_check">Проверить!</button>
+        <button class="btn btn-outline-primary" id="btn_try_typeset">Предпросмотр</button>
+        <a class="btn btn-outline-primary" role="button" href="https://goo.gl/forms/bsCb6TxkEA49vof52">Сообщить об ошибке</a>
         </div>
     </div>
-    <div class="row">
-        <div class="well flex" id="result_display_area">Здесь отображается результат проверки</div>
+    <div class="row p-2 border">
+        <div class="well flex d-grid gap-1" id="result_display_area">Здесь отображается результат проверки</div>
     </div>
 </div>
 </body>
