@@ -40,6 +40,10 @@ function initiate() {
                 msg: 'Не используйте окружение <code>eqnarray</code> (подробности по <a href="https://tex.stackexchange.com/a/197">ссылке</a>). Вместо этого пользуйтесь, например, <code>align</code>.',
                 severity: 0
             },
+            'ABBREVIATIONS_WITH_SPACE': {
+                msg: 'Сокращения типа <em>ч.т.д.</em>, <em>т.к.</em>, и подобные, следует оформлять с неразрывным пробелом <code>~</code> или так называемой <em>тонкой шпацией</em> <code>\\,</code> — это неразрывный пробел несколько меньшей ширины, нежели обычный. Например: <code>ч.\\,т.\\,д.</code>. В противном случае может случиться казус при переносе текста, когда часть сокращения останется на строке, а часть перейдёт на следующую. Тонкая шпация также смотрится лучше в этом случае, чем обычный пробел. Также её используют при наборе инициалов, например: <code>М.\\,В.~Ломоносов</code> или <code>М.\\,В.\\,Ломоносов</code>.',
+                severity: 0
+            },
             'DASH_HYPHEN': {
                 msg: 'Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченное с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href="http://webstyle.sfu-kras.ru/tire-defis">здесь</a> и <a href="http://habrahabr.ru/post/20588/">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href="https://www.artlebedev.ru/kovodstvo/sections/97/">А. Лебедева</a>.',
                 severity: 0
@@ -361,7 +365,7 @@ function initiate() {
 
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber){
             if (codeFragment){
-                codeFragment = '<br><span class="badge bg-secondary"'
+                codeFragment = '<br><span class="badge bg-light bg-gradient text-dark"'
                         + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '')
                         +'>Подозрительный фрагмент: <code>…' + codeFragment + '…</code>'
                         + (lineNumber ? ' (строка ' + lineNumber + ' в редакторе)' : '')
@@ -772,6 +776,9 @@ function initiate() {
 
         /* STAGE: check if hyphen is used where dash should be */
         addWarningQuick('text', ' - ', 'DASH_HYPHEN');
+
+        /* STAGE: check if hyphen is used where dash should be */
+        addWarningQuick('text', /ч. т.|т. н.|(т. ч.)|(т. к.)/, 'ABBREVIATIONS_WITH_SPACE');
 
 
         /* STAGE: check if dash is surrounded with spaces */
