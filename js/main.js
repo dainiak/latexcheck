@@ -765,7 +765,7 @@ function initiate() {
         addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
 
         /* STAGE: check typical math commands outside math mode */
-        addWarningQuick('text', /(\\infty)/, 'MATH_SEMANTICS_OUTSIDE_MATH');
+        addWarningQuick('text', /(\\(infty|cdot|sum))|([0-9 \n]+ *[=+*^])|([+*^] *[0-9 \n]+)/, 'MATH_SEMANTICS_OUTSIDE_MATH');
 
         /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
         addWarningQuick('text', /[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i, 'LATIN_LETTER_C_MISUSED');
