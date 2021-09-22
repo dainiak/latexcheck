@@ -212,8 +212,12 @@ function initiate() {
                 severity: 0
             },
             'SENTENCE_STARTS_WITH_FORMULA': {
-                msg: 'Предложение не следует начинать с формулы. Всегда можно добавить вначале слово. Например, вместо предложения <code>$G$ связен.</code> напишите <code>Граф $G$ связен.</code>',
+                msg: 'Обычно предложение не следует начинать с формулы. Почти всегда можно добавить в начало слово. Например, вместо предложения <code>$G$ связен.</code> напишите <code>Граф $G$ связен.</code>',
                 severity: 0
+            },
+            'SENTENCE_STARTS_WITH_NUMBER': {
+                msg: 'Обычно предложение не следует начинать с цифровой записи числа. Например, вместо предложения <code>5 человек можно выстроить в очередь $5!$ способами.</code> лучше написать либо <code>Пятерых человек…</code> либо <code>Заметим, что 5 человек…</code>',
+                severity: 5
             },
             'RUSSIAN_TYPOGRAPHY_PECULIARITIES': {
                 msg: 'Строго говоря, это не является ошибкой, но в отечественной типографской традиции принято пустое множество обозначать значком <code>\\varnothing</code>, а не <code>\\emptyset</code> (последний более приплюснутый). '
@@ -752,6 +756,7 @@ function initiate() {
         /* STAGE: check for includegraphics in math mode */
         addWarningQuick('math', /\\includegraphics/, 'GRAPHICS_IN_MATH_MODE');
 
+        addWarningQuick('text', /[.?!]\s+[0-9]+/, 'SENTENCE_STARTS_WITH_NUMBER');
 
         /* STAGE: check quotation marks */
         addWarningQuick('text', /"/, 'WRONG_QUOTES');
