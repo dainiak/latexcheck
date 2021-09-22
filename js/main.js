@@ -778,7 +778,7 @@ function initiate() {
         addWarningQuick('text', ' - ', 'DASH_HYPHEN');
 
         /* STAGE: check if hyphen is used where dash should be */
-        addWarningQuick('text', /ч. т.|т. н.|(т. ч.)|(т. к.)/, 'ABBREVIATIONS_WITH_SPACE');
+        addWarningQuick('text', /ч\. т\.|т\. н\.|т\. ч\.|т\. к\./, 'ABBREVIATIONS_WITH_SPACE');
 
 
         /* STAGE: check if dash is surrounded with spaces */
@@ -791,6 +791,7 @@ function initiate() {
 
         /* STAGE: check for incorrect multiplication sign */
         addWarningQuick('math', /[^{^_]\*/, 'MULTIPLICATION_SIGN');
+        addWarningQuick('text', /[^{^_]\*/, 'MULTIPLICATION_SIGN');
 
 
         /* STAGE: check for spaces around commas and periods */
