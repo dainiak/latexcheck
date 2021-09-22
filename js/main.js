@@ -98,7 +98,7 @@ function initiate() {
                 severity: 0
             },
             'LATIN_LETTER_OUTSIDE_MATH': {
-                msg: 'Даже одна буква, если у неё математический смысл — должна быть заключена в доллары.',
+                msg: 'Даже одна буква, если у неё математический смысл (если это имя математического объекта) — должна быть набрана в математическом режиме.',
                 severity: 0
             },
             'MATH_SEMANTICS_OUTSIDE_MATH': {
@@ -203,8 +203,7 @@ function initiate() {
             },
             'INCORPORATE_NOT': {
                 msg: 'Хотя префикс <code>\\not</code> позволяет из многих значков получить значок-отрицание, часто короче (и <a href="http://tex.stackexchange.com/a/141011">рекомендуется</a>!) писать одной командой. '
-                    + 'Например, вместо <code>\\not=</code> можно написать <code>\\ne</code>, вместо <code>\\not\\in</code> написать <code>\\notin</code> и т.д. '
-                    + 'По <a href="https://goo.gl/RQUTQ9">ссылке</a> доступен список часто используемых значков с отрицанием.',
+                    + 'Например, вместо <code>\\not=</code> можно написать <code>\\ne</code>, вместо <code>\\not\\in</code> написать <code>\\notin</code> и т.д. ',
                 severity: 0
             },
             'PARAGRAPH_STARTS_WITH_FORMULA': {
@@ -306,7 +305,11 @@ function initiate() {
                 severity: 0
             },
             'MAKE_LONG_FORMULA_DISPLAY': {
-                msg: 'Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений на стр. 2 в <a href="http://goo.gl/WywBQT">документе по ссылке</a>.',
+                msg: 'Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений в <a href="http://www.ams.org/arc/tex/amsmath/amsldoc.pdf">документе по ссылке</a>.',
+                severity: 0
+            },
+            'UNICODE_SQRT': {
+                msg: 'Для квадратного корня следует использовать команду <code>\\sqrt</code> вместо символа UNICODE.',
                 severity: 0
             }
         };
@@ -752,6 +755,9 @@ function initiate() {
         /* STAGE: check if there are shortcuts for \not command */
         addWarningQuick('math', /\\not\s*(=|\\in)/, 'INCORPORATE_NOT');
 
+        /* STAGE: check if there are unicode symbols used instead of proper LaTeX commands */
+        addWarningQuick('text', '√', 'UNICODE_SQRT');
+        addWarningQuick('math', '√', 'UNICODE_SQRT');
 
         /* STAGE: check for includegraphics in math mode */
         addWarningQuick('math', /\\includegraphics/, 'GRAPHICS_IN_MATH_MODE');
