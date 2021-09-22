@@ -33,7 +33,7 @@ function initiate() {
                 severity: 0
             },
             'CONSECUTIVE_DISPLAY_FORMULAE': {
-                msg: 'Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href="https://www.sharelatex.com/learn/Aligning_equations_with_amsmath">ссылке</a>.',
+                msg: 'Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href="https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath">ссылке</a>.',
                 severity: 0
             },
             'EQNARRAY_USED': {
@@ -261,7 +261,7 @@ function initiate() {
                 severity: 0
             },
             'BACKSLASH_NEEDED':  {
-                msg: 'Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В LaTeX есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Список доступных стандартных команд см. по <a href="https://www.sharelatex.com/learn/Operators#Reference_guide">ссылке</a>. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code> или, ещё лучше, <a href="http://tex.stackexchange.com/a/67529">создайте свой оператор</a> командой <code>\\DeclareMathOperator</code> в преамбуле документа.',
+                msg: 'Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В LaTeX есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Список доступных стандартных команд см. по <a href="https://www.overleaf.com/learn/latex/Operators#Reference_guide">ссылке</a>. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code> или, ещё лучше, <a href="http://tex.stackexchange.com/a/67529">создайте свой оператор</a> командой <code>\\DeclareMathOperator</code> в преамбуле документа.',
                 severity: 0
             },
             'CDOT_FOR_READABILITY':  {
@@ -305,7 +305,7 @@ function initiate() {
                 severity: 0
             },
             'MAKE_LONG_FORMULA_DISPLAY': {
-                msg: 'Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений в <a href="http://www.ams.org/arc/tex/amsmath/amsldoc.pdf">документе по ссылке</a>.',
+                msg: 'Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений в <a href="https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath">документе по ссылке</a>.',
                 severity: 0
             },
             'UNICODE_SQRT': {
