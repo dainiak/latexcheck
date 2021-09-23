@@ -41,7 +41,7 @@ function initiate() {
                 severity: 0
             },
             'ABBREVIATIONS_WITH_SPACE': {
-                msg: 'Сокращения типа <em>ч.т.д.</em>, <em>т.к.</em>, и подобные, следует оформлять с неразрывным пробелом <code>~</code> или так называемой <em>тонкой шпацией</em> <code>\\,</code> — это неразрывный пробел несколько меньшей ширины, нежели обычный. Например: <code>ч.\\,т.\\,д.</code>. В противном случае может случиться казус при переносе текста, когда часть сокращения останется на строке, а часть перейдёт на следующую. Тонкая шпация также смотрится лучше в этом случае, чем обычный пробел. Также её используют при наборе инициалов, например: <code>М.\\,В.~Ломоносов</code> или <code>М.\\,В.\\,Ломоносов</code>.',
+                msg: 'Сокращения типа <em>т.&thinsp;е.</em>, <em>т.&thinsp;к.</em>, <a href="https://ru.wikipedia.org/wiki/Q.E.D."><em>ч.&thinsp;т.&thinsp;д.</em></a> и подобные <a href="http://new.gramota.ru/spravka/buro/search-answer?s=296030">следует оформлять с пробелом</a> (см. также <a href="https://popravilam.com/blog/105-probel-v-sokrashcheniyah.html">тут</a>), но есть особенность: использовать нужно <em>неразрывный</em> пробел <code>~</code> или, ещё лучше, <a href="https://ru.wikipedia.org/wiki/%D0%A3%D0%B7%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D0%B1%D0%B5%D0%BB"><em>тонкую шпацию</em></a> <code>\\,</code> — это неразрывный пробел несколько меньшей ширины, нежели обычный. Например: <code>ч.\\,т.\\,д.</code>. В противном случае может случиться казус при переносе текста, когда часть сокращения останется на строке, а часть перейдёт на следующую. Тонкая шпация также смотрится лучше в этом случае, чем обычный пробел. Также её используют при наборе <a href="http://new.gramota.ru/spravka/letters/78-init">инициалов</a>, например: <code>М.\\,В.~Ломоносов</code> или <code>М.\\,В.\\,Ломоносов</code>.',
                 severity: 0
             },
             'DASH_HYPHEN': {
@@ -788,9 +788,8 @@ function initiate() {
         /* STAGE: check if hyphen is used where dash should be */
         addWarningQuick('text', ' - ', 'DASH_HYPHEN');
 
-        /* STAGE: check if hyphen is used where dash should be */
-        addWarningQuick('text', /ч\. т\.|т\. н\.|т\. ч\.|т\. к\./, 'ABBREVIATIONS_WITH_SPACE');
-
+        /* STAGE: check if standard colloquial abbreviations have space in them */
+        addWarningQuick('text', /ч\. ?т\.|т\. ?н\.|т\. ?ч\.|т\. ?к\./, 'ABBREVIATIONS_WITH_SPACE');
 
         /* STAGE: check if dash is surrounded with spaces */
         addWarningQuick('text', /--[^- ~\n]|[^- ~\n]--/, 'DASH_SURROUND_WITH_SPACES');
