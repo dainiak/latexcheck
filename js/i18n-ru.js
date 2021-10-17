@@ -10,7 +10,7 @@ window.i18n = {
     },
     "errorDescriptions": {
         "DOUBLE_DOLLARS": {
-            "msg": "Двойных долларов в тексте быть не должно. Выносные формулы нужно оформлять с помощью <code>\\[</code>…<code>\\]</code>. Объяснение <a href=\"https://tex.stackexchange.com/questions/503/why-is-preferable-to\">тут</a>.",
+            "msg": "Двойных долларов в тексте быть не должно. Выносные формулы нужно оформлять с помощью <code>\\[</code>…<code>\\]</code>. Объяснение <a href=\"https://tex.stackexchange.com/questions/503/why-is-preferable-to\" target=\"_blank\">по ссылке</a>.",
             "severity": 0
         },
         "MISMATCHED_MATH_DELIMITERS": {
@@ -18,19 +18,19 @@ window.i18n = {
             "severity": 0
         },
         "CONSECUTIVE_DISPLAY_FORMULAE": {
-            "msg": "Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\">ссылке</a>.",
+            "msg": "Обнаружены две идущие подряд выключные формулы. Такого быть не должно: используйте окружение <code>aligned</code> или его аналоги, чтобы грамотно оформить не умещающиеся на одной строке выкладки. Подробнее, например, по <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">ссылке</a>.",
             "severity": 0
         },
         "EQNARRAY_USED": {
-            "msg": "Не используйте окружение <code>eqnarray</code> (подробности по <a href=\"https://tex.stackexchange.com/a/197\">ссылке</a>). Вместо этого пользуйтесь, например, <code>align</code>.",
+            "msg": "Не используйте окружение <code>eqnarray</code> (подробности по <a href=\"https://tex.stackexchange.com/a/197\" target=\"_blank\">ссылке</a>). Вместо этого пользуйтесь, например, <code>align</code>.",
             "severity": 0
         },
         "ABBREVIATIONS_WITH_SPACE": {
-            "msg": "Сокращения типа <em>т.&thinsp;е.</em>, <em>т.&thinsp;к.</em>, <a href=\"https://ru.wikipedia.org/wiki/Q.E.D.\"><em>ч.&thinsp;т.&thinsp;д.</em></a> и подобные <a href=\"https://new.gramota.ru/spravka/buro/search-answer?s=296030\">следует оформлять с пробелом</a> (см. также <a href=\"https://popravilam.com/blog/105-probel-v-sokrashcheniyah.html\">тут</a>), но есть особенность: использовать нужно <em>неразрывный</em> пробел <code>~</code> или, ещё лучше, <a href=\"https://ru.wikipedia.org/wiki/%D0%A3%D0%B7%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D0%B1%D0%B5%D0%BB\"><em>тонкую шпацию</em></a> <code>\\,</code> — это неразрывный пробел несколько меньшей ширины, нежели обычный. Например: <code>ч.\\,т.\\,д.</code>. В противном случае может случиться казус при переносе текста, когда часть сокращения останется на строке, а часть перейдёт на следующую. Тонкая шпация также смотрится лучше в этом случае, чем обычный пробел. Также её используют при наборе <a href=\"https://new.gramota.ru/spravka/letters/78-init\">инициалов</a>, например: <code>М.\\,В.~Ломоносов</code> или <code>М.\\,В.\\,Ломоносов</code>.",
+            "msg": "Сокращения типа <em>т.&thinsp;е.</em>, <em>т.&thinsp;к.</em>, <a href=\"https://ru.wikipedia.org/wiki/Q.E.D.\" target=\"_blank\"><em>ч.&thinsp;т.&thinsp;д.</em></a> и подобные <a href=\"https://new.gramota.ru/spravka/buro/search-answer?s=296030\">следует оформлять с пробелом</a> (см. также <a href=\"https://popravilam.com/blog/105-probel-v-sokrashcheniyah.html\" target=\"_blank\">тут</a>), но есть особенность: использовать нужно <em>неразрывный</em> пробел <code>~</code> или, ещё лучше, <a href=\"https://ru.wikipedia.org/wiki/%D0%A3%D0%B7%D0%BA%D0%B8%D0%B9_%D0%BF%D1%80%D0%BE%D0%B1%D0%B5%D0%BB\" target=\"_blank\"><em>тонкую шпацию</em></a> <code>\\,</code> — это неразрывный пробел несколько меньшей ширины, нежели обычный. Например: <code>ч.\\,т.\\,д.</code>. В противном случае может случиться казус при переносе текста, когда часть сокращения останется на строке, а часть перейдёт на следующую. Тонкая шпация также смотрится лучше в этом случае, чем обычный пробел. Также её используют при наборе <a href=\"https://new.gramota.ru/spravka/letters/78-init\" target=\"_blank\">инициалов</a>, например: <code>М.\\,В.~Ломоносов</code> или <code>М.\\,В.\\,Ломоносов</code>.",
             "severity": 0
         },
         "DASH_HYPHEN": {
-            "msg": "Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченное с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href=\"https://webstyle.sfu-kras.ru/tire-defis\">здесь</a> и <a href=\"https://habrahabr.ru/post/20588/\">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href=\"https://www.artlebedev.ru/kovodstvo/sections/97/\">А. Лебедева</a>.",
+            "msg": "Возможно, перепутано тире с дефисом. Полноценное длинное тире ставится с помощью <code>---</code>, укороченное с помощью  <code>--</code>. Подробнее о тире, дефисах и подобном см. <a href=\"https://webstyle.sfu-kras.ru/tire-defis\" target=\"_blank\">здесь</a> и <a href=\"https://habrahabr.ru/post/20588/\" target=\"_blank\">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href=\"https://www.artlebedev.ru/kovodstvo/sections/97/\" target=\"_blank\">А. Лебедева</a>.",
             "severity": 0
         },
         "DASH_IN_MATH_MODE": {
@@ -38,11 +38,11 @@ window.i18n = {
             "severity": 0
         },
         "DASH_SURROUND_WITH_SPACES": {
-            "msg": "Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывными, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href=\"https://webstyle.sfu-kras.ru/tire-defis\">здесь</a> и <a href=\"https://habrahabr.ru/post/20588/\">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href=\"https://www.artlebedev.ru/kovodstvo/sections/97/\">А. Лебедева</a>.",
+            "msg": "Тире с двух сторон следует окружать пробелами. Особенный шик — один или оба из пробелов сделать неразрывными, чтобы тире не «повисало на краю пропасти» при переносе строки. Подробнее о тире, дефисах и подобном см. <a href=\"https://webstyle.sfu-kras.ru/tire-defis\" target=\"_blank\">здесь</a> и <a href=\"https://habrahabr.ru/post/20588/\" target=\"_blank\">здесь</a>. Ну и, конечно, никогда не поздно почитать <a href=\"https://www.artlebedev.ru/kovodstvo/sections/97/\" target=\"_blank\">А. Лебедева</a>.",
             "severity": 0
         },
         "RU_ORDINAL_ABBREVIATION": {
-            "msg": "Нарушены <a href=\"https://new.gramota.ru/spravka/letters/22-spravka/letters/87-rubric-99\">правила сокращения порядковых числительных</a>.",
+            "msg": "Нарушены <a href=\"https://new.gramota.ru/spravka/letters/22-spravka/letters/87-rubric-99\" target=\"_blank\">правила сокращения порядковых числительных</a>.",
             "severity": 0
         },
         "EN_ORDINAL_ABBREVIATION": {
@@ -50,7 +50,7 @@ window.i18n = {
             "severity": 0
         },
         "LATE_DEFINITION": {
-            "msg": "Вместо того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href=\"https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W\">статью П. Халмоша</a>, раздел «Правильно используйте слова».",
+            "msg": "Вместо того, чтобы писать <q><code>$x=a+b$</code>, где <code>$a=…</code></q> сначала лучше ввести все буквы и лишь затем записать выражение, эти буквы содержащие. См. <a href=\"https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W\" target=\"_blank\">статью П. Халмоша</a>, раздел «Правильно используйте слова».",
             "severity": 0
         },
         "PARAGRAPH_BREAK_BEFORE_DISPLAY_FORMULA": {
@@ -66,7 +66,7 @@ window.i18n = {
             "severity": 0
         },
         "LOW_LEVEL_FONT_COMMANDS": {
-            "msg": "Вместо низкоуровневых команд <code>{\\it …}</code>, <code>{\\bf …}</code> используйте команды <code>\\textit{…}</code> <code>\\textbf{…}</code> (подробности см. по <a href=\"https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text\">ссылке</a>.) Кроме того, выделять текст лучше не курсивом, а более гибкой командой <code>\\emph{…}</code>, поскольку она корректно сработает даже внутри курсивного блока.",
+            "msg": "Вместо низкоуровневых команд <code>{\\it …}</code>, <code>{\\bf …}</code> используйте команды <code>\\textit{…}</code> <code>\\textbf{…}</code> (подробности см. по <a href=\"https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text\" target=\"_blank\">ссылке</a>.) Кроме того, выделять текст лучше не курсивом, а более гибкой командой <code>\\emph{…}</code>, поскольку она корректно сработает даже внутри курсивного блока.",
             "severity": 0
         },
         "ITALIC_INSTEAD_OF_EMPH": {
@@ -138,7 +138,7 @@ window.i18n = {
             "severity": 0
         },
         "LEFT_RIGHT_RECOMMENDED": {
-            "msg": "Когда при наборе формул возникает необходимость поставить скобки (круглые/фигурные/квадратные) или знак модуля вокруг высокой подформулы (дроби, биномиального коэффициента, суммы с пределами), рекомендуется добавлять команды <code>\\left</code> и <code>\\right</code>. Особенно это актуально для выключных формул. Например, сравните, как нелепо выглядит в PDF скомпилированная формула <code>\\[(\\frac{a}{b})^2\\]</code> и как естественен её «правильный» вариант <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left… … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href=\"https://tex.stackexchange.com/a/58641\">ссылке</a>. Можно также воспользоваться командой <a href=\"https://tex.stackexchange.com/a/1765\"><code>\\DeclarePairedDelimiter</code></a> из библиотеки mathtools.",
+            "msg": "Когда при наборе формул возникает необходимость поставить скобки (круглые/фигурные/квадратные) или знак модуля вокруг высокой подформулы (дроби, биномиального коэффициента, суммы с пределами), рекомендуется добавлять команды <code>\\left</code> и <code>\\right</code>. Особенно это актуально для выключных формул. Например, сравните, как нелепо выглядит в PDF скомпилированная формула <code>\\[(\\frac{a}{b})^2\\]</code> и как естественен её «правильный» вариант <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. Тем не менее, переусердствовать здесь тоже не стоит: добавляйте <code>\\left… … \\right…</code> только тогда, когда видите явное несоответствие между высотой скобок и высотой того, что они окружают. Подробности по <a href=\"https://tex.stackexchange.com/a/58641\" target=\"_blank\">ссылке</a>. Можно также воспользоваться командой <a href=\"https://tex.stackexchange.com/a/1765\" target=\"_blank\"><code>\\DeclarePairedDelimiter</code></a> из библиотеки mathtools.",
             "severity": 10
         },
         "NUMERALS_AS_WORDS": {
@@ -174,7 +174,7 @@ window.i18n = {
             "severity": 5
         },
         "REPLACE_MBOX_WITH_TEXT": {
-            "msg": "Для вставки текста внутрь формулы вместо команд <code>\\mbox</code> и <code>\\hbox</code> пользуйтесь командой <code>\\text</code>. Объяснение см. по <a href=\"https://tex.stackexchange.com/questions/70632/difference-between-various-methods-for-producing-text-in-math-mode\">ссылке</a>.",
+            "msg": "Для вставки текста внутрь формулы вместо команд <code>\\mbox</code> и <code>\\hbox</code> пользуйтесь командой <code>\\text</code>. Объяснение см. по <a href=\"https://tex.stackexchange.com/questions/70632/difference-between-various-methods-for-producing-text-in-math-mode\" target=\"_blank\">ссылке</a>.",
             "severity": 0
         },
         "TEXT_IN_MATH_MODE": {
@@ -186,7 +186,7 @@ window.i18n = {
             "severity": 5
         },
         "INCORPORATE_NOT": {
-            "msg": "Хотя префикс <code>\\not</code> позволяет из многих значков получить значок-отрицание, часто короче (и <a href=\"https://tex.stackexchange.com/a/141011\">рекомендуется</a>!) писать одной командой. Например, вместо <code>\\not=</code> можно написать <code>\\ne</code>, вместо <code>\\not\\in</code> написать <code>\\notin</code> и т.д.",
+            "msg": "Хотя префикс <code>\\not</code> позволяет из многих значков получить значок-отрицание, часто короче (и <a href=\"https://tex.stackexchange.com/a/141011\" target=\"_blank\">рекомендуется</a>!) писать одной командой. Например, вместо <code>\\not=</code> можно написать <code>\\ne</code>, вместо <code>\\not\\in</code> написать <code>\\notin</code> и т.д.",
             "severity": 0
         },
         "PARAGRAPH_STARTS_WITH_FORMULA": {
@@ -206,11 +206,11 @@ window.i18n = {
             "severity": 0
         },
         "OVER_VS_FRAC": {
-            "msg": "Команда <code>\\over</code> является низкоуровневой командой TeX и <a href=\"https://tex.stackexchange.com/a/73825\">не рекомендуется</a> к использованию в \\(\\LaTeX\\). Вместо <code>A \\over B</code> пишите <code>\\frac{A}{B}</code>.",
+            "msg": "Команда <code>\\over</code> является низкоуровневой командой TeX и <a href=\"https://tex.stackexchange.com/a/73825\" target=\"_blank\">не рекомендуется</a> к использованию в \\(\\LaTeX\\). Вместо <code>A \\over B</code> пишите <code>\\frac{A}{B}</code>.",
             "severity": 0
         },
         "CHOOSE_VS_BINOM": {
-            "msg": "Команда <code>\\choose</code> является низкоуровневой командой TeX и <a href=\"https://tex.stackexchange.com/a/127711\">не рекомендуется</a> к использованию в \\(\\LaTeX\\). Вместо <code>A \\choose B</code> пишите <code>\\binom{A}{B}</code>.",
+            "msg": "Команда <code>\\choose</code> является низкоуровневой командой TeX и <a href=\"https://tex.stackexchange.com/a/127711\" target=\"_blank\">не рекомендуется</a> к использованию в \\(\\LaTeX\\). Вместо <code>A \\choose B</code> пишите <code>\\binom{A}{B}</code>.",
             "severity": 0
         },
         "INVISIBLE_BRACES": {
@@ -222,7 +222,7 @@ window.i18n = {
             "severity": 0
         },
         "MANUAL_LISTS": {
-            "msg": "Не следует вручную создавать нумерованные списки. Пишите так: <code>\\begin{enumerate}\\item Во-первых, \\item Во-вторых … \\end{enumerate}</code>. Подробнее об оформлении списков в \\(\\LaTeX\\) можно прочитать, например, <a href=\"https://www.overleaf.com/learn/latex/Lists\">здесь</a>.",
+            "msg": "Не следует вручную создавать нумерованные списки. Пишите так: <code>\\begin{enumerate}\\item Во-первых, \\item Во-вторых … \\end{enumerate}</code>. Подробнее об оформлении списков в \\(\\LaTeX\\) можно прочитать, например, <a href=\"https://www.overleaf.com/learn/latex/Lists\" target=\"_blank\">здесь</a>.",
             "severity": 0
         },
         "MOD_NOT_A_COMMAND": {
@@ -234,7 +234,7 @@ window.i18n = {
             "severity": 0
         },
         "INDENTATION_WITH_SPACES": {
-            "msg": "Избегайте использования нескольких пробельных значков подряд, так же, как и в WYSIWYG-редакторах не следует делать отступы множественными пробелами. Используйте соответствующие команды \\(\\LaTeX\\) для отступов, подробности по <a href=\"https://tex.stackexchange.com/a/74354\">ссылке</a>.",
+            "msg": "Избегайте использования нескольких пробельных значков подряд, так же, как и в WYSIWYG-редакторах не следует делать отступы множественными пробелами. Используйте соответствующие команды \\(\\LaTeX\\) для отступов, подробности по <a href=\"https://tex.stackexchange.com/a/74354\" target=\"_blank\">ссылке</a>.",
             "severity": 0
         },
         "LE_AS_SINGLE_COMMAND": {
@@ -246,7 +246,7 @@ window.i18n = {
             "severity": 0
         },
         "BACKSLASH_NEEDED": {
-            "msg": "Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В \\(\\LaTeX\\) есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Список доступных стандартных команд см. по <a href=\"https://www.overleaf.com/learn/latex/Operators#Reference_guide\">ссылке</a>. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code> или, ещё лучше, <a href=\"https://tex.stackexchange.com/a/67529\">создайте свой оператор</a> командой <code>\\DeclareMathOperator</code> в преамбуле документа.",
+            "msg": "Слова \\(\\min\\), \\(\\max\\) и подобные в формулах являются именами математических операторов и должны набираться прямым шрифтом. В \\(\\LaTeX\\) есть команды <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, и другие, которые делают эту работу за Вас. Список доступных стандартных команд см. по <a href=\"https://www.overleaf.com/learn/latex/Operators#Reference_guide\" target=\"_blank\">ссылке</a>. Если такой команды ещё нет, используйте конструкцию типа <code>\\operatorname{min}</code> или, ещё лучше, <a href=\"https://tex.stackexchange.com/a/67529\" target=\"_blank\">создайте свой оператор</a> командой <code>\\DeclareMathOperator</code> в преамбуле документа.",
             "severity": 0
         },
         "CDOT_FOR_READABILITY": {
@@ -290,7 +290,7 @@ window.i18n = {
             "severity": 0
         },
         "MAKE_LONG_FORMULA_DISPLAY": {
-            "msg": "Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений в <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\">документе по ссылке</a>.",
+            "msg": "Подозрительно длинная формула набрана не в выключном режиме. Формулы, которые при компиляции не влезают целиком на одну строку (т.е. вся строка занята формулой и всё равно возникает перенос), нужно выключными, аккуратно их разбивая построчно с помощью окружений AMS: см. перечень подходящих окружений в <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">документе по ссылке</a>.",
             "severity": 0
         },
         "UNICODE_SQRT": {

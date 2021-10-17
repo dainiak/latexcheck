@@ -10,7 +10,7 @@ window.i18n = {
     },
     "errorDescriptions": {
         "DOUBLE_DOLLARS": {
-            "msg": "Double dollars for display math should be avoided in \\(\\LaTeX\\). Use <code>\\[</code>…<code>\\]</code> for display style formulas. See <a href=\"https://tex.stackexchange.com/questions/503/why-is-preferable-to\">explanation</a>.",
+            "msg": "Double dollars for display math should be avoided in \\(\\LaTeX\\). Use <code>\\[</code>…<code>\\]</code> for display style formulas. See <a href=\"https://tex.stackexchange.com/questions/503/why-is-preferable-to\" target=\"_blank\">explanation</a>.",
             "severity": 0
         },
         "MISMATCHED_MATH_DELIMITERS": {
@@ -18,15 +18,15 @@ window.i18n = {
             "severity": 0
         },
         "CONSECUTIVE_DISPLAY_FORMULAE": {
-            "msg": "Two consecutive display style formulas detected. This should be avoided. Use <code>aligned</code> environment or its analogues to properly typeset long formula that does not fit into single line. See e.g. <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\">these guidelines</a>.",
+            "msg": "Two consecutive display style formulas detected. This should be avoided. Use <code>aligned</code> environment or its analogues to properly typeset long formula that does not fit into single line. See e.g. <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">these guidelines</a>.",
             "severity": 0
         },
         "EQNARRAY_USED": {
-            "msg": "Avoid <code>eqnarray</code> environment (see <a href=\"https://tex.stackexchange.com/a/197\">details</a>). Use e.g. <code>align</code> instead.",
+            "msg": "Avoid <code>eqnarray</code> environment (see <a href=\"https://tex.stackexchange.com/a/197\" target=\"_blank\">details</a>). Use e.g. <code>align</code> instead.",
             "severity": 0
         },
         "DASH_HYPHEN": {
-            "msg": "Looks like you have wrongly used hyphen instead of dash. You can typeset M-dash “—” with <code>---</code> and N-dash “–” with <code>--</code> in \\(\\LaTeX\\). See <a href=\"https://www.grammarly.com/blog/hyphens-and-dashes/\">details</a>.",
+            "msg": "Looks like you have wrongly used hyphen instead of dash. You can typeset M-dash “—” with <code>---</code> and N-dash “–” with <code>--</code> in \\(\\LaTeX\\). See <a href=\"https://www.grammarly.com/blog/hyphens-and-dashes/\" target=\"_blank\">details</a>.",
             "severity": 0
         },
         "DASH_IN_MATH_MODE": {
@@ -34,11 +34,11 @@ window.i18n = {
             "severity": 0
         },
         "EN_ORDINAL_ABBREVIATION_IN_MATH": {
-            "msg": "Ordinal abbreviations are textual, not mathematical pieces. See <a href=\"https://tex.stackexchange.com/a/4119\">details</a> on how to properly typeset them in \\(\\LaTeX\\) if you’d like to keep the superscript style.",
+            "msg": "Ordinal abbreviations are textual, not mathematical pieces. See <a href=\"https://tex.stackexchange.com/a/4119\" target=\"_blank\">details</a> on how to properly typeset them in \\(\\LaTeX\\) if you’d like to keep the superscript style.",
             "severity": 0
         },
         "EN_ORDINAL_ABBREVIATION": {
-            "msg": "Possibly wrong ordinal abbreviation, see <a href=\"https://www.grammarly.com/blog/how-to-write-ordinal-numbers-correctly/\">details</a>.",
+            "msg": "Possibly wrong ordinal abbreviation, see <a href=\"https://www.grammarly.com/blog/how-to-write-ordinal-numbers-correctly/\" target=\"_blank\">details</a>.",
             "severity": 0
         },
         "PARAGRAPH_BREAK_BEFORE_DISPLAY_FORMULA": {
@@ -54,7 +54,7 @@ window.i18n = {
             "severity": 0
         },
         "LOW_LEVEL_FONT_COMMANDS": {
-            "msg": "Instead of using low-level TeX commands <code>{\\it …}</code>, <code>{\\bf …}</code>. Instead use <code>\\textit{…}</code>, <code>\\textbf{…}</code> etc (see <a href=\"https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text\">details</a>.) It is also recommended to use <code>\\emph{…}</code> command to emphasize portions of the text instead of italicizing, as it nicely works also inside italicized text blocks.",
+            "msg": "Instead of using low-level TeX commands <code>{\\it …}</code>, <code>{\\bf …}</code>. Instead use <code>\\textit{…}</code>, <code>\\textbf{…}</code> etc (see <a href=\"https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text\" target=\"_blank\">details</a>.) It is also recommended to use <code>\\emph{…}</code> command to emphasize portions of the text instead of italicizing, as it nicely works also inside italicized text blocks.",
             "severity": 0
         },
         "ITALIC_INSTEAD_OF_EMPH": {
@@ -126,7 +126,7 @@ window.i18n = {
             "severity": 0
         },
         "LEFT_RIGHT_RECOMMENDED": {
-            "msg": "When in need of typesetting paired delimiters (parentheses, brackets, braces, absolute value symbol, norm symbol) around some large formula, it is recommended to add <code>\\left</code> and <code>\\right</code> commands. Compare how ugly is the PDF representation of a formula <code>\\[(\\frac{a}{b})^2\\]</code> and how beautiful is the proper variant of it: <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. On the other hand, <code>\\left… … \\right…</code> should not be overused, use them just when you see the mismatch between the formula hight and the delimiter height. See <a href=\"https://tex.stackexchange.com/a/58641\">details</a>. You can also employ <a href=\"https://tex.stackexchange.com/a/1765\"><code>\\DeclarePairedDelimiter</code></a> command from <em>mathtools</em> library.",
+            "msg": "When in need of typesetting paired delimiters (parentheses, brackets, braces, absolute value symbol, norm symbol) around some large formula, it is recommended to add <code>\\left</code> and <code>\\right</code> commands. Compare how ugly is the PDF representation of a formula <code>\\[(\\frac{a}{b})^2\\]</code> and how beautiful is the proper variant of it: <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. On the other hand, <code>\\left… … \\right…</code> should not be overused, use them just when you see the mismatch between the formula hight and the delimiter height. See <a href=\"https://tex.stackexchange.com/a/58641\" target=\"_blank\">details</a>. You can also employ <a href=\"https://tex.stackexchange.com/a/1765\" target=\"_blank\"><code>\\DeclarePairedDelimiter</code></a> command from <em>mathtools</em> library.",
             "severity": 10
         },
         "NUMERALS_AS_WORDS": {
@@ -138,7 +138,7 @@ window.i18n = {
             "severity": 0
         },
         "SYMBOLIC_LINKS": {
-            "msg": "Employ symbolic cross-referencing, e.g.: <code>Note that \\begin{equation}\\label{eqSquares} a^2-b^2=(a-b)(a+b). \\end{equation} From~\\eqref{eqSquares} it follows that…</code>. See <a href=\"https://www.overleaf.com/learn/latex/Cross_referencing_sections%2C_equations_and_floats\">details</a>.",
+            "msg": "Employ symbolic cross-referencing, e.g.: <code>Note that \\begin{equation}\\label{eqSquares} a^2-b^2=(a-b)(a+b). \\end{equation} From~\\eqref{eqSquares} it follows that…</code>. See <a href=\"https://www.overleaf.com/learn/latex/Cross_referencing_sections%2C_equations_and_floats\" target=\"_blank\">details</a>.",
             "severity": 0
         },
         "EQREF_INSTEAD_OF_REF": {
@@ -162,7 +162,7 @@ window.i18n = {
             "severity": 5
         },
         "REPLACE_MBOX_WITH_TEXT": {
-            "msg": "To place text inside a formula avoid using low-level <code>\\mbox</code> and <code>\\hbox</code> commands. Use <code>\\text</code> instead. See <a href=\"https://tex.stackexchange.com/questions/70632/difference-between-various-methods-for-producing-text-in-math-mode\">details</a>.",
+            "msg": "To place text inside a formula avoid using low-level <code>\\mbox</code> and <code>\\hbox</code> commands. Use <code>\\text</code> instead. See <a href=\"https://tex.stackexchange.com/questions/70632/difference-between-various-methods-for-producing-text-in-math-mode\" target=\"_blank\">details</a>.",
             "severity": 0
         },
         "TEXT_IN_MATH_MODE": {
@@ -174,7 +174,7 @@ window.i18n = {
             "severity": 5
         },
         "INCORPORATE_NOT": {
-            "msg": "Although <code>\\not</code> command does work to get a negated (crossed-out) sign, the <a href=\"https://tex.stackexchange.com/a/141011\">better way</a> is to search for the dedicated command. For instance, <code>\\ne</code> is better than <code>\\not=</code>, <code>\\notin</code> is better than <code>\\not\\in</code> etc.",
+            "msg": "Although <code>\\not</code> command does work to get a negated (crossed-out) sign, the <a href=\"https://tex.stackexchange.com/a/141011\" target=\"_blank\">better way</a> is to search for the dedicated command. For instance, <code>\\ne</code> is better than <code>\\not=</code>, <code>\\notin</code> is better than <code>\\not\\in</code> etc.",
             "severity": 0
         },
         "PARAGRAPH_STARTS_WITH_FORMULA": {
@@ -190,11 +190,11 @@ window.i18n = {
             "severity": 5
         },
         "OVER_VS_FRAC": {
-            "msg": "The command <code>\\over</code> is a low-level TeX command and <a href=\"https://tex.stackexchange.com/a/73825\">should be avoided</a> in \\(\\LaTeX\\). Replace <code>A \\over B</code> with <code>\\frac{A}{B}</code>.",
+            "msg": "The command <code>\\over</code> is a low-level TeX command and <a href=\"https://tex.stackexchange.com/a/73825\" target=\"_blank\">should be avoided</a> in \\(\\LaTeX\\). Replace <code>A \\over B</code> with <code>\\frac{A}{B}</code>.",
             "severity": 0
         },
         "CHOOSE_VS_BINOM": {
-            "msg": "The command <code>\\choose</code> is a low-level TeX command and <a href=\"https://tex.stackexchange.com/a/127711\">should be avoided</a> in \\(\\LaTeX\\). Replace <code>A \\choose B</code> with <code>\\binom{A}{B}</code>.",
+            "msg": "The command <code>\\choose</code> is a low-level TeX command and <a href=\"https://tex.stackexchange.com/a/127711\" target=\"_blank\">should be avoided</a> in \\(\\LaTeX\\). Replace <code>A \\choose B</code> with <code>\\binom{A}{B}</code>.",
             "severity": 0
         },
         "INVISIBLE_BRACES": {
@@ -206,7 +206,7 @@ window.i18n = {
             "severity": 0
         },
         "MANUAL_LISTS": {
-            "msg": "Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly… \\item Secondly… \\end{enumerate}</code>. Learn more about typesetting lists <a href=\"https://www.overleaf.com/learn/latex/Lists\">here</a>.",
+            "msg": "Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly… \\item Secondly… \\end{enumerate}</code>. Learn more about typesetting lists <a href=\"https://www.overleaf.com/learn/latex/Lists\" target=\"_blank\">here</a>.",
             "severity": 0
         },
         "MOD_NOT_A_COMMAND": {
@@ -218,7 +218,7 @@ window.i18n = {
             "severity": 0
         },
         "INDENTATION_WITH_SPACES": {
-            "msg": "Avoid using multiple spaces to indent text. Use proper \\(\\LaTeX\\) spacing command instead, see <a href=\"https://tex.stackexchange.com/a/74354\">details</a>.",
+            "msg": "Avoid using multiple spaces to indent text. Use proper \\(\\LaTeX\\) spacing command instead, see <a href=\"https://tex.stackexchange.com/a/74354\" target=\"_blank\">details</a>.",
             "severity": 0
         },
         "LE_AS_SINGLE_COMMAND":  {
@@ -230,7 +230,7 @@ window.i18n = {
             "severity": 0
         },
         "BACKSLASH_NEEDED":  {
-            "msg": "Words \\(\\min\\), \\(\\max\\) and such in mathematical formulas are operator names and should be typeset with roman font. There are corresponding <em>commands</em> of \\(\\LaTeX\\) <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, and others, that will do that work for you. See the list of these commands <a href=\"https://www.overleaf.com/learn/latex/Operators#Reference_guide\">here</a>. If you cannot see the command that you need, write something like <code>\\operatorname{min}</code> or, even better, <a href=\"https://tex.stackexchange.com/a/67529\">declare your own operator</a> with <code>\\DeclareMathOperator</code> command in the document preamble.",
+            "msg": "Words \\(\\min\\), \\(\\max\\) and such in mathematical formulas are operator names and should be typeset with roman font. There are corresponding <em>commands</em> of \\(\\LaTeX\\) <code>\\min</code>, <code>\\max</code>, <code>\\lim</code>, <code>\\deg</code>, and others, that will do that work for you. See the list of these commands <a href=\"https://www.overleaf.com/learn/latex/Operators#Reference_guide\" target=\"_blank\">here</a>. If you cannot see the command that you need, write something like <code>\\operatorname{min}</code> or, even better, <a href=\"https://tex.stackexchange.com/a/67529\" target=\"_blank\">declare your own operator</a> with <code>\\DeclareMathOperator</code> command in the document preamble.",
             "severity": 0
         },
         "CDOT_FOR_READABILITY":  {
@@ -274,7 +274,7 @@ window.i18n = {
             "severity": 0
         },
         "MAKE_LONG_FORMULA_DISPLAY": {
-            "msg": "Long formulas that take a lot of screen space should generally be thoughtfully typeset with proper AMS environments: see the list of these environments and their usecases <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\">here</a>.",
+            "msg": "Long formulas that take a lot of screen space should generally be thoughtfully typeset with proper AMS environments: see the list of these environments and their usecases <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">here</a>.",
             "severity": 0
         },
         "UNICODE_SQRT": {
