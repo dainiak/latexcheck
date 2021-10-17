@@ -4,7 +4,9 @@ window.i18n = {
         "task": "Task",
         "solution": "Solution",
         "mmDoubleOpen": "Command <code>{1}</code> occurred in math mode that was opened earlier with command <code>{2}</code>",
-        "mmWrongClose": "Command <code>{1}</code> occurred in text mode while it should close the math mode."
+        "mmWrongClose": "Command <code>{1}</code> occurred in text mode while it should close the math mode.",
+        "lineNo": " (line {1} in source code)",
+        "wrongFragment": "Code fragment: <code>…{1}…</code>"
     },
     "errorDescriptions": {
         "DOUBLE_DOLLARS": {

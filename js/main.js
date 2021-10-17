@@ -85,9 +85,9 @@ function initialize() {
 
             if (codeFragment){
                 codeFragment = '<br><span class="badge bg-light bg-gradient text-dark"'
-                    + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '')
-                    +'>Подозрительный фрагмент: <code>…' + codeFragment + '…</code>'
-                    + (lineNumber ? ' (строка ' + lineNumber + ' в редакторе)' : '')
+                    + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '') + '>'
+                    + strings.wrongFragment.replace('{1}', codeFragment)
+                    + (lineNumber ? strings.lineNo.replace('{1}', lineNumber): '')
                     + '</span>';
             }
 
