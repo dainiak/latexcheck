@@ -32,13 +32,13 @@
 
 <body>
 <div class="social-share">
-    <a href="https://github.com/dainiak/latexcheck" class="fork-me"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    <div class="ribbon-container"><div class="ribbon"><a href="https://github.com/dainiak/latexcheck" id="githubForkLink">Fork me on GitHub</a></div></div>
 </div>
 
 <div class="container d-grid gap-3">
     <div class="row p-2">
         <div class="well  bg-light border p-1">
-            LaTeX style checker by <a rel="author" href="https://www.dainiak.com">Alex Dainiak</a> (Associate Professor at <a href="https://mipt.ru/english/">MIPT</a>). Russian version is <a href="index-ru.html">also available</a>.
+            \(\LaTeX\) style checker by <a rel="author" href="https://www.dainiak.com">Alex Dainiak</a> (Associate Professor at <a href="https://mipt.ru/english/">MIPT</a>). Russian version is <a href="index-ru.html">also available</a>.
         </div>
         <div class="well bg-light border p-1">
             Guidelines on writing mathematical texts in general:
@@ -46,27 +46,27 @@
                 <li><a href="https://faculty.math.illinois.edu/~west/grammar.html">Douglas B. West. <em>Grammar according to West</em></a></li>
                 <li><a href="https://www.amazon.com/How-Write-Mathematics-Norman-Steenrod/dp/0821800558">Paul R. Halmos. <em>How to write mathematics</em></a></li>
             </ul>
-            Learning LaTeX:
+            Learning \(\LaTeX\):
             <ul>
-                <li><a href="https://www.overleaf.com/learn/latex/Main_Page">LaTeX tutorials on Overleaf</a></li>
-                <li>Writing in proper high-level LaTeX: <a href="https://www.ctan.org/pkg/l2tabu-english"><em>l2tabu</em></a></li>
+                <li><a href="https://www.overleaf.com/learn/latex/Main_Page">\(\LaTeX\) tutorials on Overleaf</a></li>
+                <li>Writing in proper high-level \(\LaTeX\): <a href="https://www.ctan.org/pkg/l2tabu-english"><em>l2tabu</em></a></li>
                 <li>Notes on advanced math typesetting: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics">Wikibooks: LaTeX/Advanced Mathematics</a></li>
-                <li>LaTeX Tutorial for Beginners on YouTube: <a href="https://www.youtube.com/watch?v=fCzF5gDy60g">here</a></li>
-                <li>Interactive MathJax/KaTeX based LaTeX primer: <a href="https://www.dainiak.com/ilatexprimer/">here</a></li>
-                <li>LaTeX symbol lookup: <a href="https://detexify.kirelabs.org/classify.html">Detexify</a> and <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
+                <li>\(\LaTeX\) Tutorial for Beginners on YouTube: <a href="https://www.youtube.com/watch?v=fCzF5gDy60g">here</a></li>
+                <li>Interactive MathJax/KaTeX based \(\LaTeX\) primer: <a href="https://www.dainiak.com/ilatexprimer/">here</a></li>
+                <li>\(\LaTeX\) symbol lookup: <a href="https://detexify.kirelabs.org/classify.html">Detexify</a> and <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
             </ul>
-            LaTeX linting:
+            \(\LaTeX\) linting:
             <ul>
-                <li><a href="https://ctan.org/pkg/chktex"><em>ChkTex</em> latex source checker</a></li>
-                <li><a href="https://sylvainhalle.github.io/textidote/"><em>Textidote</em> correction tool for LaTeX documents</a></li>
+                <li><a href="https://ctan.org/pkg/chktex"><em>ChkTex</em> \(\LaTeX\) source checker</a></li>
+                <li><a href="https://sylvainhalle.github.io/textidote/"><em>Textidote</em> correction tool for \(\LaTeX\) documents</a></li>
 <!--                <li>https://github.com/nspring/style-check</li>-->
             </ul>
             Various:
             <ul>
-                <li>Quick LaTeX in-browser preview: <a href="https://latex.js.org/playground.html">LaTeX.JS</a></li>
+                <li>Quick \(\LaTeX\) in-browser preview: <a href="https://latex.js.org/playground.html">LaTeX.js</a></li>
             </ul>
         </div></div>
-    <div class="row p-2  bg-light border">Paste your LaTeX code here: <div class="well" id="user_input_area"></div></div>
+    <div class="row p-2  bg-light border"><span>Paste your \(\LaTeX\) code here:</span> <div class="well" id="user_input_area"></div></div>
     <div class="row p-2">
         <div class="btn-group"  role="group">
             <button class="btn btn-outline-primary" id="btn_check">Check!</button>

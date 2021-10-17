@@ -69,8 +69,30 @@ div.social-share {
     border: 0;
 }
 
-a.fork-me {
+.social-share .ribbon-container {
     position: absolute;
     top: 0;
     right: 0;
+    overflow: hidden;
+    width: 140px;
+    height: 140px;
+}
+
+.social-share .ribbon {
+    width: 200px;
+    text-align: center;
+    position: absolute;
+    background: gray;
+    border-top: black dashed 2px;
+    border-bottom: black dashed 2px;
+    color: whitesmoke;
+    top: 45px;
+    right: -45px;
+    z-index: 10000;
+    transform: rotate(45deg);
+}
+
+.social-share .ribbon a {
+    text-decoration: none;
+    color: whitesmoke;
 }
