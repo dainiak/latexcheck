@@ -2,6 +2,10 @@ let inBrowser = typeof window !== "undefined";
 function initialize() {
     let editor;
 
+    let fragments;
+    let textFragments = [];
+    let mathFragments = [];
+
     function hlAceLine(n) {
         editor.gotoLine(n, 0);
         editor.focus();
@@ -309,9 +313,8 @@ function initialize() {
         }
 
         /* STAGE: split into text and math blocks */
-        let fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end){(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
-        let textFragments = [];
-        let mathFragments = [];
+        fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end){(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
+
         let mathFragmentTypes = [];
         for (let i = 0; i < fragments.length; ++i){
             if (i % 4 === 0){
@@ -549,8 +552,7 @@ function initialize() {
 
 
         /* STAGE: check if all lists are made using appropriate commands */
-        addWarningQuick('text', /^\s*(\\par\s+)?\d+[).]/m, 'MANUAL_LISTS');
-
+        addWarningQuick('text', /^\s*(\\par\s*)?\(?(\d+|[a-cA-C])[).]/m, 'MANUAL_LISTS');
 
         /* STAGE: check that \bmod command is used instead of plain mod */
         addWarningQuick('math', /[^\\pb]mod\W/, 'MOD_NOT_A_COMMAND');
