@@ -206,7 +206,7 @@ window.i18n = {
             "severity": 0
         },
         "MANUAL_LISTS": {
-            "msg": "Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly… \\item Secondly… \\end{enumerate}</code>.",
+            "msg": "Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly… \\item Secondly… \\end{enumerate}</code>. Learn more about typesetting lists <a href=\"https://www.overleaf.com/learn/latex/Lists\">here</a>.",
             "severity": 0
         },
         "MOD_NOT_A_COMMAND": {

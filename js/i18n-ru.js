@@ -222,7 +222,7 @@ window.i18n = {
             "severity": 0
         },
         "MANUAL_LISTS": {
-            "msg": "Не следует вручную создавать нумерованные списки. Пишите так: <code>\\begin{enumerate}\\item Во-первых, \\item Во-вторых … \\end{enumerate}</code>.",
+            "msg": "Не следует вручную создавать нумерованные списки. Пишите так: <code>\\begin{enumerate}\\item Во-первых, \\item Во-вторых … \\end{enumerate}</code>. Подробнее об оформлении списков в \\(\\LaTeX\\) можно прочитать, например, <a href=\"https://www.overleaf.com/learn/latex/Lists\">здесь</a>.",
             "severity": 0
         },
         "MOD_NOT_A_COMMAND": {
