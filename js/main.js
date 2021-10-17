@@ -698,5 +698,5 @@ function initialize() {
 if (inBrowser) {
     document.addEventListener('readystatechange', initialize);
 } else {
-    initiate();
+    initialize();
 }
