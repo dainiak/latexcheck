@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Alex Dainiak @ Moscow Institute of Physics and Technology">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="css/main.css" rel="stylesheet">
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-latex.min.js"></script>
@@ -30,8 +25,9 @@
         };
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/error-descriptions-en.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
-    <title>Инструмент проверки стиля LaTeX-кода</title>
+    <title>LaTeX style checker</title>
 </head>
 
 <body>
@@ -42,28 +38,40 @@
 <div class="container d-grid gap-3">
     <div class="row p-2">
         <div class="well  bg-light border p-1">
-        Инструмент создан <a rel="author" href="https://www.dainiak.com">Александром Дайняком</a>, доцентом <a href="https://mipt.ru/">МФТИ</a>.
+            LaTeX style checker by <a rel="author" href="https://www.dainiak.com">Alex Dainiak</a> (Associate Professor at <a href="https://mipt.ru/english/">MIPT</a>).
         </div>
         <div class="well bg-light border p-1">
-        Полезные ресурсы:
-        <ul>
-        <li>Стиль в математике: <a href="https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W">П. Халмош. <em>Как писать математические тексты</em></a></li>
-        <li>Краткое руководство по LaTeX на русском: <a href="https://www.ccas.ru/voron/download/voron05latex.pdf">К. В. Воронцов. LaTeX 2e в примерах</a></li>
-        <li>Стандартное руководство по LaTeX на русском: <a href="https://www.mccme.ru/free-books/llang/newllang.pdf">С. М. Львовский. Набор и вёрстка в системе LaTeX</a></li>
-        <li>Интерактивный урок по LaTeX: <a href="https://dainiak.github.io/ilatexprimer/">https://dainiak.github.io/ilatexprimer/</a></li>
-        <li>Рукописный ввод символов LaTeX: сервисы <a href="https://detexify.kirelabs.org/classify.html">Detexify</a> и <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
-        <li>Очень кратко о полезных, но неочевидных элементах оформления: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics">Wikibooks: LaTeX/Advanced Mathematics</a></li>
-        </ul></div></div>
-    <div class="row p-2  bg-light border">Вставьте исходный текст на LaTeX сюда: <div class="well" id="user_input_area"></div></div>
+            Guidelines on writing mathematical texts in general:
+            <ul>
+                <li><a href="https://faculty.math.illinois.edu/~west/grammar.html">Douglas B. West. <em>Grammar according to West</em></a></li>
+                <li><a href="https://www.amazon.com/How-Write-Mathematics-Norman-Steenrod/dp/0821800558">Paul R. Halmos. <em>How to write mathematics</em></a></li>
+            </ul>
+            Learning LaTeX:
+            <ul>
+                <li><a href="https://www.overleaf.com/learn/latex/Main_Page">LaTeX tutorials on Overleaf</a></li>
+                <li>Writing in proper high-level LaTeX: <a href="https://www.ctan.org/pkg/l2tabu-english"><em>l2tabu</em></a></li>
+                <li>Notes on advanced math typesetting: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics">Wikibooks: LaTeX/Advanced Mathematics</a></li>
+                <li>LaTeX Tutorial for Beginners on YouTube: <a href="https://www.youtube.com/watch?v=fCzF5gDy60g">here</a></li>
+                <li>Interactive MathJax/KaTeX based LaTeX primer: <a href="https://www.dainiak.com/ilatexprimer/">here</a></li>
+                <li>LaTeX symbol lookup: <a href="https://detexify.kirelabs.org/classify.html">Detexify</a> and <a href="http://www.martin-thoma.de/write-math/classify/">Write Math</a></li>
+            </ul>
+            LaTeX linting:
+            <ul>
+                <li><a href="https://ctan.org/pkg/chktex"><em>ChkTex</em> latex source checker</a></li>
+                <li><a href="https://sylvainhalle.github.io/textidote/"><em>Textidote</em> correction tool for LaTeX documents</a></li>
+<!--                <li>https://github.com/nspring/style-check</li>-->
+            </ul>
+        </div></div>
+    <div class="row p-2  bg-light border">Paste your LaTeX code here: <div class="well" id="user_input_area"></div></div>
     <div class="row p-2">
         <div class="btn-group"  role="group">
-        <button class="btn btn-outline-primary" id="btn_check">Проверить!</button>
-        <button class="btn btn-outline-primary" id="btn_try_typeset">Предпросмотр</button>
-        <a class="btn btn-outline-primary" role="button" href="https://goo.gl/forms/bsCb6TxkEA49vof52">Сообщить об ошибке</a>
+            <button class="btn btn-outline-primary" id="btn_check">Check!</button>
+            <button class="btn btn-outline-primary" id="btn_try_typeset">Preview</button>
+            <a class="btn btn-outline-primary" role="button" href="https://goo.gl/forms/bsCb6TxkEA49vof52">Report a bug</a>
         </div>
     </div>
     <div class="row p-2 border">
-        <div class="well flex d-grid gap-1" id="result_display_area">Здесь отображается результат проверки</div>
+        <div class="well flex d-grid gap-1" id="result_display_area">Here the results of the style check will be displayed</div>
     </div>
 </div>
 </body>
