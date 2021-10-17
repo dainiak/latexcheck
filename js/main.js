@@ -105,7 +105,7 @@ function initiate() {
                 "severity": 0
             },
             "CYRILLIC_LETTER_C_MISUSED": {
-                "msg": "Возможно, использована случайно кириллическая буква <strong>с</strong> вместо латинской буквы <strong>c</strong> (це) внутри фоормулы.",
+                "msg": "Возможно, использована случайно кириллическая буква <strong>с</strong> (эс) вместо латинской буквы <strong>c</strong> (це) внутри фоормулы.",
                 "severity": 0
             },
             "FLOOR_FUNCTION_NOTATION": {
@@ -113,7 +113,7 @@ function initiate() {
                 "severity": 0
             },
             "MULTIPLICATION_SIGN": {
-                "msg": "Знак <code>*</code> используется для обозначения умножения в программировании, но не в математике. Пользуйтесь командой <code>\\cdot</code> или <code>\\times</code> (последней в особых случаях).",
+                "msg": "Знак <code>*</code> используется для обозначения умножения в программировании, но не в математике. Пользуйтесь командой <code>\\cdot</code> или <code>\\times</code> (последней только в особых случаях).",
                 "severity": 0
             },
             "SPACE_BEFORE_PUNCTUATION_MARK": {
@@ -153,7 +153,7 @@ function initiate() {
                 "severity": 10
             },
             "MID_IN_SET_COMPREHENSION": {
-                "msg": "При описании множеств вертикальная черта ставится командой <code>\\mid</code>. Например, <code>\\{x^2\\mid x\\in\\mathbb{Z}\\}</code>. И, наоборот, <code>\\mid</code> НЕ используется в остальных контекстах, например, при обозначении модуля числа. Для обозначения последнего пишите <code>\\lvert x \\rvert</code>.",
+                "msg": "При описании множеств вертикальная черта ставится командой <code>\\mid</code>. Например, <code>\\{x^2\\mid x\\in\\mathbb{Z}\\}</code>. И, наоборот, <code>\\mid</code> НЕ используется в остальных контекстах, например, при обозначении модуля числа. Для обозначения последнего пишите <code>|x|</code> или <code>\\lvert x \\rvert</code>.",
                 "severity": 0
             },
             "SYMBOLIC_LINKS": {
