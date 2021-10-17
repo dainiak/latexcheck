@@ -10,7 +10,6 @@ function initialize() {
     if (inBrowser) { window.hlAceLine = hlAceLine; }
 
     function checkLatexCode(latexString, addWarningCustom) {
-        let rda = document.querySelector('#result_display_area');
         if (addWarningCustom !== undefined && typeof addWarningCustom !== 'function') {
             throw new Error('addWarningCustom must be a function');
         }
@@ -19,13 +18,14 @@ function initialize() {
         function isCyrLetter(letter){ return capCyrLetters.includes(letter) || smallCyrLetters.includes(letter) }
         function isWordSymbol(letter){ return /\w/.test(letter) || isCyrLetter(letter) }
 
-        console.assert(!!window.errorDescriptions);
-        let errors = this.errors = window.errorDescriptions;
+        console.assert(!!window.i18n);
+        let errors = this.errors = window.i18n.errorDescriptions;
+        let strings = window.i18n.strings;
+        let rda = document.querySelector('#result_display_area');
 
         let usedErrorCodes = {};
         if (!addWarningCustom) {
-            // This var will be visible to the code below.
-            document.querySelector('#result_display_area').innerHTML = '';
+            rda.innerHTML = '';
         }
 
         function extractSnippet(fragment, position, radius) {
@@ -79,17 +79,21 @@ function initialize() {
         }
 
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber){
+            if(errors[errorCode].msg === '') {
+                return;
+            }
+
             if (codeFragment){
                 codeFragment = '<br><span class="badge bg-light bg-gradient text-dark"'
-                        + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '')
-                        +'>Подозрительный фрагмент: <code>…' + codeFragment + '…</code>'
-                        + (lineNumber ? ' (строка ' + lineNumber + ' в редакторе)' : '')
-                        + '</span>';
+                    + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '')
+                    +'>Подозрительный фрагмент: <code>…' + codeFragment + '…</code>'
+                    + (lineNumber ? ' (строка ' + lineNumber + ' в редакторе)' : '')
+                    + '</span>';
             }
 
             if(!usedErrorCodes[errorCode]) {
                 let severity = errors[errorCode].severity.toString();
-                document.querySelector('#result_display_area').innerHTML +=
+                rda.innerHTML +=
                     '<div class="p-2 border severity' + severity + '" id="' + errorCode + '" data-severity="' + severity +'">'
                     + (extraInfo ? extraInfo : errors[errorCode].msg)
                     + '</div>';
@@ -108,17 +112,17 @@ function initialize() {
 
         function addTypicalWarning(errorCode, fragmentType, fragmentIndex, positionInFragment){
             return addWarning(
-                    errorCode,
-                    null,
-                    extractSnippet(
-                            (fragmentType === 'math' ? mathFragments : textFragments)[fragmentIndex],
-                            positionInFragment
-                    ),
-                    findLine(
-                            fragmentType,
-                            fragmentIndex,
-                            positionInFragment
-                    )
+                errorCode,
+                null,
+                extractSnippet(
+                    (fragmentType === 'math' ? mathFragments : textFragments)[fragmentIndex],
+                    positionInFragment
+                ),
+                findLine(
+                    fragmentType,
+                    fragmentIndex,
+                    positionInFragment
+                )
             );
         }
 
@@ -163,7 +167,8 @@ function initialize() {
                     if (lastSeenBrace !== '$$'){
                         addWarning(
                             'MISMATCHED_MATH_DELIMITERS',
-                            'Команда <code>' + nextTwoSymbols + '</code> встречена в математическом режиме, открытом ранее командой <code>' + lastSeenBrace + '</code>');
+                            strings.mmDoubleOpen.replace('{1}', nextTwoSymbols).replace('{2}', lastSeenBrace)
+                        );
                         break;
                     }
                     currentlyInMathMode = false;
@@ -178,8 +183,9 @@ function initialize() {
             else if (['\\[', '\\('].includes(nextTwoSymbols)){
                 if (currentlyInMathMode){
                     addWarning(
-                            'MISMATCHED_MATH_DELIMITERS',
-                            'Команда <code>' + nextTwoSymbols + '</code> встречена в математическом режиме, открытом ранее командой <code>' + lastSeenBrace + '</code>');
+                        'MISMATCHED_MATH_DELIMITERS',
+                        strings.mmDoubleOpen.replace('{1}', nextTwoSymbols).replace('{2}', lastSeenBrace)
+                    );
                     break;
                 }
                 lastSeenBrace = nextTwoSymbols;
@@ -189,14 +195,16 @@ function initialize() {
             else if (['\\]', '\\)'].includes(nextTwoSymbols)){
                 if (!currentlyInMathMode){
                     addWarning(
-                            'MISMATCHED_MATH_DELIMITERS',
-                            'Команда <code>' + nextTwoSymbols + '</code> встречена в текстовом режиме, а должна была закрывать математический.');
+                        'MISMATCHED_MATH_DELIMITERS',
+                        strings.mmWrongClose.replace('{1}', nextTwoSymbols)
+                    );
                     break;
                 }
                 if (nextTwoSymbols === '\\]' && lastSeenBrace !== '\\[' || nextTwoSymbols === '\\)' && lastSeenBrace !== '\\(' ) {
                     addWarning(
-                            'MISMATCHED_MATH_DELIMITERS',
-                            'Математический режим был открыт командой <code>' + lastSeenBrace + '</code>, а закрыт командой <code>' + nextTwoSymbols + '</code>');
+                        'MISMATCHED_MATH_DELIMITERS',
+                        strings.mmDoubleOpen.replace('{1}', nextTwoSymbols).replace('{2}', lastSeenBrace)
+                    );
                     break;
                 }
                 lastSeenBrace = '';
@@ -209,8 +217,9 @@ function initialize() {
             else if (nextSymbol === '$'){
                 if(currentlyInMathMode && lastSeenBrace !== '$') {
                     addWarning(
-                            'MISMATCHED_MATH_DELIMITERS',
-                            'Математический режим был открыт командой <code>' + lastSeenBrace + '</code>, а закрыт командой <code>$</code>');
+                        'MISMATCHED_MATH_DELIMITERS',
+                        strings.mmDoubleOpen.replace('{1}', '$').replace('{2}', lastSeenBrace)
+                    );
                     break;
                 }
                 if(!currentlyInMathMode){
@@ -594,24 +603,24 @@ function initialize() {
 
 
         if (addWarningCustom === undefined && rda.innerHTML === '') {
-            document.querySelector('#result_display_area').innerHTML = 'Замечательный результат: автоматическая проверка пройдена без замечаний.';
+            rda.innerHTML = strings.noErrors;
         }
     }
 
     function checkLatexCodeExport(latexString) {
-        let used_errcodes = {};
+        let usedErrorCodes = {};
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber) {
-            if (!used_errcodes[errorCode]) {
-                used_errcodes[errorCode] = {
+            if (!usedErrorCodes[errorCode]) {
+                usedErrorCodes[errorCode] = {
                     severity: this.errors[errorCode].severity,
                     extraInfo: (extraInfo ? extraInfo : this.errors[errorCode].msg),
                     codeFragments: []
                 };
             }
-            used_errcodes[errorCode].codeFragments.push({code: codeFragment, line: lineNumber});
+            usedErrorCodes[errorCode].codeFragments.push({code: codeFragment, line: lineNumber});
         }
         checkLatexCode(latexString, addWarning);
-        return used_errcodes;
+        return usedErrorCodes;
     }
 
     if (!inBrowser) {
@@ -635,11 +644,12 @@ function initialize() {
     editor.resize();
     editor.focus();
     editor.gotoLine(1);
+    let rda = document.querySelector('#result_display_area');
 
     document.querySelector('#btn_check').addEventListener('click', function(){
-        document.querySelector('#result_display_area').classList.add('flex');
+        rda.classList.add('flex');
         checkLatexCode(editor.getValue());
-        MathJax.typeset([document.querySelector('#result_display_area')]);
+        MathJax.typeset([rda]);
     });
 
     function typesetWithProcessing(){
@@ -658,20 +668,19 @@ function initialize() {
             .replace(/''/g, '”')
             .replace(/\n\n/g, '\\par');
 
-        let rda = document.querySelector('#result_display_area');
         rda.innerHTML = v;
         MathJax.typesetPromise([rda]).then(() => {
             let v = rda.innerHTML;
             v = v
                 .replace(/\\par/g, '<br>')
-                .replace('((beginTask))', '<span class="badge">Условие задачи</span>')
-                .replace('((beginSolution))', '<span class="badge">Решение</span>');
+                .replace('((beginTask))', '<span class="badge">' + window.i18n.strings.task + '</span>')
+                .replace('((beginSolution))', '<span class="badge">' + window.i18n.strings.solution + '</span>');
             rda.innerHTML = v;
         });
     }
 
     document.querySelector('#btn_try_typeset').addEventListener('click', function(){
-        document.querySelector('#result_display_area').classList.remove('flex');
+        rda.classList.remove('flex');
         typesetWithProcessing();
     });
 }
