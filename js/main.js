@@ -79,7 +79,7 @@ function initialize() {
         }
 
         function addWarning(errorCode, extraInfo, codeFragment, lineNumber){
-            if(errors[errorCode].msg === '') {
+            if(!errors[errorCode] || !errors[errorCode].msg) {
                 return;
             }
 
@@ -283,11 +283,18 @@ function initialize() {
             addWarning('PARAGRAPH_STARTS_WITH_FORMULA', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
-        /* STAGE: check if numerals are properly abbreviated */
+        /* STAGE: check if ordinals are properly abbreviated */
         badPos = latexString.search(/(\\\)|\$)?\s*-{1,3}\s*(ый|ого|о|тому|ому|ему|ом|ая|ой|ую|ые|ыми|и|ым|тым|той|им|его|того|тых|ых|том|ем|ём|ех|ёх|ух)([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
         if (badPos >= 0) {
-            addWarning('NUMERAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
+            addWarning('RU_ORDINAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
+
+        badPos = latexString.search(/(([2-9]|11)\\?[a-z]*[-]*{?st)|((11|12|13)\\?[a-z]*[-]*{?(st|nd|rd))/i);
+        if (badPos >= 0) {
+            addWarning('EN_ORDINAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
+        }
+        addWarningQuick('math', /\^{(th|st|nd|rd)}/, 'EN_ORDINAL_ABBREVIATION_IN_MATH');
+
 
         /* STAGE: check if letters are defined before they are used */
         badPos = latexString.search(/,(\\]|\$)?\s+где([^абвгдеёжзиклмнопрстуфхцчшщьыъэюя]|$)/i);
@@ -486,15 +493,15 @@ function initialize() {
         addWarningQuick('text', /([^\\]\\(\\|newline)[^\\])/, 'SUGGESTED_NEW_PARAGRAPH');
 
         /* STAGE: check latin letters outside math mode */
-        addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH');
+        addWarningQuick('text', /(^|[,. ~])[a-zA-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH_RU');
+        addWarningQuick('text', /(^|[,. ~])[b-zA-HJ-Z]($|[,.:!? ~-])/, 'LATIN_LETTER_OUTSIDE_MATH_EN');
 
         /* STAGE: check typical math commands outside math mode */
         addWarningQuick('text', /(\\(infty|cdot|sum))|([0-9 \n]+ *[=+*^])|([+*^] *[0-9 \n]+)/, 'MATH_SEMANTICS_OUTSIDE_MATH');
 
         /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
         addWarningQuick('text', /[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i, 'LATIN_LETTER_C_MISUSED');
-        addWarningQuick('math', /(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[с]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i, 'CYRILLIC_LETTER_C_MISUSED');
-
+        addWarningQuick('math', /(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[аесх]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i, 'CYRILLIC_LETTER_C_MISUSED');
 
         addWarningQuick('math', /-$/, 'DASH_IN_MATH_MODE');
 
@@ -551,6 +558,9 @@ function initialize() {
 
         /* STAGE: check if tilde is not surrounded with spaces */
         addWarningQuick('text', /\s+~|~\s+/, 'TILDE_INEFFECTIVE_AS_NBSP');
+
+        /* STAGE: check if spaces are used for indentation */
+        addWarningQuick('any', /(~|\\:|\\ |\\,|\\!|\\>|\\space|{ }){2,}/, 'INDENTATION_WITH_SPACES');
 
 
         /* STAGE: check that \le is used instead of <= */
