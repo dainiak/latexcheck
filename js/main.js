@@ -313,7 +313,7 @@ function initialize() {
         }
 
         /* STAGE: split into text and math blocks */
-        fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end){(?:equation|align|gather|eqnarray|multline|flalign|alignat|math)\*?})/);
+        fragments = latexString.split(/(\$\$|\\\[|\\]|\\\(|\\\)|\$|\\(?:begin|end){(?:displaymath|alignat|flalign|equation|align|gather|eqnarray|multline|math)\*?})/);
 
         let mathFragmentTypes = [];
         for (let i = 0; i < fragments.length; ++i){
@@ -435,8 +435,7 @@ function initialize() {
 
 
         /* STAGE: Trivially named symbolic link */
-        addWarningQuick('math', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
-        addWarningQuick('text', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
+        addWarningQuick('any', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
 
         /* STAGE: Ellipsis */
         addWarningQuick('math', /\.{3}/, 'ELLIPSIS_LDOTS');
@@ -531,7 +530,7 @@ function initialize() {
 
 
         /* STAGE: check for spaces before parentheses */
-        addWarningQuick('text', /[^()\[\]{}\n\t-\\/+]\(/, 'SPACE_BEFORE_PARENTHESES');
+        addWarningQuick('text', /[^()\[\]{}\n\t-\\/+]\(/, 'SPACE_BEFORE_PARENTHESIS');
 
 
         /* STAGE: check if there are symbols that do not meet the Russian typographic tradition */
@@ -562,7 +561,7 @@ function initialize() {
         addWarningQuick('text', /\s+~|~\s+/, 'TILDE_INEFFECTIVE_AS_NBSP');
 
         /* STAGE: check if spaces are used for indentation */
-        addWarningQuick('any', /(~|\\:|\\ |\\,|\\!|\\>|\\space|{ }){2,}/, 'INDENTATION_WITH_SPACES');
+        addWarningQuick('any', /(~|\\:|\\ |\\,|\\!|\\>|\\space|\{ }){2,}/, 'INDENTATION_WITH_SPACES');
 
 
         /* STAGE: check that \le is used instead of <= */

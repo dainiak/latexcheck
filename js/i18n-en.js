@@ -101,7 +101,7 @@ window.i18n = {
             "msg": "There should be no space symbol inserted before colon, semicolon, comma, full stop, exclamation mark or question mark.",
             "severity": 0
         },
-        "SPACE_BEFORE_PARENTHESES": {
+        "SPACE_BEFORE_PARENTHESIS": {
             "msg": "There should be a space before the opening parenthesis.",
             "severity": 0
         },
