@@ -15,8 +15,8 @@ function initialize() {
 
     function checkLatexCode(latexString, addWarningCustom) {
         fragments = null;
-        let textFragments = [];
-        let mathFragments = [];
+        textFragments = [];
+        mathFragments = [];
 
         if (addWarningCustom !== undefined && typeof addWarningCustom !== 'function') {
             throw new Error('addWarningCustom must be a function');
