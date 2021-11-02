@@ -14,6 +14,10 @@ function initialize() {
     if (inBrowser) { window.hlAceLine = hlAceLine; }
 
     function checkLatexCode(latexString, addWarningCustom) {
+        fragments = null;
+        let textFragments = [];
+        let mathFragments = [];
+
         if (addWarningCustom !== undefined && typeof addWarningCustom !== 'function') {
             throw new Error('addWarningCustom must be a function');
         }
@@ -28,9 +32,7 @@ function initialize() {
         let rda = document.querySelector('#result_display_area');
 
         let usedErrorCodes = {};
-        if (!addWarningCustom) {
-            rda.innerHTML = '';
-        }
+        rda.innerHTML = '';
 
         function extractSnippet(fragment, position, radius) {
             if(position === null || position === undefined){
