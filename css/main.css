@@ -96,3 +96,7 @@ div.social-share {
     text-decoration: none;
     color: whitesmoke;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

@@ -90,7 +90,7 @@ function initialize() {
             }
 
             if (codeFragment){
-                codeFragment = '<br><span class="badge bg-light bg-gradient text-dark"'
+                codeFragment = '<br><span class="badge bg-light bg-gradient text-dark cursor-pointer"'
                     + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '') + '>'
                     + strings.wrongFragment.replace('{1}', codeFragment)
                     + (lineNumber ? strings.lineNo.replace('{1}', lineNumber): '')
@@ -648,6 +648,7 @@ function initialize() {
         mode: 'ace/mode/latex',
         minLines: 3,
         maxLines: Infinity,
+        fontSize: '12pt',
         wrap: true,
         showGutter: true,
         fadeFoldWidgets: false,
