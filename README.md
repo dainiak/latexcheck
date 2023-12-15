@@ -1,2 +1,4 @@
-# LaTeXcheck
-Online LaTeX style checker/linter a la ChkTex. Try it [here](https://www.dainiak.com/latexcheck/).
+# LaTeXcheck — online $\LaTeX$ style checker/linter
+[Try it here](https://www.dainiak.com/latexcheck/).
+
+Console script version of this tool is available [here](https://github.com/dainiak/latexcheck-py/).

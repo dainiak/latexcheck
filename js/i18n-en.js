@@ -18,7 +18,7 @@ window.i18n = {
             "severity": 0
         },
         "CONSECUTIVE_DISPLAY_FORMULAE": {
-            "msg": "Two consecutive display style formulas detected. This should be avoided. Use <code>aligned</code> environment or its analogues to properly typeset long formula that does not fit into single line. See e.g. <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">these guidelines</a>.",
+            "msg": "Two consecutive display style formulas have been detected. This should be avoided. Use <code>aligned</code> environment or its analogues to properly typeset long formula that does not fit into single line. See e.g. <a href=\"https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath\" target=\"_blank\">these guidelines</a>.",
             "severity": 0
         },
         "EQNARRAY_USED": {
@@ -198,7 +198,7 @@ window.i18n = {
             "severity": 0
         },
         "INVISIBLE_BRACES": {
-            "msg": "To typeset braces you should write <code>\\{…\\}</code>. Without backslaches the braces <code>{…}</code> are the semantic delimiters in code, but are not displayed in the PDF.",
+            "msg": "To typeset braces you should write <code>\\{…\\}</code>. Without backslashes the braces <code>{…}</code> are the semantic delimiters in code, but are not displayed in the PDF.",
             "severity": 0
         },
         "SETS_IN_BBFONT": {
@@ -266,7 +266,7 @@ window.i18n = {
             "severity": 0
         },
         "USE_DIVIDES_INSTEAD_OF_VDOTS": {
-            "msg": "Command <code>\\vdots</code> should be primarily used for typesetting matrices as a vertical ellipsis. When writing on divisibility of numbers consider using vertical line (“…devides…”) instead of triple vertical dots (“…is divisible by…”).",
+            "msg": "Command <code>\\vdots</code> should be primarily used for typesetting matrices as a vertical ellipsis. When writing on divisibility of numbers, consider using vertical line (“…devides…”) instead of triple vertical dots (“…is divisible by…”).",
             "severity": 0
         },
         "FORMULA_NEIGHBOURING_REFERENCE": {
@@ -278,7 +278,7 @@ window.i18n = {
             "severity": 0
         },
         "UNICODE_SQRT": {
-            "msg": "To typeset the square root symbol use <code>\\sqrt</code> instead of UNICODE symbol. As a benefit you will also get a beautiful stretching overline.",
+            "msg": "To typeset the square root symbol use <code>\\sqrt</code> instead of UNICODE symbol. As a benefit, you will also get a beautiful stretching overline.",
             "severity": 0
         }
     }
