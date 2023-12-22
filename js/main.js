@@ -41,23 +41,23 @@ function initialize() {
             radius = radius ? radius : 5;
             let left = Math.max(0, position-radius);
             let right = Math.min(fragment.length-1, position+radius);
-            if (isWordSymbol(fragment.substr(left, 1))) {
-                while (left > 0 && isWordSymbol(fragment.substr(left-1, 1))) {
+            if (isWordSymbol(fragment.substring(left, left + 1))) {
+                while (left > 0 && isWordSymbol(fragment.substring(left-1, left))) {
                     --left;
                 }
             }
             else {
-                while (left > 0 && !isWordSymbol(fragment.substr(left-1, 1))) {
+                while (left > 0 && !isWordSymbol(fragment.substring(left-1, left))) {
                     --left;
                 }
             }
-            if (isWordSymbol(fragment.substr(right, 1))) {
-                while (right < fragment.length - 1 && isWordSymbol(fragment.substr(right+1, 1))) {
+            if (isWordSymbol(fragment.substring(right, right + 1))) {
+                while (right < fragment.length - 1 && isWordSymbol(fragment.substring(right+1, right+2))) {
                     ++right;
                 }
             }
             else {
-                while (right < fragment.length - 1 && !isWordSymbol(fragment.substr(right+1, 1))) {
+                while (right < fragment.length - 1 && !isWordSymbol(fragment.substring(right+1, right+2))) {
                     ++right;
                 }
             }
@@ -166,8 +166,8 @@ function initialize() {
         let currentlyInMathMode = false;
         let lastSeenBrace = '';
         while (i < latexString.length){
-            let nextTwoSymbols = latexString.substr(i,2);
-            let nextSymbol = latexString.substr(i,1);
+            let nextTwoSymbols = latexString.substring(i, i+2);
+            let nextSymbol = latexString.substring(i, i+1);
             if (nextTwoSymbols === '$$'){
                 if (currentlyInMathMode){
                     if (lastSeenBrace !== '$$'){
@@ -295,7 +295,7 @@ function initialize() {
             addWarning('RU_ORDINAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
-        badPos = latexString.search(/(([2-9]|11)\\?[a-z]*[-]*{?st)|((11|12|13)\\?[a-z]*[-]*{?(st|nd|rd))/i);
+        badPos = latexString.search(/(([2-9]|11)\\?[a-z]*-*{?st)|((11|12|13)\\?[a-z]*-*{?(st|nd|rd))/i);
         if (badPos >= 0) {
             addWarning('EN_ORDINAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
@@ -361,7 +361,7 @@ function initialize() {
 
         /* STAGE: check for period before new sentence */
         for (let i = 0; i < textFragments.length; ++i) {
-            if (i > 0 && capCyrLetters.includes(textFragments[i].trim().substr(0,1)) && !mathFragments[i-1].trim().match(/\.(\s*}*)*$/)){
+            if (i > 0 && capCyrLetters.includes(textFragments[i].trim().substring(0, 1)) && !mathFragments[i-1].trim().match(/\.(\s*}*)*$/)){
                 addWarning('PERIOD_BEFORE_NEXT_SENTENCE', null, extractSnippet(mathFragments[i-1] + textFragments[i], mathFragments[i-1].length));
             }
         }
@@ -374,9 +374,9 @@ function initialize() {
 
             let modifiedMathFragment = mathFragments[i];
             for (let j = 0, k = 0; j < modifiedMathFragment.length; ++j){
-                if (modifiedMathFragment.substr(j,1) === '|'){
+                if (modifiedMathFragment.substring(j, j+1) === '|'){
                     ++k;
-                    modifiedMathFragment = modifiedMathFragment.substr(0,j) + (k % 2 ? '¹' : '²') + modifiedMathFragment.substr(j+1,modifiedMathFragment.length)
+                    modifiedMathFragment = modifiedMathFragment.substring(0, j) + (k % 2 ? '¹' : '²') + modifiedMathFragment.substring(j+1, j+1+modifiedMathFragment.length)
                 }
             }
             let largeFormula = '(\\\\(frac|binom|over|underline|sum|prod|choose)|((\\)|\\\\}|])[_^]))';
@@ -444,11 +444,11 @@ function initialize() {
 
         /* STAGE: Text in math mode */
         for (let i = 0; i < mathFragments.length; ++i) {
-            let badPos = mathFragments[i].search(new RegExp('[' + smallCyrLetters + capCyrLetters + ']'));
+            let badPos = mathFragments[i].search(new RegExp(`[${smallCyrLetters}${capCyrLetters}]`));
             if (badPos < 0){
                 badPos = mathFragments[i].search(/([^a-z\\]|^)[a-z]{4,}/i);
             }
-            if (badPos >= 0 && mathFragments[i].search(/\\(text|mbox|hbox)/) < 0 && mathFragments[i].substr(0, badPos).search(/\\label/) < 0) {
+            if (badPos >= 0 && mathFragments[i].search(/\\(text|mbox|hbox)/) < 0 && mathFragments[i].substring(0, badPos).search(/\\label/) < 0) {
                 addTypicalWarning('TEXT_IN_MATH_MODE', 'math', i, badPos);
             }
         }
@@ -503,7 +503,7 @@ function initialize() {
         /* STAGE: check typical math commands outside math mode */
         addWarningQuick('text', /(\\(infty|cdot|sum))|([0-9 \n]+ *[=+*^])|([+*^] *[0-9 \n]+)/, 'MATH_SEMANTICS_OUTSIDE_MATH');
 
-        /* STAGE: check if latin letter c accidentially used instead of cyrillic letter с and vice versa*/
+        /* STAGE: check if latin letter c accidentially used instead of a cyrillic letter с and vice versa*/
         addWarningQuick('text', /[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]\s+c\s+[абвгдеёжзиклмнопрстуфхцчшщьыъэюя ]/i, 'LATIN_LETTER_C_MISUSED');
         addWarningQuick('math', /(^|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])[аесх]($|[^ абвгдеёжзиклмнопрстуфхцчшщьыъэюя])/i, 'CYRILLIC_LETTER_C_MISUSED');
 
@@ -662,39 +662,35 @@ function initialize() {
 
     document.querySelector('#btn_check').addEventListener('click', function(){
         rda.classList.add('flex');
+        rda.classList.add('d-grid');
         checkLatexCode(editor.getValue());
         MathJax.typeset([rda]);
     });
 
     function typesetWithProcessing(){
-        let v = editor.getValue();
-        v = v
+        rda.innerHTML = editor.getValue()
             .replace(/\\begin{task}/g,'((beginTask))')
             .replace(/\\begin{solution}/g,'((beginSolution))')
-            .replace(/\\end{(task|solution)}/g,'');
-
-        v = v
+            .replace(/\\end{(task|solution)}/g,'')
             .replace(/---/g, '—')
             .replace(/--/g, '–')
             .replace(/<</g, '«')
             .replace(/>>/g, '»')
             .replace(/``/g,'“')
             .replace(/''/g, '”')
-            .replace(/\n\n/g, '\\par');
+            .replace(/\n\n/g, '\\par ');
 
-        rda.innerHTML = v;
         MathJax.typesetPromise([rda]).then(() => {
-            let v = rda.innerHTML;
-            v = v
+            rda.innerHTML = rda.innerHTML
                 .replace(/\\par/g, '<br>')
-                .replace('((beginTask))', '<span class="badge">' + window.i18n.strings.task + '</span>')
-                .replace('((beginSolution))', '<span class="badge">' + window.i18n.strings.solution + '</span>');
-            rda.innerHTML = v;
+                .replace('((beginTask))', `<span class="badge bg-secondary">${window.i18n.strings.task}</span>`)
+                .replace('((beginSolution))', `<span class="badge bg-secondary">${window.i18n.strings.solution}</span>`);
         });
     }
 
     document.querySelector('#btn_try_typeset').addEventListener('click', function(){
         rda.classList.remove('flex');
+        rda.classList.remove('d-grid');
         typesetWithProcessing();
     });
 }
