@@ -6,15 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Проверка LaTeX-документов на соответствие стандартам оформления.">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="css/main.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.35.0/css/ace.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ace-builds@1.35.0/src-min-noconflict/ace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.4/ace.min.js" integrity="sha512-9xNuS6O4ZXZdCVDekkW4ApP8MfH2SCyK7Wsd4g0l3KDmbNld2vsozYGY6kQup0VKB0iT89cLj/DiRSV7WjfUaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript" >
         window.MathJax = {
@@ -32,37 +29,74 @@
 
 <body>
 <div class="social-share">
-    <div class="ribbon-container"><div class="ribbon"><a href="https://github.com/dainiak/latexcheck" id="githubForkLink" target="_blank">Fork me on GitHub</a></div></div>
+    <div class="ribbon-container"><div class="ribbon"><a href="https://github.com/dainiak/latexcheck" id="githubForkLink" target="_blank">Репозиторий на GitHub</a></div></div>
 </div>
 
-<div class="container d-grid gap-3">
-    <div class="row p-2">
-        <div class="well  bg-light border p-1">
-            Инструмент создан <a rel="author" href="https://www.dainiak.com" target="_blank">Александром Дайняком</a>. Англоязычная версия находится по <a href="index.html">ссылке</a>. См. также <a href="https://github.com/dainiak/latexcheck-py" target="_blank">консольную версию</a> этого инструмента; часто она даёт более точный результат.
-            <br>
-            См. также <a data-bs-toggle="collapse" href="#usefulResources">полезные ресурсы</a> для пользователей \(\LaTeX\).
-        </div>
-        <div class="well bg-light border p-1 collapse" id="usefulResources">
-        Полезные ресурсы:
-        <ul>
-        <li>Стиль в математике: <a href="https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W" target="_blank">П. Халмош. <em>Как писать математические тексты</em></a></li>
-        <li>Краткое руководство по \(\LaTeX\) на русском: <a href="https://www.ccas.ru/voron/download/voron05latex.pdf" target="_blank">К. В. Воронцов. \(\LaTeX\) 2e в примерах</a></li>
-        <li>Стандартное руководство по \(\LaTeX\) на русском: <a href="https://www.mccme.ru/free-books/llang/newllang.pdf" target="_blank">С. М. Львовский. Набор и вёрстка в системе \(\LaTeX\)</a></li>
-        <li>Интерактивный урок по \(\LaTeX\): <a href="https://dainiak.github.io/ilatexprimer/" target="_blank">https://dainiak.github.io/ilatexprimer/</a></li>
-        <li>Рукописный ввод символов \(\LaTeX\): сервисы <a href="https://detexify.kirelabs.org/classify.html" target="_blank">Detexify</a> и <a href="http://www.martin-thoma.de/write-math/classify/" target="_blank">Write Math</a></li>
-        <li>Очень кратко о полезных, но неочевидных элементах оформления: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics" target="_blank">Wikibooks: LaTeX/Advanced Mathematics</a></li>
-        </ul></div></div>
-    <div class="row p-2  bg-light border"><span>Вставьте исходный текст на \(\LaTeX\) сюда:</span> <div class="well" id="user_input_area"></div></div>
-    <div class="row p-2">
-        <div class="btn-group"  role="group">
-        <button class="btn btn-outline-primary" id="btn_check">Проверить!</button>
-        <button class="btn btn-outline-primary" id="btn_try_typeset">Предпросмотр</button>
-        <a class="btn btn-outline-primary" role="button" href="https://goo.gl/forms/bsCb6TxkEA49vof52" target="_blank">Сообщить об ошибке</a>
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p class="mb-2">
+                        Инструмент создан <a rel="author" href="https://www.dainiak.com" target="_blank">Александром Дайняком</a>. Англоязычная версия находится по <a href="index.html">ссылке</a>. См. также <a href="https://github.com/dainiak/latexcheck-py" target="_blank">консольную версию</a> этого инструмента; часто она даёт более точный результат.
+                    </p>
+                    <p class="mb-0">
+                        См. также <a data-bs-toggle="collapse" href="#usefulResources">полезные ресурсы</a> для пользователей \(\LaTeX\).
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row p-2 border">
-        <div class="well flex d-grid gap-1" id="result_display_area">Здесь отображается результат проверки</div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="collapse" id="usefulResources">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Полезные ресурсы</h5>
+                        Полезные ресурсы:
+                        <ul class="mb-4">
+                            <li>Стиль в математике: <a href="https://1drv.ms/w/s!AiAwrmxQ9QLrjOtTQqAXWdl3ryK5Jg?e=vEMU6W" target="_blank">П. Халмош. <em>Как писать математические тексты</em></a></li>
+                            <li>Краткое руководство по \(\LaTeX\) на русском: <a href="https://www.ccas.ru/voron/download/voron05latex.pdf" target="_blank">К. В. Воронцов. \(\LaTeX\) 2e в примерах</a></li>
+                            <li>Стандартное руководство по \(\LaTeX\) на русском: <a href="https://www.mccme.ru/free-books/llang/newllang.pdf" target="_blank">С. М. Львовский. Набор и вёрстка в системе \(\LaTeX\)</a></li>
+                            <li>Интерактивный урок по \(\LaTeX\): <a href="https://dainiak.github.io/ilatexprimer/" target="_blank">https://dainiak.github.io/ilatexprimer/</a></li>
+                            <li>Рукописный ввод символов \(\LaTeX\): сервисы <a href="https://detexify.kirelabs.org/classify.html" target="_blank">Detexify</a> и <a href="http://www.martin-thoma.de/write-math/classify/" target="_blank">Write Math</a></li>
+                            <li>Очень кратко о полезных, но неочевидных элементах оформления: <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics" target="_blank">Wikibooks: LaTeX/Advanced Mathematics</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <label class="form-label">Вставьте исходный текст на \(\LaTeX\) сюда:</label>
+                    <div class="card-text border rounded p-3" id="user_input_area"></div>
+                    <div class="btn-group my-3" role="group">
+                        <button class="btn btn-primary" id="btn_check">Проверить!</button>
+                        <button class="btn btn-primary" id="btn_try_typeset">Предпросмотр</button>
+                        <a class="btn btn-primary" role="button" href="https://goo.gl/forms/bsCb6TxkEA49vof52" target="_blank">Сообщить об ошибке</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text" id="result_display_area">
+                        Здесь отображается результат проверки
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
+
 </html>

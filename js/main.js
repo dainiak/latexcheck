@@ -1,5 +1,8 @@
 let inBrowser = typeof window !== "undefined";
 function initialize() {
+    const isInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body && document.body.setAttribute("data-bs-theme", isInDarkMode ? "dark" : "light");
+
     let editor;
 
     let fragments;
@@ -90,7 +93,7 @@ function initialize() {
             }
 
             if (codeFragment){
-                codeFragment = '<br><span class="badge bg-light bg-gradient text-dark cursor-pointer"'
+                codeFragment = '<br><span class="badge bg-secondary cursor-pointer"'
                     + (lineNumber ? ' onclick="hlAceLine(' + lineNumber + ')"': '') + '>'
                     + strings.wrongFragment.replace('{1}', codeFragment)
                     + (lineNumber ? strings.lineNo.replace('{1}', lineNumber): '')
@@ -644,7 +647,7 @@ function initialize() {
     editor = ace.edit(document.querySelector('#user_input_area'));
     editor.$blockScrolling = Infinity; // To disable annoying ACE warning
     editor.setOptions({
-        theme: 'ace/theme/chrome',
+        theme: "ace/theme/" + (isInDarkMode ? "monokai" : "chrome"),
         mode: 'ace/mode/latex',
         minLines: 3,
         maxLines: Infinity,
