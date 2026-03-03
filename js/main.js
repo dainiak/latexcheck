@@ -1,7 +1,10 @@
 let inBrowser = typeof window !== "undefined";
 function initialize() {
-    const isInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.body && document.body.setAttribute("data-bs-theme", isInDarkMode ? "dark" : "light");
+    let isInDarkMode = false;
+    if (inBrowser) {
+        isInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body && document.body.setAttribute("data-bs-theme", isInDarkMode ? "dark" : "light");
+    }
 
     let editor;
 
@@ -269,7 +272,7 @@ function initialize() {
             addWarning('ITALIC_INSTEAD_OF_EMPH', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
 
-        badPos = latexString.search(/\\](\s|[^абвгдеёжзиклмнопрстуфхцчшщьыъэюя])*\\\[/i);
+        badPos = latexString.search(/\\](\s|[^a-zабвгдеёжзиклмнопрстуфхцчшщьыъэюя])*\\\[/i);
         if (badPos >= 0) {
             addWarning('CONSECUTIVE_DISPLAY_FORMULAE', null, extractSnippet(latexString, badPos), findLine(badPos+3));
         }
@@ -302,7 +305,6 @@ function initialize() {
         if (badPos >= 0) {
             addWarning('EN_ORDINAL_ABBREVIATION', null, extractSnippet(latexString, badPos), findLine(badPos));
         }
-        addWarningQuick('math', /\^{(th|st|nd|rd)}/, 'EN_ORDINAL_ABBREVIATION_IN_MATH');
 
 
         /* STAGE: check if letters are defined before they are used */
@@ -442,6 +444,9 @@ function initialize() {
         /* STAGE: Trivially named symbolic link */
         addWarningQuick('any', /\\label{\s*(eq|equation|eqn|th|thm|lemma|theorem|lem|fig|figure)?:?[^a-z}]}/i, 'TRIVIAL_LABEL');
 
+        /* STAGE: ordinal abbreviation in math mode */
+        addWarningQuick('math', /\^{(th|st|nd|rd)}/, 'EN_ORDINAL_ABBREVIATION_IN_MATH');
+
         /* STAGE: Ellipsis */
         addWarningQuick('math', /\.{3}/, 'ELLIPSIS_LDOTS');
 
@@ -466,7 +471,7 @@ function initialize() {
         /* STAGE: check if there are sentences starting with formula */
         for (let i = 0; i < mathFragments.length; ++i) {
             if (textFragments[i].trim().endsWith('.')) {
-                addTypicalWarning('SENTENCE_STARTS_WITH_FORMULA', 'math', i, badPos);
+                addTypicalWarning('SENTENCE_STARTS_WITH_FORMULA', 'math', i, 0);
             }
         }
 
