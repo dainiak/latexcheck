@@ -17,8 +17,12 @@ export default function Resources({ visible }) {
                                     {section.items.map((item, ii) => (
                                         <li key={ii}>
                                             {item.url ? (
-                                                <a href={item.url} target="_blank" rel="noreferrer"
-                                                   dangerouslySetInnerHTML={{ __html: item.text }} />
+                                                <a
+                                                    href={item.url}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    dangerouslySetInnerHTML={{ __html: item.text }}
+                                                />
                                             ) : (
                                                 <span dangerouslySetInnerHTML={{ __html: item.text }} />
                                             )}

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import en from './en.js';
 import ru from './ru.js';
 
@@ -15,20 +15,18 @@ export function I18nProvider({ children }) {
     });
 
     const toggleLang = useCallback(() => {
-        setLang(prev => {
+        setLang((prev) => {
             const next = prev === 'en' ? 'ru' : 'en';
-            try { localStorage.setItem('latexcheck-lang', next); } catch {}
+            try {
+                localStorage.setItem('latexcheck-lang', next);
+            } catch {}
             return next;
         });
     }, []);
 
     const i18n = locales[lang];
 
-    return (
-        <I18nContext.Provider value={{ lang, i18n, toggleLang }}>
-            {children}
-        </I18nContext.Provider>
-    );
+    return <I18nContext.Provider value={{ lang, i18n, toggleLang }}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {

@@ -10,9 +10,13 @@ export default function Header({ onToggleResources }) {
                     <div className="card-body">
                         <p className="mb-2" dangerouslySetInnerHTML={{ __html: i18n.strings.headerDesc }} />
                         <p className="mb-0">
-                            <a className="text-decoration-none cursor-pointer" role="button" onClick={onToggleResources}>
+                            <button
+                                type="button"
+                                className="btn btn-link text-decoration-none cursor-pointer p-0"
+                                onClick={onToggleResources}
+                            >
                                 {i18n.strings.resourcesToggle}
-                            </a>
+                            </button>
                         </p>
                     </div>
                 </div>

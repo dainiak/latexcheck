@@ -5,14 +5,19 @@ export default function Toolbar({ onCheck, onPreview }) {
 
     return (
         <div className="btn-group my-3" role="group">
-            <button className="btn btn-primary" onClick={onCheck}>
+            <button type="button" className="btn btn-primary" onClick={onCheck}>
                 {i18n.strings.checkBtn}
             </button>
-            <button className="btn btn-primary" onClick={onPreview}>
+            <button type="button" className="btn btn-primary" onClick={onPreview}>
                 {i18n.strings.previewBtn}
             </button>
-            <a className="btn btn-primary" role="button"
-               href="https://goo.gl/forms/bsCb6TxkEA49vof52" target="_blank" rel="noreferrer">
+            <a
+                className="btn btn-primary"
+                role="button"
+                href="https://goo.gl/forms/bsCb6TxkEA49vof52"
+                target="_blank"
+                rel="noreferrer"
+            >
                 {i18n.strings.reportBugBtn}
             </a>
         </div>

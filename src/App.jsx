@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect, useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { MathJaxBaseContext } from 'better-react-mathjax';
-import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
 import { checkLatex } from './checker/checkLatex.js';
+import Editor from './components/Editor.jsx';
 import Header from './components/Header.jsx';
 import Resources from './components/Resources.jsx';
-import Editor from './components/Editor.jsx';
-import Toolbar from './components/Toolbar.jsx';
 import ResultDisplay from './components/ResultDisplay.jsx';
+import Toolbar from './components/Toolbar.jsx';
+import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
 
 function AppContent() {
     const { i18n, toggleLang } = useI18n();
@@ -35,6 +35,7 @@ function AppContent() {
         return () => mq.removeEventListener('change', handler);
     }, []);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: re-typeset MathJax when locale changes
     useEffect(() => {
         if (mjContext?.promise) {
             mjContext.promise.then((MathJax) => {
@@ -81,9 +82,9 @@ function AppContent() {
     return (
         <>
             <div className="social-share">
-                <a className="lang-toggle" role="button" onClick={toggleLang}>
+                <button type="button" className="lang-toggle" onClick={toggleLang}>
                     {i18n.strings.langLabel}
-                </a>
+                </button>
                 <div className="ribbon-container">
                     <div className="ribbon">
                         <a href="https://github.com/dainiak/latexcheck" target="_blank" rel="noreferrer">
@@ -94,14 +95,17 @@ function AppContent() {
             </div>
 
             <div className="container py-4">
-                <Header onToggleResources={() => setResourcesVisible(v => !v)} />
+                <Header onToggleResources={() => setResourcesVisible((v) => !v)} />
                 <Resources visible={resourcesVisible} />
 
                 <div className="row mb-4">
                     <div className="col">
                         <div className="card">
                             <div className="card-body">
-                                <label className="form-label" dangerouslySetInnerHTML={{ __html: i18n.strings.pasteLabel }} />
+                                <label
+                                    className="form-label"
+                                    dangerouslySetInnerHTML={{ __html: i18n.strings.pasteLabel }}
+                                />
                                 <Editor ref={editorRef} isDark={isDark} />
                                 <Toolbar onCheck={handleCheck} onPreview={handlePreview} />
                             </div>

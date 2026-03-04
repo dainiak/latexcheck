@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "lint": "biome check src/",
+    "format": "biome format --write src/ e2e/"
   },
   "dependencies": {
     "ace-builds": "^1.43.6",
@@ -19,6 +21,7 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.5",
     "@playwright/test": "^1.58.2",
     "@vitejs/plugin-react": "^6.0.0-beta.0",
     "vite": "^8.0.0-beta.16",
