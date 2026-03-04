@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { MathJaxBaseContext } from 'better-react-mathjax';
 import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
 import { checkLatex } from './checker/checkLatex.js';
 import Header from './components/Header.jsx';
@@ -10,10 +11,12 @@ import Toolbar from './components/Toolbar.jsx';
 import ResultDisplay from './components/ResultDisplay.jsx';
 
 function AppContent() {
-    const { i18n } = useI18n();
+    const { i18n, toggleLang } = useI18n();
+    const mjContext = useContext(MathJaxBaseContext);
     const editorRef = useRef(null);
     const [results, setResults] = useState(null);
     const [previewHtml, setPreviewHtml] = useState(null);
+    const [resourcesVisible, setResourcesVisible] = useState(false);
     const [isDark, setIsDark] = useState(() => {
         if (typeof window !== 'undefined') {
             return window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -31,6 +34,16 @@ function AppContent() {
         mq.addEventListener('change', handler);
         return () => mq.removeEventListener('change', handler);
     }, []);
+
+    useEffect(() => {
+        if (mjContext?.promise) {
+            mjContext.promise.then((MathJax) => {
+                if (MathJax?.typesetPromise) {
+                    MathJax.typesetPromise();
+                }
+            });
+        }
+    }, [i18n, mjContext]);
 
     const handleCheck = useCallback(() => {
         if (!editorRef.current) return;
@@ -68,6 +81,9 @@ function AppContent() {
     return (
         <>
             <div className="social-share">
+                <a className="lang-toggle" role="button" onClick={toggleLang}>
+                    {i18n.strings.langLabel}
+                </a>
                 <div className="ribbon-container">
                     <div className="ribbon">
                         <a href="https://github.com/dainiak/latexcheck" target="_blank" rel="noreferrer">
@@ -78,8 +94,8 @@ function AppContent() {
             </div>
 
             <div className="container py-4">
-                <Header />
-                <Resources />
+                <Header onToggleResources={() => setResourcesVisible(v => !v)} />
+                <Resources visible={resourcesVisible} />
 
                 <div className="row mb-4">
                     <div className="col">

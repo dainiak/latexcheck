@@ -12,7 +12,7 @@ const mathJaxConfig = {
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <MathJaxContext config={mathJaxConfig}>
+        <MathJaxContext version={4} src="https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-chtml.js" config={mathJaxConfig}>
             <App />
         </MathJaxContext>
     </StrictMode>

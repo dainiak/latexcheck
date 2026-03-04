@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/I18nContext.jsx';
 
 export default function Toolbar({ onCheck, onPreview }) {
-    const { i18n, toggleLang } = useI18n();
+    const { i18n } = useI18n();
 
     return (
         <div className="btn-group my-3" role="group">
@@ -15,9 +15,6 @@ export default function Toolbar({ onCheck, onPreview }) {
                href="https://goo.gl/forms/bsCb6TxkEA49vof52" target="_blank" rel="noreferrer">
                 {i18n.strings.reportBugBtn}
             </a>
-            <button className="btn btn-outline-secondary" onClick={toggleLang}>
-                {i18n.strings.langLabel}
-            </button>
         </div>
     );
 }
