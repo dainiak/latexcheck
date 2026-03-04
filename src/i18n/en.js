@@ -7,12 +7,12 @@ export default {
             'Command <code>{1}</code> occurred in math mode that was opened earlier with command <code>{2}</code>',
         mmWrongClose: 'Command <code>{1}</code> occurred in text mode while it should close the math mode.',
         lineNo: ' (line {1} in source code)',
-        wrongFragment: 'Code fragment: <code>\u2026{1}\u2026</code>',
+        wrongFragment: 'Code fragment: <code>…{1}…</code>',
         pasteLabel: 'Paste your \\(\\LaTeX\\) code here:',
         checkBtn: 'Check!',
         previewBtn: 'Preview',
         reportBugBtn: 'Report a bug',
-        langLabel: '\u0420\u0443\u0441\u0441\u043A\u0438\u0439',
+        langLabel: 'Русский',
         headerDesc:
             '\\(\\LaTeX\\) style checker by <a rel="author" href="https://www.dainiak.com" target="_blank">Alex Dainiak</a>. For the Python-based console script version of this tool click <a href="https://github.com/dainiak/latexcheck-py" target="_blank">here</a>; often it produces more accurate results.',
         resourcesToggle: 'Click here for a list of useful resources for learners and practitioners of \\(\\LaTeX\\)',
@@ -82,7 +82,7 @@ export default {
     ],
     errorDescriptions: {
         DOUBLE_DOLLARS: {
-            msg: 'Double dollars for display math should be avoided in \\(\\LaTeX\\). Use <code>\\[</code>\u2026<code>\\]</code> for display style formulas. See <a href="https://tex.stackexchange.com/questions/503/why-is-preferable-to" target="_blank">explanation</a>.',
+            msg: 'Double dollars for display math should be avoided in \\(\\LaTeX\\). Use <code>\\[</code>…<code>\\]</code> for display style formulas. See <a href="https://tex.stackexchange.com/questions/503/why-is-preferable-to" target="_blank">explanation</a>.',
             severity: 0,
         },
         MISMATCHED_MATH_DELIMITERS: {
@@ -98,7 +98,7 @@ export default {
             severity: 0,
         },
         DASH_HYPHEN: {
-            msg: 'Looks like you have wrongly used hyphen instead of dash. You can typeset M-dash \u201C\u2014\u201D with <code>---</code> and N-dash \u201C\u2013\u201D with <code>--</code> in \\(\\LaTeX\\). See <a href="https://www.grammarly.com/blog/hyphens-and-dashes/" target="_blank">details</a>.',
+            msg: 'Looks like you have wrongly used hyphen instead of dash. You can typeset M-dash “—” with <code>---</code> and N-dash “–” with <code>--</code> in \\(\\LaTeX\\). See <a href="https://www.grammarly.com/blog/hyphens-and-dashes/" target="_blank">details</a>.',
             severity: 0,
         },
         DASH_IN_MATH_MODE: {
@@ -126,23 +126,23 @@ export default {
             severity: 0,
         },
         LOW_LEVEL_FONT_COMMANDS: {
-            msg: 'Instead of using low-level TeX commands <code>{\\it \u2026}</code>, <code>{\\bf \u2026}</code>. Instead use <code>\\textit{\u2026}</code>, <code>\\textbf{\u2026}</code> etc (see <a href="https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text" target="_blank">details</a>.) It is also recommended to use <code>\\emph{\u2026}</code> command to emphasize portions of the text instead of italicizing, as it nicely works also inside italicized text blocks.',
+            msg: 'Instead of using low-level TeX commands <code>{\\it …}</code>, <code>{\\bf …}</code>. Instead use <code>\\textit{…}</code>, <code>\\textbf{…}</code> etc (see <a href="https://tex.stackexchange.com/questions/41681/correct-way-to-bold-italicize-text" target="_blank">details</a>.) It is also recommended to use <code>\\emph{…}</code> command to emphasize portions of the text instead of italicizing, as it nicely works also inside italicized text blocks.',
             severity: 0,
         },
         ITALIC_INSTEAD_OF_EMPH: {
-            msg: 'Consider using <code>\\emph{\u2026}</code> for text emphasis instead of italicizing, as it nicely works also inside italicized text blocks.',
+            msg: 'Consider using <code>\\emph{…}</code> for text emphasis instead of italicizing, as it nicely works also inside italicized text blocks.',
             severity: 0,
         },
         WRONG_QUOTES: {
-            msg: 'Do not use \u201Cprogrammers\u2019 quotes\u201D like <code>"..."</code> to quote in \\(\\LaTeX\\). Use <code>``\u2026\'\'</code> instead.',
+            msg: 'Do not use “programmers’ quotes” like <code>"..."</code> to quote in \\(\\LaTeX\\). Use <code>``…\'\'</code> instead.',
             severity: 0,
         },
         WRONG_SAME_QUOTES: {
-            msg: "Opening and closing quotes are usually different: avoid <code>''\u2026''</code> or <code>``\u2026``</code>, make it <code>``\u2026''</code> instead.",
+            msg: "Opening and closing quotes are usually different: avoid <code>''…''</code> or <code>``…``</code>, make it <code>``…''</code> instead.",
             severity: 0,
         },
         QUOTES_IN_MATH: {
-            msg: "Quote symbol detected in math mode. If you need to put a mathematical \u201Cprime\u201D symbol use <code>\\prime\\prime</code> or just keyboard apostrophes <code>''</code>.",
+            msg: "Quote symbol detected in math mode. If you need to put a mathematical “prime” symbol use <code>\\prime\\prime</code> or just keyboard apostrophes <code>''</code>.",
             severity: 0,
         },
         LATIN_LETTER_OUTSIDE_MATH_EN: {
@@ -154,7 +154,7 @@ export default {
             severity: 0,
         },
         LATIN_LETTER_C_MISUSED: {
-            msg: 'Looks like you have accidentally used latin c instead of cyrillic \u0441.',
+            msg: 'Looks like you have accidentally used latin c instead of cyrillic с.',
             severity: 0,
         },
         CYRILLIC_LETTER_C_MISUSED: {
@@ -198,7 +198,7 @@ export default {
             severity: 0,
         },
         LEFT_RIGHT_RECOMMENDED: {
-            msg: 'When in need of typesetting paired delimiters (parentheses, brackets, braces, absolute value symbol, norm symbol) around some large formula, it is recommended to add <code>\\left</code> and <code>\\right</code> commands. Compare how ugly is the PDF representation of a formula <code>\\[(\\frac{a}{b})^2\\]</code> and how beautiful is the proper variant of it: <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. On the other hand, <code>\\left\u2026 \u2026 \\right\u2026</code> should not be overused, use them just when you see the mismatch between the formula hight and the delimiter height. See <a href="https://tex.stackexchange.com/a/58641" target="_blank">details</a>. You can also employ <a href="https://tex.stackexchange.com/a/1765" target="_blank"><code>\\DeclarePairedDelimiter</code></a> command from <em>mathtools</em> library.',
+            msg: 'When in need of typesetting paired delimiters (parentheses, brackets, braces, absolute value symbol, norm symbol) around some large formula, it is recommended to add <code>\\left</code> and <code>\\right</code> commands. Compare how ugly is the PDF representation of a formula <code>\\[(\\frac{a}{b})^2\\]</code> and how beautiful is the proper variant of it: <code>\\[\\left(\\frac{a}{b}\\right)^2\\]</code>. On the other hand, <code>\\left… … \\right…</code> should not be overused, use them just when you see the mismatch between the formula hight and the delimiter height. See <a href="https://tex.stackexchange.com/a/58641" target="_blank">details</a>. You can also employ <a href="https://tex.stackexchange.com/a/1765" target="_blank"><code>\\DeclarePairedDelimiter</code></a> command from <em>mathtools</em> library.',
             severity: 10,
         },
         NUMERALS_AS_WORDS: {
@@ -210,15 +210,15 @@ export default {
             severity: 0,
         },
         SYMBOLIC_LINKS: {
-            msg: 'Employ symbolic cross-referencing, e.g.: <code>Note that \\begin{equation}\\label{eqSquares} a^2-b^2=(a-b)(a+b). \\end{equation} From~\\eqref{eqSquares} it follows that\u2026</code>. See <a href="https://www.overleaf.com/learn/latex/Cross_referencing_sections%2C_equations_and_floats" target="_blank">details</a>.',
+            msg: 'Employ symbolic cross-referencing, e.g.: <code>Note that \\begin{equation}\\label{eqSquares} a^2-b^2=(a-b)(a+b). \\end{equation} From~\\eqref{eqSquares} it follows that…</code>. See <a href="https://www.overleaf.com/learn/latex/Cross_referencing_sections%2C_equations_and_floats" target="_blank">details</a>.',
             severity: 0,
         },
         EQREF_INSTEAD_OF_REF: {
-            msg: 'Write <code>\\eqref{\u2026}</code> instead of <code>(\\ref{\u2026})</code>.',
+            msg: 'Write <code>\\eqref{…}</code> instead of <code>(\\ref{…})</code>.',
             severity: 0,
         },
         NONBREAKABLE_SPACE_BEFORE_REF: {
-            msg: 'Commands <code>\\ref</code>, <code>\\eqref</code> and such are recommended to be prepended with unbreakable space <code>~</code>, e.g.: <code>\u2026Using~\\eqref{eqMaxwell} we obtain\u2026</code>.',
+            msg: 'Commands <code>\\ref</code>, <code>\\eqref</code> and such are recommended to be prepended with unbreakable space <code>~</code>, e.g.: <code>…Using~\\eqref{eqMaxwell} we obtain…</code>.',
             severity: 0,
         },
         ELLIPSIS_LDOTS: {
@@ -250,7 +250,7 @@ export default {
             severity: 0,
         },
         PARAGRAPH_STARTS_WITH_FORMULA: {
-            msg: 'A paragraph should not start with a formula. If you need to place a formula on a separate line, typeset it in display mode using <code>\\[\u2026\\]</code>.',
+            msg: 'A paragraph should not start with a formula. If you need to place a formula on a separate line, typeset it in display mode using <code>\\[…\\]</code>.',
             severity: 0,
         },
         SENTENCE_STARTS_WITH_FORMULA: {
@@ -258,7 +258,7 @@ export default {
             severity: 0,
         },
         SENTENCE_STARTS_WITH_NUMBER: {
-            msg: 'Typically a sentence should not start with a number. Consider using numerals or reordering the sentenced. <code>5 persons can form a queue in $5!$ ways.</code> you could write <code>Five persons\u2026</code> or <code>Note that 5 persons\u2026</code>',
+            msg: 'Typically a sentence should not start with a number. Consider using numerals or reordering the sentenced. <code>5 persons can form a queue in $5!$ ways.</code> you could write <code>Five persons…</code> or <code>Note that 5 persons…</code>',
             severity: 5,
         },
         OVER_VS_FRAC: {
@@ -270,15 +270,15 @@ export default {
             severity: 0,
         },
         INVISIBLE_BRACES: {
-            msg: 'To typeset braces you should write <code>\\{\u2026\\}</code>. Without backslashes the braces <code>{\u2026}</code> are the semantic delimiters in code, but are not displayed in the PDF.',
+            msg: 'To typeset braces you should write <code>\\{…\\}</code>. Without backslashes the braces <code>{…}</code> are the semantic delimiters in code, but are not displayed in the PDF.',
             severity: 0,
         },
         SETS_IN_BBFONT: {
-            msg: 'Standard number sets should be typeset in \u201Cblackboard bold\u201D font: e.g. the usages of <code>N</code> as a set of naturals should be replaced with <code>\\mathbb{N}</code>.',
+            msg: 'Standard number sets should be typeset in “blackboard bold” font: e.g. the usages of <code>N</code> as a set of naturals should be replaced with <code>\\mathbb{N}</code>.',
             severity: 0,
         },
         MANUAL_LISTS: {
-            msg: 'Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly\u2026 \\item Secondly\u2026 \\end{enumerate}</code>. Learn more about typesetting lists <a href="https://www.overleaf.com/learn/latex/Lists" target="_blank">here</a>.',
+            msg: 'Avoid manual numbering in lists. Employ <em>enumerate</em> environment: <code>\\begin{enumerate}\\item Firstly… \\item Secondly… \\end{enumerate}</code>. Learn more about typesetting lists <a href="https://www.overleaf.com/learn/latex/Lists" target="_blank">here</a>.',
             severity: 0,
         },
         MOD_NOT_A_COMMAND: {
@@ -286,7 +286,7 @@ export default {
             severity: 0,
         },
         TILDE_INEFFECTIVE_AS_NBSP: {
-            msg: 'The symbol <code>~</code> denotes the unbreakable space in \\(\\LaTeX\\). It should not be surrounded with spaces: you loose unbreakability. For instance, instead of <code>Formula ~\\eqref{\u2026} implies\u2026</code> you should write <code>Formula~\\eqref{\u2026} implies\u2026</code>',
+            msg: 'The symbol <code>~</code> denotes the unbreakable space in \\(\\LaTeX\\). It should not be surrounded with spaces: you loose unbreakability. For instance, instead of <code>Formula ~\\eqref{…} implies…</code> you should write <code>Formula~\\eqref{…} implies…</code>',
             severity: 0,
         },
         INDENTATION_WITH_SPACES: {
@@ -314,11 +314,11 @@ export default {
             severity: 0,
         },
         UNNECESSARY_MATH_MODE: {
-            msg: 'If the only content of a formula is a single symbols which is neither a digit nor a single letter \u2014 that is suspicious! Most likely you either did not need math mode here or unnecessarily broke a formula into pieces.',
+            msg: 'If the only content of a formula is a single symbols which is neither a digit nor a single letter — that is suspicious! Most likely you either did not need math mode here or unnecessarily broke a formula into pieces.',
             severity: 0,
         },
         BETTER_TO_USE_WORDS_THEN_MATH: {
-            msg: 'Constructs like <code>the number of elements $=m^2$</code> are unacceptable in proper mathematical writing except for taking short personal notes. Symbols  \\(=, \\gt, \\geqslant\\) and such should be replaced with words if surrounded by words: <code>\u2026does not exceed $m^2$</code>, <code>\u2026equals $m^2$</code> etc.',
+            msg: 'Constructs like <code>the number of elements $=m^2$</code> are unacceptable in proper mathematical writing except for taking short personal notes. Symbols  \\(=, \\gt, \\geqslant\\) and such should be replaced with words if surrounded by words: <code>…does not exceed $m^2$</code>, <code>…equals $m^2$</code> etc.',
             severity: 0,
         },
         NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC: {
@@ -334,11 +334,11 @@ export default {
             severity: 0,
         },
         MATH_ENVIRONMENT_VERBOSITY_WARNING: {
-            msg: 'The <code>math</code> environment is not popular in \\(\\LaTeX\\) community. You can use a shorter (and absolutely equivalent in terms of what you get of it) construct <code>\\(\u2026\\)</code> or <code>$\u2026$</code>. Note also that <em>math</em> does not make a display-style formula, it opens the standard inline-math mode. For display math use <code>\\[\u2026\\]</code> or one of the environments <em>equation</em>, <em>array</em> etc.',
+            msg: 'The <code>math</code> environment is not popular in \\(\\LaTeX\\) community. You can use a shorter (and absolutely equivalent in terms of what you get of it) construct <code>\\(…\\)</code> or <code>$…$</code>. Note also that <em>math</em> does not make a display-style formula, it opens the standard inline-math mode. For display math use <code>\\[…\\]</code> or one of the environments <em>equation</em>, <em>array</em> etc.',
             severity: 0,
         },
         USE_DIVIDES_INSTEAD_OF_VDOTS: {
-            msg: 'Command <code>\\vdots</code> should be primarily used for typesetting matrices as a vertical ellipsis. When writing on divisibility of numbers, consider using vertical line (\u201C\u2026devides\u2026\u201D) instead of triple vertical dots (\u201C\u2026is divisible by\u2026\u201D).',
+            msg: 'Command <code>\\vdots</code> should be primarily used for typesetting matrices as a vertical ellipsis. When writing on divisibility of numbers, consider using vertical line (“…devides…”) instead of triple vertical dots (“…is divisible by…”).',
             severity: 0,
         },
         FORMULA_NEIGHBOURING_REFERENCE: {

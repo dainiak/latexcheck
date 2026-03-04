@@ -143,7 +143,7 @@ describe('CONSECUTIVE_DISPLAY_FORMULAE', () => {
     it('does not flag display formulas separated by Cyrillic text', () => {
         expectNoError(
             checkEN(
-                '\\[x=1\\]\n\u041E\u0442\u0441\u044E\u0434\u0430 \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u043C\n\\[y=2\\]',
+                '\\[x=1\\]\nОтсюда получаем\n\\[y=2\\]',
             ),
             'CONSECUTIVE_DISPLAY_FORMULAE',
         );
@@ -494,7 +494,7 @@ describe('TEXT_IN_MATH_MODE', () => {
     });
 
     it('detects Cyrillic in math', () => {
-        expectError(checkEN('$x = \u043F\u0440\u0438\u0432\u0435\u0442$'), 'TEXT_IN_MATH_MODE');
+        expectError(checkEN('$x = привет$'), 'TEXT_IN_MATH_MODE');
     });
 
     it('does not flag \\text{...}', () => {
@@ -592,11 +592,11 @@ describe('GRAPHICS_IN_MATH_MODE', () => {
 
 describe('UNICODE_SQRT', () => {
     it('detects unicode sqrt symbol', () => {
-        expectError(checkEN('We compute \u221a2.'), 'UNICODE_SQRT');
+        expectError(checkEN('We compute √2.'), 'UNICODE_SQRT');
     });
 
     it('detects unicode sqrt in math', () => {
-        expectError(checkEN('$\u221a2$'), 'UNICODE_SQRT');
+        expectError(checkEN('$√2$'), 'UNICODE_SQRT');
     });
 
     it('does not flag \\sqrt', () => {
@@ -682,7 +682,7 @@ describe('SPACE_AFTER_PUNCTUATION_MARK', () => {
     it('detects missing space after comma before Cyrillic', () => {
         expectError(
             checkRU(
-                '\u0421\u043B\u043E\u0432\u043E,\u0434\u0440\u0443\u0433\u043E\u0435 \u0441\u043B\u043E\u0432\u043E.',
+                'Слово,другое слово.',
             ),
             'SPACE_AFTER_PUNCTUATION_MARK',
         );
@@ -691,7 +691,7 @@ describe('SPACE_AFTER_PUNCTUATION_MARK', () => {
     it('detects punctuation at end of text fragment before inline math (RU)', () => {
         expectError(
             checkRU(
-                '\u0442\u0435\u043A\u0441\u0442,$x$ \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u0435.',
+                'текст,$x$ продолжение.',
             ),
             'SPACE_AFTER_PUNCTUATION_MARK',
         );
@@ -726,7 +726,7 @@ describe('CAPITALIZATION_AFTER_PUNCTUATION_MARK', () => {
     it('detects capital Cyrillic after comma', () => {
         expectError(
             checkRU(
-                '\u0441\u043B\u043E\u0432\u043E, \u0414\u0440\u0443\u0433\u043E\u0435 \u0441\u043B\u043E\u0432\u043E.',
+                'слово, Другое слово.',
             ),
             'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
         );
@@ -735,7 +735,7 @@ describe('CAPITALIZATION_AFTER_PUNCTUATION_MARK', () => {
     it('detects capital Cyrillic after semicolon', () => {
         expectError(
             checkRU(
-                '\u0441\u043B\u043E\u0432\u043E; \u0414\u0440\u0443\u0433\u043E\u0435 \u0441\u043B\u043E\u0432\u043E.',
+                'слово; Другое слово.',
             ),
             'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
         );
@@ -744,7 +744,7 @@ describe('CAPITALIZATION_AFTER_PUNCTUATION_MARK', () => {
     it('does not flag lowercase after comma', () => {
         expectNoError(
             checkRU(
-                '\u0441\u043B\u043E\u0432\u043E, \u0434\u0440\u0443\u0433\u043E\u0435 \u0441\u043B\u043E\u0432\u043E.',
+                'слово, другое слово.',
             ),
             'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
         );
@@ -755,7 +755,7 @@ describe('CAPITALIZATION_AFTER_PERIOD', () => {
     it('detects lowercase Cyrillic after period', () => {
         expectError(
             checkRU(
-                '\u041F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435. \u0434\u0440\u0443\u0433\u043E\u0435 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435.',
+                'Предложение. другое предложение.',
             ),
             'CAPITALIZATION_AFTER_PERIOD',
         );
@@ -764,7 +764,7 @@ describe('CAPITALIZATION_AFTER_PERIOD', () => {
     it('does not flag uppercase after period', () => {
         expectNoError(
             checkRU(
-                '\u041F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435. \u0414\u0440\u0443\u0433\u043E\u0435 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435.',
+                'Предложение. Другое предложение.',
             ),
             'CAPITALIZATION_AFTER_PERIOD',
         );
@@ -775,7 +775,7 @@ describe('PERIOD_BEFORE_NEXT_SENTENCE', () => {
     it('detects missing period when Cyrillic sentence follows math', () => {
         expectError(
             checkRU(
-                '\u0418\u043C\u0435\u0435\u043C $x$ \u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u043A\u0430\u0436\u0435\u043C.',
+                'Имеем $x$ Теперь покажем.',
             ),
             'PERIOD_BEFORE_NEXT_SENTENCE',
         );
@@ -784,7 +784,7 @@ describe('PERIOD_BEFORE_NEXT_SENTENCE', () => {
     it('does not flag when period ends the formula portion', () => {
         expectNoError(
             checkRU(
-                '\u0418\u043C\u0435\u0435\u043C $x.$ \u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u043A\u0430\u0436\u0435\u043C.',
+                'Имеем $x.$ Теперь покажем.',
             ),
             'PERIOD_BEFORE_NEXT_SENTENCE',
         );
@@ -932,17 +932,17 @@ describe('SYMBOLIC_LINKS', () => {
         expectError(checkEN('$*)$'), 'SYMBOLIC_LINKS');
     });
 
-    it('detects Russian "\u0440\u0438\u0441\u0443\u043D\u043E\u043A 1" pattern', () => {
+    it('detects Russian "рисунок 1" pattern', () => {
         expectError(
-            checkRU('\u0421\u043C. \u0440\u0438\u0441\u0443\u043D\u043E\u043A 1. \u041A\u043E\u043D\u0435\u0446.'),
+            checkRU('См. рисунок 1. Конец.'),
             'SYMBOLIC_LINKS',
         );
     });
 
-    it('detects Russian "\u0444\u043E\u0440\u043C\u0443\u043B\u0430 1" pattern', () => {
+    it('detects Russian "формула 1" pattern', () => {
         expectError(
             checkRU(
-                '\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044F \u0444\u043E\u0440\u043C\u0443\u043B\u0443 1, \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u043C. \u041A\u043E\u043D\u0435\u0446.',
+                'Используя формулу 1, получаем. Конец.',
             ),
             'SYMBOLIC_LINKS',
         );
@@ -991,7 +991,7 @@ describe('LATIN_LETTER_OUTSIDE_MATH_RU', () => {
 
     it('does not flag Latin in math mode', () => {
         expectNoError(
-            checkRU('\u041F\u0443\u0441\u0442\u044C $x$ --- \u0447\u0438\u0441\u043B\u043E.'),
+            checkRU('Пусть $x$ --- число.'),
             'LATIN_LETTER_OUTSIDE_MATH_RU',
         );
     });
@@ -1019,16 +1019,16 @@ describe('LATIN_LETTER_C_MISUSED', () => {
     it('detects Latin c in Russian text', () => {
         expectError(
             checkEN(
-                '\u0441\u043B\u043E\u0432\u043E c \u0434\u0440\u0443\u0433\u0438\u043C \u0441\u043B\u043E\u0432\u043E\u043C.',
+                'слово c другим словом.',
             ),
             'LATIN_LETTER_C_MISUSED',
         );
     });
 
-    it('does not flag Cyrillic \u0441', () => {
+    it('does not flag Cyrillic с', () => {
         expectNoError(
             checkEN(
-                '\u0441\u043B\u043E\u0432\u043E \u0441 \u0434\u0440\u0443\u0433\u0438\u043C \u0441\u043B\u043E\u0432\u043E\u043C.',
+                'слово с другим словом.',
             ),
             'LATIN_LETTER_C_MISUSED',
         );
@@ -1036,12 +1036,12 @@ describe('LATIN_LETTER_C_MISUSED', () => {
 });
 
 describe('CYRILLIC_LETTER_C_MISUSED', () => {
-    it('detects Cyrillic \u0430 in math mode', () => {
-        expectError(checkEN('$\u0430+b$'), 'CYRILLIC_LETTER_C_MISUSED');
+    it('detects Cyrillic а in math mode', () => {
+        expectError(checkEN('$а+b$'), 'CYRILLIC_LETTER_C_MISUSED');
     });
 
-    it('detects Cyrillic \u0441 in math mode', () => {
-        expectError(checkEN('$\u0441+b$'), 'CYRILLIC_LETTER_C_MISUSED');
+    it('detects Cyrillic с in math mode', () => {
+        expectError(checkEN('$с+b$'), 'CYRILLIC_LETTER_C_MISUSED');
     });
 
     it('does not flag Latin a in math', () => {
@@ -1141,41 +1141,41 @@ describe('EN_ORDINAL_ABBREVIATION_IN_MATH', () => {
 // RUSSIAN-SPECIFIC CHECKS
 // ============================================================
 describe('RU_ORDINAL_ABBREVIATION', () => {
-    it('detects incorrect ordinal like 5-\u044B\u0439', () => {
-        expectError(checkRU('$5$-\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442.'), 'RU_ORDINAL_ABBREVIATION');
+    it('detects incorrect ordinal like 5-ый', () => {
+        expectError(checkRU('$5$-ый элемент.'), 'RU_ORDINAL_ABBREVIATION');
     });
 
-    it('detects 3-\u043E\u0433\u043E', () => {
-        expectError(checkRU('$3$-\u043E\u0433\u043E \u0447\u0438\u0441\u043B\u0430.'), 'RU_ORDINAL_ABBREVIATION');
+    it('detects 3-ого', () => {
+        expectError(checkRU('$3$-ого числа.'), 'RU_ORDINAL_ABBREVIATION');
     });
 });
 
 describe('ABBREVIATIONS_WITH_SPACE (RU)', () => {
-    it('detects \u0442.\u043A. without thin space', () => {
+    it('detects т.к. without thin space', () => {
         expectError(
-            checkRU('\u0412\u0435\u0440\u043D\u043E, \u0442.\u043A. \u0434\u043E\u043A\u0430\u0437\u0430\u043D\u043E.'),
+            checkRU('Верно, т.к. доказано.'),
             'ABBREVIATIONS_WITH_SPACE',
         );
     });
 
-    it('detects \u0447.\u0442.\u0434. (\u0447.\u0442. portion)', () => {
+    it('detects ч.т.д. (ч.т. portion)', () => {
         expectError(
-            checkRU('\u0414\u043E\u043A\u0430\u0437\u0430\u043D\u043E, \u0447.\u0442.\u0434.'),
+            checkRU('Доказано, ч.т.д.'),
             'ABBREVIATIONS_WITH_SPACE',
         );
     });
 
-    it('detects \u0442.\u043D. without thin space', () => {
+    it('detects т.н. without thin space', () => {
         expectError(
-            checkRU('\u042D\u0442\u043E \u0442.\u043D. \u0442\u0435\u043E\u0440\u0435\u043C\u0430.'),
+            checkRU('Это т.н. теорема.'),
             'ABBREVIATIONS_WITH_SPACE',
         );
     });
 
-    it('does not flag \u0442.\u0435. (not in regex)', () => {
+    it('does not flag т.е. (not in regex)', () => {
         expectNoError(
             checkRU(
-                '\u0423\u0441\u043B\u043E\u0432\u0438\u0435, \u0442.\u0435. \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u0435.',
+                'Условие, т.е. требование.',
             ),
             'ABBREVIATIONS_WITH_SPACE',
         );
@@ -1185,29 +1185,29 @@ describe('ABBREVIATIONS_WITH_SPACE (RU)', () => {
 describe('DASH_SURROUND_WITH_SPACES (RU)', () => {
     it('detects -- without space after', () => {
         expectError(
-            checkRU('\u0441\u043B\u043E\u0432\u043E --\u0434\u0440\u0443\u0433\u043E\u0435.'),
+            checkRU('слово --другое.'),
             'DASH_SURROUND_WITH_SPACES',
         );
     });
 
     it('detects -- without space before', () => {
         expectError(
-            checkRU('\u0441\u043B\u043E\u0432\u043E-- \u0434\u0440\u0443\u0433\u043E\u0435.'),
+            checkRU('слово-- другое.'),
             'DASH_SURROUND_WITH_SPACES',
         );
     });
 
     it('does not flag -- surrounded by spaces', () => {
         expectNoError(
-            checkRU('\u0441\u043B\u043E\u0432\u043E -- \u0434\u0440\u0443\u0433\u043E\u0435.'),
+            checkRU('слово -- другое.'),
             'DASH_SURROUND_WITH_SPACES',
         );
     });
 });
 
 describe('LATE_DEFINITION (RU)', () => {
-    it('detects late variable definition with "\u0433\u0434\u0435"', () => {
-        expectError(checkRU('$x=a+b$, \u0433\u0434\u0435 $a$ --- \u0447\u0438\u0441\u043B\u043E.'), 'LATE_DEFINITION');
+    it('detects late variable definition with "где"', () => {
+        expectError(checkRU('$x=a+b$, где $a$ --- число.'), 'LATE_DEFINITION');
     });
 });
 
@@ -1239,11 +1239,11 @@ describe('RUSSIAN_TYPOGRAPHY_PECULIARITIES (RU)', () => {
 
 describe('NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC (RU)', () => {
     it('detects command directly followed by Cyrillic', () => {
-        expectError(checkRU('\\textbf\u0421\u043B\u043E\u0432\u043E'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
+        expectError(checkRU('\\textbfСлово'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
     });
 
     it('does not flag command with space before Cyrillic', () => {
-        expectNoError(checkRU('\\textbf \u0421\u043B\u043E\u0432\u043E'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
+        expectNoError(checkRU('\\textbf Слово'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
     });
 });
 
@@ -1415,7 +1415,7 @@ describe('Pure function export', () => {
 describe('Language-specific error activation', () => {
     it('RU_ORDINAL_ABBREVIATION does NOT fire with English i18n', () => {
         expectNoError(
-            checkEN('$5$-\u044B\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442.'),
+            checkEN('$5$-ый элемент.'),
             'RU_ORDINAL_ABBREVIATION',
         );
     });
@@ -1429,19 +1429,19 @@ describe('Language-specific error activation', () => {
     });
 
     it('NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC does NOT fire with English i18n (empty msg)', () => {
-        expectNoError(checkEN('\\textbf\u0421\u043B\u043E\u0432\u043E'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
+        expectNoError(checkEN('\\textbfСлово'), 'NO_SPACE_AFTER_COMMAND_BEFORE_CYRILLIC');
     });
 
     it('ABBREVIATIONS_WITH_SPACE does NOT fire with English i18n', () => {
         expectNoError(
-            checkEN('\u0412\u0435\u0440\u043D\u043E, \u0442.\u043A. \u0434\u043E\u043A\u0430\u0437\u0430\u043D\u043E.'),
+            checkEN('Верно, т.к. доказано.'),
             'ABBREVIATIONS_WITH_SPACE',
         );
     });
 
     it('DASH_SURROUND_WITH_SPACES does NOT fire with English i18n', () => {
         expectNoError(
-            checkEN('\u0441\u043B\u043E\u0432\u043E --\u0434\u0440\u0443\u0433\u043E\u0435.'),
+            checkEN('слово --другое.'),
             'DASH_SURROUND_WITH_SPACES',
         );
     });

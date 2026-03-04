@@ -311,12 +311,12 @@ export function checkLatex(latexString, errorDescriptions, strings) {
         if (textFragments[i].match(/^\s*$/)) {
             addWarning(
                 'UNNECESSARY_FORMULA_BREAK',
-                '\u0424\u043E\u0440\u043C\u0443\u043B\u044B <code>' +
+                'Формулы <code>' +
                     mathFragments[i - 1] +
-                    '</code> \u0438 <code>' +
+                    '</code> и <code>' +
                     mathFragments[i] +
-                    '</code> \u043D\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u044B \u0442\u0435\u043A\u0441\u0442\u043E\u043C. ' +
-                    '\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u043E, \u0441\u043B\u0435\u0434\u0443\u0435\u0442 \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u0438\u0442\u044C \u044D\u0442\u0438 \u0434\u0432\u0435 \u0444\u043E\u0440\u043C\u0443\u043B\u044B \u0432 \u043E\u0434\u043D\u0443, \u043B\u0438\u0431\u043E \u0432\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0432\u0432\u043E\u0434\u043D\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u043F\u0435\u0440\u0435\u0434 \u0432\u0442\u043E\u0440\u043E\u0439 \u0444\u043E\u0440\u043C\u0443\u043B\u043E\u0439. ',
+                    '</code> не разделены текстом. ' +
+                    'Возможно, следует объединить эти две формулы в одну, либо вставить вводное слово перед второй формулой. ',
                 textFragments[i],
                 findLine('text', i, 0),
             );
@@ -375,13 +375,13 @@ export function checkLatex(latexString, errorDescriptions, strings) {
                 ++k;
                 modifiedMathFragment =
                     modifiedMathFragment.substring(0, j) +
-                    (k % 2 ? '\u00b9' : '\u00b2') +
+                    (k % 2 ? '¹' : '²') +
                     modifiedMathFragment.substring(j + 1, j + 1 + modifiedMathFragment.length);
             }
         }
         const largeFormula = '(\\\\(frac|binom|over|underline|sum|prod|choose)|((\\)|\\\\}|])[_^]))';
         const delimiters = [
-            '\u00b9[^|]*?  [^|]*?\u00b2',
+            '¹[^|]*?  [^|]*?²',
             '[(][^)]*  [^)]*[)]',
             '\\\\[{].*?  .*?\\\\[}]',
             '\\\\lfloor.*?  .*?\\\\rfloor',
@@ -398,7 +398,7 @@ export function checkLatex(latexString, errorDescriptions, strings) {
                 addWarning(
                     'LEFT_RIGHT_RECOMMENDED',
                     null,
-                    badMatch[0].replace(/[\u00b9\u00b2]/g, '|'),
+                    badMatch[0].replace(/[¹²]/g, '|'),
                     findLine('math', i, 0),
                 );
                 break;
@@ -498,7 +498,7 @@ export function checkLatex(latexString, errorDescriptions, strings) {
     addWarningQuick('math', /\\not\s*(=|\\in)/, 'INCORPORATE_NOT');
 
     /* STAGE: check if there are unicode symbols used instead of proper LaTeX commands */
-    addWarningQuick('any', '\u221a', 'UNICODE_SQRT');
+    addWarningQuick('any', '√', 'UNICODE_SQRT');
 
     /* STAGE: check for includegraphics in math mode */
     addWarningQuick('math', /\\includegraphics/, 'GRAPHICS_IN_MATH_MODE');
