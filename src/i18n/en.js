@@ -12,7 +12,7 @@ export default {
         checkBtn: 'Check!',
         previewBtn: 'Preview',
         reportBugBtn: 'Report a bug',
-        langLabel: 'Русский',
+        langLabel: 'Переключиться на русский',
         headerDesc:
             '\\(\\LaTeX\\) style checker by <a rel="author" href="https://www.dainiak.com" target="_blank">Alex Dainiak</a>. For the Python-based console script version of this tool click <a href="https://github.com/dainiak/latexcheck-py" target="_blank">here</a>; often it produces more accurate results.',
         resourcesToggle: 'Click here for a list of useful resources for learners and practitioners of \\(\\LaTeX\\)',

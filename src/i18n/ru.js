@@ -17,7 +17,7 @@ export default {
         previewBtn: 'Предпросмотр',
         reportBugBtn:
             'Сообщить об ошибке',
-        langLabel: 'English',
+        langLabel: 'Switch to English',
         headerDesc:
             'Инструмент создан <a rel="author" href="https://www.dainiak.com" target="_blank">Александром Дайняком</a>. См. также <a href="https://github.com/dainiak/latexcheck-py" target="_blank">консольную версию</a> этого инструмента; часто она даёт более точный результат.',
         resourcesToggle:
