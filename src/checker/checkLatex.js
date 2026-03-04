@@ -395,12 +395,7 @@ export function checkLatex(latexString, errorDescriptions, strings) {
             const re = new RegExp(ldelim + largeFormula + rdelim);
             const badMatch = modifiedMathFragment.match(re);
             if (badMatch && badMatch[0].search(/\\(right|bigr|biggr)/) < 0) {
-                addWarning(
-                    'LEFT_RIGHT_RECOMMENDED',
-                    null,
-                    badMatch[0].replace(/[¹²]/g, '|'),
-                    findLine('math', i, 0),
-                );
+                addWarning('LEFT_RIGHT_RECOMMENDED', null, badMatch[0].replace(/[¹²]/g, '|'), findLine('math', i, 0));
                 break;
             }
         }

@@ -141,12 +141,7 @@ describe('CONSECUTIVE_DISPLAY_FORMULAE', () => {
     });
 
     it('does not flag display formulas separated by Cyrillic text', () => {
-        expectNoError(
-            checkEN(
-                '\\[x=1\\]\nОтсюда получаем\n\\[y=2\\]',
-            ),
-            'CONSECUTIVE_DISPLAY_FORMULAE',
-        );
+        expectNoError(checkEN('\\[x=1\\]\nОтсюда получаем\n\\[y=2\\]'), 'CONSECUTIVE_DISPLAY_FORMULAE');
     });
 
     it('does not flag display formulas separated by Latin text', () => {
@@ -680,21 +675,11 @@ describe('SPACE_BEFORE_PUNCTUATION_MARK', () => {
 
 describe('SPACE_AFTER_PUNCTUATION_MARK', () => {
     it('detects missing space after comma before Cyrillic', () => {
-        expectError(
-            checkRU(
-                'Слово,другое слово.',
-            ),
-            'SPACE_AFTER_PUNCTUATION_MARK',
-        );
+        expectError(checkRU('Слово,другое слово.'), 'SPACE_AFTER_PUNCTUATION_MARK');
     });
 
     it('detects punctuation at end of text fragment before inline math (RU)', () => {
-        expectError(
-            checkRU(
-                'текст,$x$ продолжение.',
-            ),
-            'SPACE_AFTER_PUNCTUATION_MARK',
-        );
+        expectError(checkRU('текст,$x$ продолжение.'), 'SPACE_AFTER_PUNCTUATION_MARK');
     });
 });
 
@@ -724,70 +709,35 @@ describe('SPACE_AFTER_PARENTHESIS', () => {
 
 describe('CAPITALIZATION_AFTER_PUNCTUATION_MARK', () => {
     it('detects capital Cyrillic after comma', () => {
-        expectError(
-            checkRU(
-                'слово, Другое слово.',
-            ),
-            'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
-        );
+        expectError(checkRU('слово, Другое слово.'), 'CAPITALIZATION_AFTER_PUNCTUATION_MARK');
     });
 
     it('detects capital Cyrillic after semicolon', () => {
-        expectError(
-            checkRU(
-                'слово; Другое слово.',
-            ),
-            'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
-        );
+        expectError(checkRU('слово; Другое слово.'), 'CAPITALIZATION_AFTER_PUNCTUATION_MARK');
     });
 
     it('does not flag lowercase after comma', () => {
-        expectNoError(
-            checkRU(
-                'слово, другое слово.',
-            ),
-            'CAPITALIZATION_AFTER_PUNCTUATION_MARK',
-        );
+        expectNoError(checkRU('слово, другое слово.'), 'CAPITALIZATION_AFTER_PUNCTUATION_MARK');
     });
 });
 
 describe('CAPITALIZATION_AFTER_PERIOD', () => {
     it('detects lowercase Cyrillic after period', () => {
-        expectError(
-            checkRU(
-                'Предложение. другое предложение.',
-            ),
-            'CAPITALIZATION_AFTER_PERIOD',
-        );
+        expectError(checkRU('Предложение. другое предложение.'), 'CAPITALIZATION_AFTER_PERIOD');
     });
 
     it('does not flag uppercase after period', () => {
-        expectNoError(
-            checkRU(
-                'Предложение. Другое предложение.',
-            ),
-            'CAPITALIZATION_AFTER_PERIOD',
-        );
+        expectNoError(checkRU('Предложение. Другое предложение.'), 'CAPITALIZATION_AFTER_PERIOD');
     });
 });
 
 describe('PERIOD_BEFORE_NEXT_SENTENCE', () => {
     it('detects missing period when Cyrillic sentence follows math', () => {
-        expectError(
-            checkRU(
-                'Имеем $x$ Теперь покажем.',
-            ),
-            'PERIOD_BEFORE_NEXT_SENTENCE',
-        );
+        expectError(checkRU('Имеем $x$ Теперь покажем.'), 'PERIOD_BEFORE_NEXT_SENTENCE');
     });
 
     it('does not flag when period ends the formula portion', () => {
-        expectNoError(
-            checkRU(
-                'Имеем $x.$ Теперь покажем.',
-            ),
-            'PERIOD_BEFORE_NEXT_SENTENCE',
-        );
+        expectNoError(checkRU('Имеем $x.$ Теперь покажем.'), 'PERIOD_BEFORE_NEXT_SENTENCE');
     });
 });
 
@@ -933,19 +883,11 @@ describe('SYMBOLIC_LINKS', () => {
     });
 
     it('detects Russian "рисунок 1" pattern', () => {
-        expectError(
-            checkRU('См. рисунок 1. Конец.'),
-            'SYMBOLIC_LINKS',
-        );
+        expectError(checkRU('См. рисунок 1. Конец.'), 'SYMBOLIC_LINKS');
     });
 
     it('detects Russian "формула 1" pattern', () => {
-        expectError(
-            checkRU(
-                'Используя формулу 1, получаем. Конец.',
-            ),
-            'SYMBOLIC_LINKS',
-        );
+        expectError(checkRU('Используя формулу 1, получаем. Конец.'), 'SYMBOLIC_LINKS');
     });
 });
 
@@ -990,10 +932,7 @@ describe('LATIN_LETTER_OUTSIDE_MATH_RU', () => {
     });
 
     it('does not flag Latin in math mode', () => {
-        expectNoError(
-            checkRU('Пусть $x$ --- число.'),
-            'LATIN_LETTER_OUTSIDE_MATH_RU',
-        );
+        expectNoError(checkRU('Пусть $x$ --- число.'), 'LATIN_LETTER_OUTSIDE_MATH_RU');
     });
 });
 
@@ -1017,21 +956,11 @@ describe('MATH_SEMANTICS_OUTSIDE_MATH', () => {
 
 describe('LATIN_LETTER_C_MISUSED', () => {
     it('detects Latin c in Russian text', () => {
-        expectError(
-            checkEN(
-                'слово c другим словом.',
-            ),
-            'LATIN_LETTER_C_MISUSED',
-        );
+        expectError(checkEN('слово c другим словом.'), 'LATIN_LETTER_C_MISUSED');
     });
 
     it('does not flag Cyrillic с', () => {
-        expectNoError(
-            checkEN(
-                'слово с другим словом.',
-            ),
-            'LATIN_LETTER_C_MISUSED',
-        );
+        expectNoError(checkEN('слово с другим словом.'), 'LATIN_LETTER_C_MISUSED');
     });
 });
 
@@ -1152,56 +1081,33 @@ describe('RU_ORDINAL_ABBREVIATION', () => {
 
 describe('ABBREVIATIONS_WITH_SPACE (RU)', () => {
     it('detects т.к. without thin space', () => {
-        expectError(
-            checkRU('Верно, т.к. доказано.'),
-            'ABBREVIATIONS_WITH_SPACE',
-        );
+        expectError(checkRU('Верно, т.к. доказано.'), 'ABBREVIATIONS_WITH_SPACE');
     });
 
     it('detects ч.т.д. (ч.т. portion)', () => {
-        expectError(
-            checkRU('Доказано, ч.т.д.'),
-            'ABBREVIATIONS_WITH_SPACE',
-        );
+        expectError(checkRU('Доказано, ч.т.д.'), 'ABBREVIATIONS_WITH_SPACE');
     });
 
     it('detects т.н. without thin space', () => {
-        expectError(
-            checkRU('Это т.н. теорема.'),
-            'ABBREVIATIONS_WITH_SPACE',
-        );
+        expectError(checkRU('Это т.н. теорема.'), 'ABBREVIATIONS_WITH_SPACE');
     });
 
     it('does not flag т.е. (not in regex)', () => {
-        expectNoError(
-            checkRU(
-                'Условие, т.е. требование.',
-            ),
-            'ABBREVIATIONS_WITH_SPACE',
-        );
+        expectNoError(checkRU('Условие, т.е. требование.'), 'ABBREVIATIONS_WITH_SPACE');
     });
 });
 
 describe('DASH_SURROUND_WITH_SPACES (RU)', () => {
     it('detects -- without space after', () => {
-        expectError(
-            checkRU('слово --другое.'),
-            'DASH_SURROUND_WITH_SPACES',
-        );
+        expectError(checkRU('слово --другое.'), 'DASH_SURROUND_WITH_SPACES');
     });
 
     it('detects -- without space before', () => {
-        expectError(
-            checkRU('слово-- другое.'),
-            'DASH_SURROUND_WITH_SPACES',
-        );
+        expectError(checkRU('слово-- другое.'), 'DASH_SURROUND_WITH_SPACES');
     });
 
     it('does not flag -- surrounded by spaces', () => {
-        expectNoError(
-            checkRU('слово -- другое.'),
-            'DASH_SURROUND_WITH_SPACES',
-        );
+        expectNoError(checkRU('слово -- другое.'), 'DASH_SURROUND_WITH_SPACES');
     });
 });
 
@@ -1414,10 +1320,7 @@ describe('Pure function export', () => {
 
 describe('Language-specific error activation', () => {
     it('RU_ORDINAL_ABBREVIATION does NOT fire with English i18n', () => {
-        expectNoError(
-            checkEN('$5$-ый элемент.'),
-            'RU_ORDINAL_ABBREVIATION',
-        );
+        expectNoError(checkEN('$5$-ый элемент.'), 'RU_ORDINAL_ABBREVIATION');
     });
 
     it('EN_ORDINAL_ABBREVIATION does NOT fire with Russian i18n', () => {
@@ -1433,16 +1336,10 @@ describe('Language-specific error activation', () => {
     });
 
     it('ABBREVIATIONS_WITH_SPACE does NOT fire with English i18n', () => {
-        expectNoError(
-            checkEN('Верно, т.к. доказано.'),
-            'ABBREVIATIONS_WITH_SPACE',
-        );
+        expectNoError(checkEN('Верно, т.к. доказано.'), 'ABBREVIATIONS_WITH_SPACE');
     });
 
     it('DASH_SURROUND_WITH_SPACES does NOT fire with English i18n', () => {
-        expectNoError(
-            checkEN('слово --другое.'),
-            'DASH_SURROUND_WITH_SPACES',
-        );
+        expectNoError(checkEN('слово --другое.'), 'DASH_SURROUND_WITH_SPACES');
     });
 });

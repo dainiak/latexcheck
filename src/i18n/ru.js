@@ -1,29 +1,22 @@
 export default {
     strings: {
-        noErrors:
-            'Замечательный результат: автоматическая проверка пройдена без замечаний.',
+        noErrors: 'Замечательный результат: автоматическая проверка пройдена без замечаний.',
         task: 'Условие задачи',
         solution: 'Решение',
         mmDoubleOpen:
             'Команда <code>{1}</code> встречена в математическом режиме, открытом ранее командой <code>{2}</code>',
-        mmWrongClose:
-            'Команда <code>{1}</code> встречена в текстовом режиме, а должна была закрывать математический.',
+        mmWrongClose: 'Команда <code>{1}</code> встречена в текстовом режиме, а должна была закрывать математический.',
         lineNo: ' (строка {1} в редакторе)',
-        wrongFragment:
-            'Подозрительный фрагмент: <code>…{1}…</code>',
-        pasteLabel:
-            'Вставьте исходный текст на \\(\\LaTeX\\) сюда:',
+        wrongFragment: 'Подозрительный фрагмент: <code>…{1}…</code>',
+        pasteLabel: 'Вставьте исходный текст на \\(\\LaTeX\\) сюда:',
         checkBtn: 'Проверить!',
         previewBtn: 'Предпросмотр',
-        reportBugBtn:
-            'Сообщить об ошибке',
+        reportBugBtn: 'Сообщить об ошибке',
         langLabel: 'Switch to English',
         headerDesc:
             'Инструмент создан <a rel="author" href="https://www.dainiak.com" target="_blank">Александром Дайняком</a>. См. также <a href="https://github.com/dainiak/latexcheck-py" target="_blank">консольную версию</a> этого инструмента; часто она даёт более точный результат.',
-        resourcesToggle:
-            'См. также полезные ресурсы для пользователей \\(\\LaTeX\\).',
-        resultPlaceholder:
-            'Здесь отображается результат проверки',
+        resourcesToggle: 'См. также полезные ресурсы для пользователей \\(\\LaTeX\\).',
+        resultPlaceholder: 'Здесь отображается результат проверки',
         githubRibbon: 'Проект на GitHub',
     },
     resources: [
